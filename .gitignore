@@ -99,3 +99,9 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+/node_modules
+/dist
+/.tmp
+/.sass-cache
+/bower_components

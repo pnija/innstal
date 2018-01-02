@@ -24,7 +24,7 @@ class ProductBrand(models.Model):
 
 class Product(models.Model):
     product_name = models.CharField('Product Name', max_length=50, db_index=True)
-    business = models.ForeignKey(UserProfile, blank=True, null=True)
+    user = models.ForeignKey(UserProfile, blank=True, null=True)
     product_category = models.ForeignKey(ProductCategory, blank=True, null=True)
     product_type = models.ForeignKey(ProductType, blank=True, null=True)
     product_brand = models.ForeignKey(ProductBrand, blank=True, null=True)

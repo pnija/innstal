@@ -19,3 +19,14 @@ class UserProfile(models.Model):
     class Meta:
         verbose_name = 'UserProfile'
         verbose_name_plural = 'UserProfiles'
+
+
+class PricingPlan(models.Model):
+    name = models.CharField('Package Name', max_length=50, unique=True)
+    title = models.CharField('Package Title', max_length=50, blank=True, null=True)
+    price = models.CharField('Package Cost', max_length=50)
+    duration = models.DurationField(default=2000, blank=True, null=True)
+    is_active = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.name

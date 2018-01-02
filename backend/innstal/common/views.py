@@ -48,7 +48,6 @@ def login(request):
 
 class Logout(APIView):
     queryset = User.objects.all()
-
     def get(self, request, format=None):
         # simply delete the token to force a login
         self.request.user.auth_token.delete()

@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'common',
     'rest_framework',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
     'product'
 ]
 
@@ -114,6 +114,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.gmail.com'
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
@@ -136,3 +141,18 @@ STATIC_URL = '/static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_USE_TLS = True
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_HOST_USER = 'innstaltest@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'techversant'
+
+EMAIL_PORT = 587
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

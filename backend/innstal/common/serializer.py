@@ -39,3 +39,9 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('id', 'username', 'email', 'password','phone','avatar')
 
+
+class ContactSerializer(serializers.Serializer):
+    name = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Your Name'})
+    email = serializers.EmailField(style={'placeholder': 'Email Address'})
+    phone = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Phone'})
+    message = serializers.CharField(style={'base_template': 'textarea.html', 'placeholder': 'Your Message'})

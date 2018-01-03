@@ -1,3 +1,24 @@
-from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.response import Response
+from rest_framework import status
 
-# Create your views here.
+from .serializers import ProductManualSearchSerializer
+from .models import Product
+
+
+class SearchProductManual(generics.ListAPIView):
+    serializer_class = ProductManualSearchSerializer
+
+    def get_queryset(self):
+        search = self.request.query_params.get('search', None)
+
+        if search is not (None or ''):
+            
+            if self.request.user.is_authenticated():
+                product = Product.objects.filter(product_search_string__icontains=search)
+            else:
+                product = Product.objects.filter(product_search_string__icontains=search)[:3]
+
+            return product
+
+        return Product.objects.none()

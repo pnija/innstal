@@ -72,7 +72,7 @@ class ContactView(APIView):
                 send_mail('Innstal : New Contact Submission',
                     '',
                     settings.DEFAULT_FROM_EMAIL,
-                    [settings.DEFAULT_FROM_EMAIL],
+                    ['jaseemtechversant@gmail.com'],
                     html_message = html_message,
                     fail_silently=False
                 )

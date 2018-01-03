@@ -34,6 +34,7 @@ class Product(models.Model):
     product_image1 = models.ImageField(upload_to='product_image_path', blank=True, null=True)
     product_manual = models.FileField(upload_to='product_manual_path', blank=True, null=True)
     product_search_string = models.TextField(max_length=500, blank=True, null=True, editable=False)
+    product_serial_number = models.CharField(max_length=20, blank=True, null=True)
 
     def __unicode__(self):
         return self.product_name

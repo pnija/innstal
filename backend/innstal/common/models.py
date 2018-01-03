@@ -10,10 +10,52 @@ USER_TYPE = (
     ('2', 'Business')
 )
 
+class Country(models.Model):
+    name = models.CharField(max_length=45)
+    code = models.CharField(max_length=45)
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    class Meta:
+        verbose_name = 'Country'
+        verbose_name_plural = 'Countries'
+
+
+class City(models.Model):
+    name = models.CharField(max_length=45)
+    code = models.CharField(max_length=45)
+    state = models.ForeignKey(State)
+    country = models.ForeignKey(Country)
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    class Meta:
+        verbose_name = 'City'
+        verbose_name_plural = 'Cities'
+
+
+class State(models.Model):
+    name = models.CharField(max_length=45)
+    code = models.CharField(max_length=45)
+    country = models.ForeignKey(Country)
+
+    def __unicode__(self):
+        return "%s" % (self.name)
+
+    class Meta:
+        verbose_name = 'State'
+        verbose_name_plural = 'States'
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
+    address = models.TextField()
+    city = models.ForeignKey(City)
+    state = models.ForeignKey(State)
+    country = models.ForeignKey(Country)
     avatar = models.ImageField(upload_to='avatar_directory_path/', null=True, blank=True)
 
     class Meta:

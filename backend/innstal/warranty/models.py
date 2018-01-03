@@ -4,7 +4,7 @@ from product.models import *
 
 
 class Warranty(models.Model):
-    user = models.ForeignKey(UserProfile)
+    user_profile = models.ForeignKey(UserProfile, null=True)
     product = models.ForeignKey(ProductType)
     company_name = models.CharField(max_length=200, null=True, blank=True)
     product_color = models.CharField(max_length=200, null=True, blank=True)
@@ -13,6 +13,4 @@ class Warranty(models.Model):
     additional_info = models.CharField(max_length=200, null=True, blank=True)
     warranty_image = models.ImageField(upload_to='warranty_images/')
 
-    def __str__(self):
-        return self.product.product_name
 

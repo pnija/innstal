@@ -9,6 +9,6 @@ class Warranty(models.Model):
     warranty_image = models.ImageField(upload_to='warranty_images/')
 
 
-    def __unicode__(self):
+    def __str__(self):
         return self.product.product_name
 

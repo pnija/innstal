@@ -5,13 +5,12 @@ from product.models import *
 
 class Warranty(models.Model):
     user = models.ForeignKey(UserProfile)
-    product = models.ForeignKey(Product)
-    company_name = models.CharField(max_length=200,null=True,blank=True)
+    product = models.ForeignKey(ProductType)
+    company_name = models.CharField(max_length=200, null=True, blank=True)
     product_color = models.CharField(max_length=200, null=True, blank=True)
-    product_serialnumber = models.CharField(max_length=200, null=True, blank=True)
-    purchase_country = models.CharField(max_length=200,  null=True, blank=True)
+    purchase_country = models.CharField(max_length=200, null=True, blank=True)
     purchase_date = models.DateField(auto_now_add=True)
-    additional_info = models.CharField(max_length=200,  null=True, blank=True)
+    additional_info = models.CharField(max_length=200, null=True, blank=True)
     warranty_image = models.ImageField(upload_to='warranty_images/')
 
     def __str__(self):

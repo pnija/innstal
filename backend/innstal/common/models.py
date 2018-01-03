@@ -14,7 +14,7 @@ class Country(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=45)
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % (self.name)
 
     class Meta:
@@ -22,12 +22,14 @@ class Country(models.Model):
         verbose_name_plural = 'Countries'
 
 
+
 class City(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=45)
-    state = models.ForeignKey(State)
-    country = models.ForeignKey(Country)
-    def __unicode__(self):
+    state = models.ForeignKey('common.State')
+    country = models.ForeignKey('common.Country')
+
+    def __str__(self):
         return "%s" % (self.name)
 
     class Meta:
@@ -35,12 +37,13 @@ class City(models.Model):
         verbose_name_plural = 'Cities'
 
 
+
 class State(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=45)
-    country = models.ForeignKey(Country)
+    country = models.ForeignKey('common.Country')
 
-    def __unicode__(self):
+    def __str__(self):
         return "%s" % (self.name)
 
     class Meta:
@@ -52,10 +55,10 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
-    address = models.TextField()
-    city = models.ForeignKey(City)
-    state = models.ForeignKey(State)
-    country = models.ForeignKey(Country)
+    address = models.TextField(null=True, blank=True)
+    city = models.ForeignKey(City, null=True, blank=True)
+    state = models.ForeignKey(State, null=True, blank=True)
+    country = models.ForeignKey(Country, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatar_directory_path/', null=True, blank=True)
 
     class Meta:
@@ -70,5 +73,5 @@ class PricingPlan(models.Model):
     duration = models.DurationField(default=2000, blank=True, null=True)
     is_active = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name

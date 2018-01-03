@@ -30,3 +30,8 @@ class PricingPlan(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+class Newsletter(models.Model):
+    email = models.EmailField(max_length=70, blank=False)
+    is_subscribed = models.BooleanField(default=False)

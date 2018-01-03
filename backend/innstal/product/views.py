@@ -11,8 +11,9 @@ class SearchProductManual(generics.ListAPIView):
 
     def get_queryset(self):
         search = self.request.query_params.get('search', None)
+        print(search)
 
-        if search is not (None or ''):
+        if search:
             
             if self.request.user.is_authenticated():
                 product = Product.objects.filter(product_search_string__icontains=search)

@@ -11,7 +11,6 @@ class SearchProductManual(generics.ListAPIView):
 
     def get_queryset(self):
         search = self.request.query_params.get('search', None)
-        print(search)
 
         if search:
             

@@ -19,5 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("common.urls"), name="common"),
-    url(r'^', include('product.urls'))
+    url(r'^', include('product.urls')),
+    url(r'^api-auth/', include('rest_framework.urls'))
 ]

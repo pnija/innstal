@@ -61,6 +61,7 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
+        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
@@ -70,10 +71,11 @@ class SubcribeNewsLetter(APIView):
                                  settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
             email.content_subtype = 'html'
             response['status'] = 'success'
-            response['message'] = 'Subcription email sent to the email id'
+            response['message'] = 'Subcription email has been sent to the email-id'
             response['newsletter'] = serializer.data
             try:
-                email.send()
+                print ('gii')
+                # email.send()
             except Exception as e:
                 print(e)
             return Response(response, status=status.HTTP_201_CREATED)

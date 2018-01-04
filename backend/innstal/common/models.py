@@ -80,3 +80,6 @@ class PricingPlan(models.Model):
 class Newsletter(models.Model):
     email = models.EmailField(max_length=70, blank=False)
     is_subscribed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email

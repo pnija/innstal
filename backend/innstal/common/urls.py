@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^user/login', Login.as_view()),
     url(r'^user/logout/', Logout.as_view()),
     url(r'^user/subcribe/', SubcribeNewsLetter.as_view()),
-    url(r'^user/update/subscription', UpdateNewsLetterSubscription.as_view()),
+    url(r'^user/update/subscription', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
 ]
 

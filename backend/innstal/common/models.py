@@ -22,7 +22,6 @@ class Country(models.Model):
         verbose_name_plural = 'Countries'
 
 
-
 class City(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=45)
@@ -35,7 +34,6 @@ class City(models.Model):
     class Meta:
         verbose_name = 'City'
         verbose_name_plural = 'Cities'
-
 
 
 class State(models.Model):

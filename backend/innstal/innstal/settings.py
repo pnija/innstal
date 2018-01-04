@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'product',
-    'warranty'
+    'warranty',
+    'rest_framework_swagger',
+
 ]
 
 MIDDLEWARE = [

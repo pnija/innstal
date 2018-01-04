@@ -27,7 +27,7 @@ class UserCreate(APIView):
                 email.send()
             except Exception as e:
                 print(e)
-            return Response(e, status=status.HTTP_408_REQUEST_TIMEOUT)
+            return Response({'message':'User Created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message':'User not created'}, status=status.HTTP_200_OK)

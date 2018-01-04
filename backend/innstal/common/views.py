@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
-from django.core.mail import EmailMessage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template import Context
+from django.template.loader import get_template
 from rest_framework.authtoken.models import Token
 from rest_framework import status
 from rest_framework.compat import authenticate
@@ -65,17 +67,16 @@ class SubcribeNewsLetter(APIView):
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
-            body = 'You have subscribed to Innstal services successfully'
-            email = EmailMessage('Innstal Subscription Activated', body,
-                                 settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
-            email.content_subtype = 'html'
+            email_id = serializer.data.pop('email')
+            html = get_template('subscription_email.html')
+            subject, from_email, to = 'Innstal Subscription Activated',settings.DEFAULT_FROM_EMAIL , email_id
+            html_content = html.render()
+            msg = EmailMultiAlternatives(subject, '', from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
             response['status'] = 'success'
             response['message'] = 'Subcription email sent to the email id'
             response['newsletter'] = serializer.data
-            try:
-                email.send()
-            except Exception as e:
-                print(e)
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             response['status'] = 'failed'
@@ -112,15 +113,14 @@ class UpdateNewsLetterSubscription(APIView):
             serializer = NewsletterSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
-                body = 'You have subscribed to Innstal services successfully'
-                email = EmailMessage('Innstal Subscription Activated', body,
-                                     settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
-                email.content_subtype = 'html'
+                email_id = serializer.data.pop('email')
+                html = get_template('subscription_email.html')
+                subject, from_email, to = 'Innstal Subscription Activated', settings.DEFAULT_FROM_EMAIL, email_id
+                html_content = html.render()
+                msg = EmailMultiAlternatives(subject, '', from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
                 response['status'] = 'success'
                 response['message'] = 'Subcription email sent to the email id'
                 response['newsletter'] = serializer.data
-                try:
-                    email.send()
-                except Exception as e:
-                    print(e)
                 return Response(response, status=status.HTTP_201_CREATED)

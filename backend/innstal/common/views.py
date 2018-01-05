@@ -57,6 +57,7 @@ class Logout(APIView):
 
 class SubcribeNewsLetter(APIView):
     def post(self, request):
+        import pdb;pdb.set_trace()
         response = {}
         if Newsletter.objects.filter(email=request.data.get('email')):
             response['status'] = 'failed'

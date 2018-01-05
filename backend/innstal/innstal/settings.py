@@ -25,7 +25,7 @@ SECRET_KEY = 'p2wp%(_-x=q3vd_8f60g234g2c&j5%(xe6d5uqm574#glq)=^3'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

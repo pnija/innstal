@@ -17,6 +17,7 @@ from innstal import settings
 
 class UserCreate(APIView):
     def post(self, request):
+        response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -24,35 +25,44 @@ class UserCreate(APIView):
             email = EmailMessage('Account Created', body,
                                  settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
             email.content_subtype = 'html'
-
+            response['status'] = 'success'
+            response['message'] = 'User Account created successfully'
             try:
                 email.send()
             except Exception as e:
                 print(e)
-            return Response({'message':'User Created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+            return Response(response, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'message':'User not created'}, status=status.HTTP_200_OK)
+        return Response({'message':'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
 
 
 
 class Login(APIView):
     def post(self,request):
+        response = {}
         username = request.data.get("username")
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
-        print(user)
+        response['status'] = 'success'
+        response['message'] = 'User logged in succesfully'
         if not user:
+            response['status'] = 'failed'
+            response['message'] = 'Login failed'
             return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
         token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key})
+        response['token'] = token.key
+        return Response(response)
 
 
 class Logout(APIView):
     queryset = User.objects.all()
     def get(self, request, format=None):
+        response = {}
         self.request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        response['status'] = 'success'
+        response['message'] = 'User logged out succesfully'
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class SubcribeNewsLetter(APIView):
@@ -63,7 +73,6 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
-        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
@@ -76,12 +85,8 @@ class SubcribeNewsLetter(APIView):
             msg.attach_alternative(html_content, "text/html")
             msg.send()
             response['status'] = 'success'
-            response['message'] = 'Subcription email has been sent to the email-id'
+            response['message'] = 'Newsletter Subcription email has been sent to the email-id'
             response['newsletter'] = serializer.data
-            try:
-                email.send()
-            except Exception as e:
-                print(e)
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             response['status'] = 'failed'
@@ -105,12 +110,12 @@ class UpdateNewsLetterSubscription(APIView):
             if serializer.is_valid():
                 serializer.save()
                 response['status'] = 'success'
-                response['message'] = 'Subscription updated'
+                response['message'] = 'Newsletter Subscription updated'
                 response['newsletter'] = serializer.data
                 return Response(response, status=status.HTTP_200_OK)
             else:
                 response['status'] = 'failed'
-                response['message'] = 'Unsubcription failed'
+                response['message'] = 'Newsletter Subscription failed'
                 response['error'] = serializer.errors
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -126,6 +131,6 @@ class UpdateNewsLetterSubscription(APIView):
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
                 response['status'] = 'success'
-                response['message'] = 'Subcription email sent to the email id'
+                response['message'] = 'Newsletter Subcription email sent to the email id'
                 response['newsletter'] = serializer.data
                 return Response(response, status=status.HTTP_201_CREATED)

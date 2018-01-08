@@ -1,10 +1,11 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template import Context
+from django.template import Context, exceptions
 from django.template.loader import get_template
+from idna import unicode
 from rest_framework.authtoken.models import Token
-from rest_framework import status, permissions
-from rest_framework.compat import authenticate
+from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
@@ -37,22 +38,30 @@ class UserCreate(APIView):
         return Response({'message':'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
 
 
-
 class Login(APIView):
     def post(self,request):
         response = {}
-        username = request.data.get("username")
+        email = request.data.get("email")
         password = request.data.get("password")
-        user = authenticate(username=username, password=password)
-        response['status'] = 'success'
-        response['message'] = 'User logged in succesfully'
-        if not user:
-            response['status'] = 'failed'
-            response['message'] = 'Login failed'
-            return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
-        token, _ = Token.objects.get_or_create(user=user)
-        response['token'] = token.key
-        return Response(response)
+        if User.objects.get(email=email):
+            user = User.objects.get(email=email)
+            if user:
+                registered_user = authenticate(username=user.username, password=password)
+            else:
+                response['status'] = 'failed'
+                response['message'] = 'Login failed'
+                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+            if not registered_user:
+                response['status'] = 'failed'
+                response['message'] = 'Login failed'
+                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+            else:
+                response['status'] = 'success'
+                response['message'] = 'User logged in succesfully'
+                token, _ = Token.objects.get_or_create(user=registered_user)
+                response['token'] = token.key
+                return Response(response)
+
 
 
 class Logout(APIView):

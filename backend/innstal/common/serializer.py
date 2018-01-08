@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
+from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 
 from common.models import UserProfile, Newsletter
@@ -71,3 +72,6 @@ class ChangePasswordSerializer(serializers.Serializer):
     def validate_new_password(self, value):
         validate_password(value)
         return value
+
+
+

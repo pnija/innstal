@@ -1,8 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from rest_framework import status
+from rest_framework import status, viewsets
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
 from product.models import Product
@@ -32,9 +33,27 @@ class ProductViewSet(ViewSet):
         response['product_detail'] = serializer.data
         return Response(serializer.data)
 
-    def update(self, request, *args, **kwargs):
+    def update(self, request, pk=None):
         instance = self.get_object()
         serializer = self.serialize(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+class UpdateProductViewCount(APIView):
+    def post(self, request, pk):
+        response = {}
+        request_data = Product.objects.get(pk=pk)
+        if request_data.manual_view_count:
+            manual_view_count = request_data.manual_view_count
+            manual_view_count = manual_view_count + 1
+            request_data.manual_view_count = manual_view_count
+            Product.objects.filter(pk=pk).update(manual_view_count=manual_view_count)
+            response['status'] = 'success'
+            response['message'] = 'manual view count updated'
+            return Response(response, status=status.HTTP_200_OK)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Failed to update manual view count'
+            return Response(response)
+

@@ -2,8 +2,8 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 
-from .serializers import ProductManualSearchSerializer
-from .models import Product
+from .serializers import ProductManualSearchSerializer, ProductCategorySerializer
+from .models import Product, ProductCategory
 
 
 class SearchProductManual(generics.ListAPIView):
@@ -22,3 +22,9 @@ class SearchProductManual(generics.ListAPIView):
             return product
 
         return Product.objects.none()
+
+
+class ViewProductCategories(generics.ListAPIView):
+    serializer_class = ProductCategorySerializer
+    queryset =  ProductCategory.objects.all()
+

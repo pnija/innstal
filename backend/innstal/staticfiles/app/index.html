@@ -370,7 +370,7 @@
 
 
         <div class="modal fade bs-example-modal-log" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog modal-lg" ng-controller="logincontroller">
                 <img class="modal-img " src="/static/app/images/logo.png" />
                 <button type="button" class="close close-modal" data-dismiss="modal">&times;</button>
                 <div class="modal-content col-sm-4 col-sm-offset-4">
@@ -412,9 +412,7 @@
                                     </span>
                                 </div>
                                 <div>
-                                    <button id="login-button" type="submit" class="width-100 button button--l btn-primary button--flat  c-white">
-                                    Sign in
-                                    </button>
+                                    <input id="login-button" type="button" class="width-100 button button--l btn-primary button--flat  c-white" value="Sign in" ng-click="alert();submitted=true;login(logindata)">
                                 </div>
                             </form>
                             <div align="center" class="modal-signup-a">
@@ -720,6 +718,7 @@
         <script type="text/javascript" src="/static/app/scripts/app.js"></script>
         <script type="text/javascript" src="/static/app/scripts/controllers/basecontroller.js"></script>
         <script type="text/javascript" src="/static/app/scripts/controllers/joinincontroller.js"></script>
+        <script type="text/javascript" src="/static/app/scripts/controllers/logincontroller.js"></script>
     </body>
 
 

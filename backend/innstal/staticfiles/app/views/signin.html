@@ -1,0 +1,100 @@
+<div class="sign-up">
+    <div class="container">
+        <div class="row">
+            <div class="outer">
+                <div class="middle">
+                    <div class="inner">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <div class="signin-wrapper">
+                                        <div align="center">
+                                            <img  src="/static/app/images/logo.png" style="margin:5px" />
+                                        </div>
+                                        <div class="signup-outer">
+                                            <div class="signin-form">
+                                                <form class="marginBottom-m breakPointS-marginBottom-l">
+                                                    <div class="marginBottom-m email">
+                                                        <div class="width-100 uiIcon uiIcon--l">
+                                                            <input class="width-100 input input--default input--l" type="email" spellcheck="false" name="signin-email" placeholder="Email address">
+                                                            <svg class="svgIcon fill-smoke--d" width="30" height="30" viewBox="0 -6 30 30" enable-background="new 0 -6 30 30">
+                                                                <path d="M15 11.9c-.9 0-1.7-.2-2.3-.7l-5.7-4.4v8.1c0 .1 0 .3.1.4.1.1.2.2.3.2 2.5.4 5 .5 7.5.5s5-.2 7.5-.5c.1 0 .3-.1.4-.2.2-.1.2-.3.2-.4v-8.1l-5.7 4.4c-.6.5-1.4.7-2.3.7zm-1.3-2.3c.3.3.8.4 1.3.4s1-.1 1.3-.4l6.1-4.7c.3-.3.5-.6.6-1v-.8c0-.1 0-.3-.1-.4-.1-.1-.2-.2-.4-.2-2.5-.3-5-.5-7.5-.5s-5 .2-7.5.5c-.1 0-.2.1-.3.2-.2.1-.2.3-.2.4v.9c.1.3.3.6.6 1l6.1 4.6z"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="error textAlign-center"></div>
+                                                    </div>
+                                                    <div class="marginBottom-s password">
+                                                        <div class="width-100 uiIcon uiIcon--l">
+                                                            <input class="width-100 input input--default input--l" type="password" spellcheck="false" name="signin-password" placeholder="Password">
+                                                            <svg class="svgIcon fill-smoke--d" width="30" height="30" viewBox="0 -6 30 30" enable-background="new 0 -6 30 30">
+                                                                <path d="M21.6 8.3c-.2-.2-.5-.3-.9-.3h-.7v-2.6c0-1.3-.5-2.4-1.4-3.2-.9-.8-2.1-1.2-3.6-1.2s-2.7.4-3.6 1.2c-.9.8-1.4 1.9-1.4 3.2v2.6h-.7c-.3 0-.7.1-.9.4-.3.2-.4.5-.4.8v6.1c0 .3.1.5.3.7.2.2.4.3.7.4 1.9.4 3.9.6 6 .6 2 0 4-.2 5.9-.6.3-.1.5-.2.7-.4.2-.2.3-.4.3-.7v-6.1c.1-.3 0-.6-.3-.9zm-8.6-2.4c0-1.3.7-1.9 2-1.9s2 .6 2 1.9v2.1h-4v-2.1z"></path>
+                                                            </svg>
+                                                        </div>
+                                                        <div class="error textAlign-center"></div>
+                                                    </div>
+                                                    <div class="marginBottom-m textAlign-center breakPointS-textAlign-right">
+                                                        <span class="forgot-password link link--light fontWeight-3">
+                                                        Forgotten password?
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <button id="login-button" type="submit" class="width-100 button button--l btn-primary button--flat  c-white">
+                                                        Sign in
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                                <!--//other login icons
+                                                    <div class="grid grid--m grid--3">
+                                                        <div>
+                                                            <div class="width-100 button button--ghost button--l bg-dropbox--hover">
+                                                                <div class="logoWrap" style="padding-left: 30px">
+                                                                    <svg class="svgIcon fill-dropbox position-absolute pinCenter" height="30" viewBox="0 0 48 46">
+                                                                        <path d="M14.1 0l-14.1 9.5 9.8 8.1 14.2-9.1-9.9-8.5zm-14.1 25.6l14.1 9.5 9.9-8.5-14.2-9-9.8 8zm24 1l9.9 8.5 14.1-9.5-9.8-8.1-14.2 9.1zm24-17.1l-14.1-9.5-9.9 8.5 14.2 9.1 9.8-8.1zm-24 18.9l-9.9 8.5-4.2-2.9v3.2l14.1 8.8 14.1-8.7v-3.2l-4.2 2.9-9.9-8.6z"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="width-100 button button--ghost button--l bg-google--hover" id="fb-login">
+                                                                <div class="logoWrap" style="padding-left: 30px">
+                                                                    <svg class="svgIcon position-absolute pinCenter" width="30" height="30" viewBox="0 0 30 30">
+                                                                        <path fill="#ffffff" d="M10.31.82A15.3,15.3,0,0,0,1.63,8.26a14.72,14.72,0,0,0,0,13.47,15.2,15.2,0,0,0,4.16,5,15.37,15.37,0,0,0,5.56,2.75,16.71,16.71,0,0,0,7.83.08,14,14,0,0,0,6.27-3.19,13.58,13.58,0,0,0,3.88-6.22,17.27,17.27,0,0,0,.39-8H15.31V18h8.34a7.05,7.05,0,0,1-3.06,4.64A8.87,8.87,0,0,1,17.22,24a10.3,10.3,0,0,1-3.65,0,9.16,9.16,0,0,1-3.41-1.44,9.29,9.29,0,0,1-3.51-4.6,8.93,8.93,0,0,1,0-5.84A9.34,9.34,0,0,1,8.87,8.55a9.13,9.13,0,0,1,4.58-2.49,9.31,9.31,0,0,1,4.49.18,8.28,8.28,0,0,1,3.3,1.9l2.81-2.76c.49-.49,1-1,1.49-1.48a15,15,0,0,0-4.93-3A15.75,15.75,0,0,0,10.31.82"></path>
+                                                                        <path fill="#eb4335" d="M10.31.82A15.8,15.8,0,0,1,20.62.91a14.93,14.93,0,0,1,4.93,3c-.48.51-1,1-1.49,1.48L21.24,8.13a8.37,8.37,0,0,0-3.3-1.9A9.23,9.23,0,0,0,6.65,12.09l-5-3.81A15.29,15.29,0,0,1,10.31.82"></path>
+                                                                        <path fill="#fbbc05" d="M1.64,8.26l5,3.81a8.88,8.88,0,0,0,0,5.84l-5,3.81a14.66,14.66,0,0,1,0-13.47Z"></path>
+                                                                        <path fill="#4285f4" d="M29.68,12a18.1,18.1,0,0,1-.36,8.13,13.58,13.58,0,0,1-3.88,6.22l-4.86-3.7A7.05,7.05,0,0,0,23.65,18H15.07c0-2,0-4.07,0-6Z"></path>
+                                                                        <path fill="#34a853" d="M1.63,21.73l5-3.81a9.34,9.34,0,0,0,3.51,4.6A9.22,9.22,0,0,0,13.56,24a10.12,10.12,0,0,0,3.65,0,8.87,8.87,0,0,0,3.37-1.31l4.86,3.7a13.91,13.91,0,0,1-6.27,3.19,16.71,16.71,0,0,1-7.83-.08,15.26,15.26,0,0,1-9.71-7.75"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="width-100 button button--ghost button--l bg-facebook--hover" id="fb-login">
+                                                                <div class="logoWrap" style="padding-left: 30px">
+                                                                    <svg class="fill-facebook pinCenter position-absolute svgIcon" width="30" height="30" viewBox="0 0 30 30">
+                                                                        <path d="M1.656 0c-.915 0-1.656.741-1.656 1.656v26.689c0 .914.741 1.656 1.656 1.656h14.266l.016-11.869h-3.917v-4.158h3.917l-.025-3.696c0-3.875 1.818-5.409 5.275-5.409 1.656 0 3.456.123 3.871.178l-.044 3.98h-2.178c-1.88 0-1.969.89-1.969 2.201l.217 2.746h4.113l-.584 4.158h-3.514l-.016 11.869h7.259c.914 0 1.656-.741 1.656-1.656v-26.689c0-.915-.741-1.656-1.656-1.656h-26.689z"></path>
+                                                                    </svg>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    -->
+                                                <!--end of other login icons-->
+                                                <!--dont have an account-->
+                                                <div class="margin-t-5">
+                                                    <span class="c-silver fontWeight-3">Don't have an account? </span><a class="js-signup-link link link--blue">Sign up</a>.
+                                                </div>
+                                                <!--end of dont have an account-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

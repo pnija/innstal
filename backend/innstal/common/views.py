@@ -9,6 +9,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.views import APIView
+from datetime import datetime
 
 from common.models import Newsletter
 from common.serializer import UserSerializer, NewsletterSerializer
@@ -17,6 +18,11 @@ from innstal import settings
 
 class UserCreate(APIView):
     def post(self, request):
+        day = request.data['day']
+        month = request.data['month']
+        year = request.data['year']
+        request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
+
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -26,10 +32,10 @@ class UserCreate(APIView):
             email.content_subtype = 'html'
 
             try:
-                email.send()
+                # email.send()
             except Exception as e:
                 print(e)
-            return Response({'message':'User Created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+            return Response({'message':'User Created'}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response({'message':'User not created'}, status=status.HTTP_200_OK)
@@ -57,7 +63,6 @@ class Logout(APIView):
 
 class SubcribeNewsLetter(APIView):
     def post(self, request):
-        import pdb;pdb.set_trace()
         response = {}
         if Newsletter.objects.filter(email=request.data.get('email')):
             response['status'] = 'failed'

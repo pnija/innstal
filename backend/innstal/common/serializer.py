@@ -4,7 +4,6 @@ from rest_framework.validators import UniqueValidator
 
 from common.models import UserProfile, Newsletter
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -22,7 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
             )
     password = serializers.CharField(min_length=8)
     phone = serializers.CharField(source='userprofile.phone', required=False)
-    avatar = serializers.ImageField(source='userprofile.avatar')
+    dob = serializers.DateField(source='userprofile.dob', required=False)
+    avatar = serializers.ImageField(source='userprofile.avatar', required=False)
 
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'], validated_data['email'],
@@ -31,13 +31,17 @@ class UserSerializer(serializers.ModelSerializer):
         profile = UserProfile(user=user)
         userprofile = validated_data['userprofile']
         profile.phone = userprofile['phone']
-        profile.avatar = userprofile['avatar']
+        profile.dob = userprofile['dob']
+        try:
+            profile.avatar = userprofile['avatar']
+        except:
+            pass
         profile.save()
         return user
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password','phone','avatar')
+        fields = ('id', 'username', 'email', 'dob', 'password','phone','avatar')
 
 
 class NewsletterSerializer(serializers.ModelSerializer):

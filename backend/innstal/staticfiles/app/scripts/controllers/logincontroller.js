@@ -9,7 +9,7 @@ app.controller('logincontroller', ['$scope', '$http', function($scope, $http){
 
         $http({
             method: 'POST',
-            url: 'user/user/login/',
+            url: 'user/login/',
             data: logindata,
         }).then(function (response) {
                 $scope.user = {};

@@ -6,11 +6,9 @@ app.controller('basecontroller', ['$scope', '$http', '$modal', function($scope, 
     $scope.subscribe = function () {
         var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
-        console.log('paramssssssssssssss', params);
-
         $http({
             method: 'POST',
-            url: 'user/user/subcribe/',
+            url: 'user/subcribe/newsletter/',
             data: params,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).then(function (response) {

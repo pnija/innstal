@@ -9,7 +9,7 @@ app.controller('joinincontroller', ['$scope', '$http', function($scope, $http){
 
         $http({
             method: 'POST',
-            url: 'user/user/register/',
+            url: 'user/register/',
             data: user,
         }).then(function (response) {
 

@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
-from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
+from rest_framework import serializers, exceptions
+from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 
 from common.models import UserProfile, Newsletter
@@ -55,10 +57,25 @@ class NewsletterSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         instance.is_subscribed = validated_data.get('is_subscribed', instance.is_subscribed)
-        instance.email = validated_data.get('is_subscribed', instance.email)
+        instance.email = validated_data.get('email', instance.email)
         instance.save()
         return instance
 
     class Meta:
         model = Newsletter
         fields = ('id', 'email','is_subscribed')
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)
+
+    def validate_new_password(self, value):
+        validate_password(value)
+        return value
+
+
+

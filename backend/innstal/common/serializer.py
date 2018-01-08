@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from common.models import UserProfile
+from common.models import UserProfile, Newsletter
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -45,3 +45,23 @@ class ContactSerializer(serializers.Serializer):
     email = serializers.EmailField(style={'placeholder': 'Email Address'})
     phone = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Phone'})
     message = serializers.CharField(style={'base_template': 'textarea.html', 'placeholder': 'Your Message'})
+
+
+class NewsletterSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True)
+    is_subscribed = serializers.BooleanField()
+
+    def create(self, validated_data):
+        newsletter = Newsletter.objects.create(**validated_data)
+        return newsletter
+
+    def update(self, instance, validated_data):
+        instance.is_subscribed = validated_data.get('is_subscribed', instance.is_subscribed)
+        instance.email = validated_data.get('is_subscribed', instance.email)
+        instance.save()
+        return instance
+
+    class Meta:
+        model = Newsletter
+        fields = ('id', 'email','is_subscribed')

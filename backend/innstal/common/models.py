@@ -57,10 +57,14 @@ class UserProfile(models.Model):
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
     address = models.TextField(null=True, blank=True)
+    dob = models.DateField(null=True, blank=True)
     city = models.ForeignKey(City, null=True, blank=True)
     state = models.ForeignKey(State, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatar_directory_path/', null=True, blank=True)
+
+    def __str__(self):
+        return "%s" % (self.user.username)
 
     class Meta:
         verbose_name = 'UserProfile'
@@ -89,3 +93,9 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.blog_title
+class Newsletter(models.Model):
+    email = models.EmailField(max_length=70, blank=False)
+    is_subscribed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.email

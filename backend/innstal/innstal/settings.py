@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'product',
-    'warranty'
+    'warranty',
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
@@ -78,16 +79,15 @@ WSGI_APPLICATION = 'innstal.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'innstal_db',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-    }
-}
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'innstal_db',
+#         'USER': 'postgres',
+#         'PASSWORD': 'postgres',
+#         'HOST': 'localhost',
+#     }
+# }
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -140,6 +140,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
@@ -158,8 +160,19 @@ EMAIL_PORT = 587
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+
+#ck editor config
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 300,
+        'width': 700,
+    },
+}
+
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
     pass
 

@@ -6,9 +6,11 @@ from rest_framework.compat import authenticate
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from .models import Blog
 
-from common.serializer import UserSerializer
+from common.serializer import UserSerializer, BlogSerializer
 from innstal import settings
 
 
@@ -29,8 +31,7 @@ class UserCreate(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'message':'User not created'}, status=status.HTTP_200_OK)
-
+        return Response({'message': 'User not created'}, status=status.HTTP_200_OK)
 
 
 @api_view(["POST"])
@@ -45,10 +46,15 @@ def login(request):
     return Response({"token": token.key})
 
 
-
 class Logout(APIView):
     queryset = User.objects.all()
+
     def get(self, request, format=None):
         # simply delete the token to force a login
         self.request.user.auth_token.delete()
         return Response(status=status.HTTP_200_OK)
+
+
+class BlogListingViewSet(ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer

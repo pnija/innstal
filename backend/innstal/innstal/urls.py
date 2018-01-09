@@ -20,5 +20,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("common.urls"), name="common"),
     url(r'^', include('product.urls')),
-    url(r'^warranty/', include('warranty.urls'))
+    url(r'^warranty/', include('warranty.urls')),
+    url(r'^ckeditor/', include('ckeditor_uploader.urls')),
+
+
 ]

@@ -13,7 +13,6 @@ class UserProfileSerializer(ModelSerializer):
 
 
 class WarrantyApplicationSerializer(ModelSerializer):
-
     user_profile = UserProfileSerializer()
 
     class Meta:

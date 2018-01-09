@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ USER_TYPE = (
     ('1', 'General'),
     ('2', 'Business')
 )
+
 
 class Country(models.Model):
     name = models.CharField(max_length=45)
@@ -34,6 +36,7 @@ class City(models.Model):
     class Meta:
         verbose_name = 'City'
         verbose_name_plural = 'Cities'
+
 
 
 class State(models.Model):
@@ -76,3 +79,13 @@ class PricingPlan(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Blog(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    blog_title = models.CharField(max_length=255, null=True, blank=True)
+    blog_image = models.ImageField(upload_to='blog_images_path/', null=True, blank=True)
+    blog_content = RichTextField()
+
+    def __str__(self):
+        return self.blog_title

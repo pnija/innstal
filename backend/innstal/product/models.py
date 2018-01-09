@@ -40,6 +40,20 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+    def save(self, *args, **kwargs):
+
+        string = self.product_name + " "
+        if self.product_model:
+            string += self.product_model + " "
+
+        if self.product_brand:
+            string += self.product_brand.brand_name + " "
+
+        if self.product_category:
+            string += self.product_category.name + " "
+        self.product_search_string = string
+        super(Product, self).save(*args, **kwargs)
+
 
 class ProductVisited(models.Model):
     product = models.ForeignKey(Product)

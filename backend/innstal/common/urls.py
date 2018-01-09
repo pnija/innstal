@@ -1,17 +1,17 @@
-
-from django import views
-from django.conf.urls import url, include
 from django.conf.urls import url
 from django.contrib import admin
-from common.views import UserCreate, Logout, SubcribeNewsLetter, UpdateNewsLetterSubscription,\
- Login, ContactView
+from django.views.generic import TemplateView
 
+from common.views import UserCreate, Logout, SubcribeNewsLetter, \
+    UpdateNewsLetterSubscription, UpdatePassword, Login, ContactView
 
 urlpatterns = [
-    url(r'^user/register$', UserCreate.as_view(), name='account-create'),
-    url(r'^user/login', Login.as_view()),
-    url(r'^user/logout/', Logout.as_view()),
-    url(r'^user/subcribe/', SubcribeNewsLetter.as_view()),
-    url(r'^user/update/subscription', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
+    url(r'^register/$', UserCreate.as_view(), name='account-create'),
+    url(r'^login/$', Login.as_view()),
+    url(r'^logout/$', Logout.as_view()),
+    url(r'^reset-password/$', UpdatePassword.as_view()),
+    url(r'^subcribe/newsletter/$', SubcribeNewsLetter.as_view()),
+    url(r'^update/newsletter-subscription/$', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
+    url(r'^dashboard/$', TemplateView.as_view(template_name='views/dashboard.html'), name='dashboard'),
     url(r'contact/$', ContactView.as_view(), name='contact'),
 ]

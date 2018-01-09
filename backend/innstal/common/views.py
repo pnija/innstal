@@ -1,10 +1,10 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage, EmailMultiAlternatives
-from django.template import Context
+from django.template import Context, exceptions
 from django.template.loader import get_template
 from rest_framework.authtoken.models import Token
-from rest_framework import status
-from rest_framework.compat import authenticate
+from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
@@ -13,13 +13,20 @@ from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
 
+from datetime import datetime
+
 from common.models import Newsletter
-from common.serializer import UserSerializer, NewsletterSerializer, ContactSerializer
-from innstal import settings
+from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, ContactSerializer
 
 
 class UserCreate(APIView):
     def post(self, request):
+        day = request.data['day']
+        month = request.data['month']
+        year = request.data['year']
+        request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
+
+        response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -27,35 +34,48 @@ class UserCreate(APIView):
             email = EmailMessage('Account Created', body,
                                  settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
             email.content_subtype = 'html'
-
-            try:
-                email.send()
-            except Exception as e:
-                print(e)
-            return Response({'message':'User Created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+            response['status'] = 'success'
+            response['message'] = 'User Account created successfully'
+            return Response(response, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({'message':'User not created'}, status=status.HTTP_200_OK)
-
+        return Response({'message':'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
 
 
 class Login(APIView):
     def post(self,request):
-        username = request.data.get("username")
+        response = {}
+        email = request.data.get("email")
         password = request.data.get("password")
-        user = authenticate(username=username, password=password)
-        print(user)
-        if not user:
-            return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
-        token, _ = Token.objects.get_or_create(user=user)
-        return Response({"token": token.key})
+        if User.objects.get(email=email):
+            user = User.objects.get(email=email)
+            if user:
+                registered_user = authenticate(username=user.username, password=password)
+            else:
+                response['status'] = 'failed'
+                response['message'] = 'Login failed'
+                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+            if not registered_user:
+                response['status'] = 'failed'
+                response['message'] = 'Login failed'
+                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+            else:
+                response['status'] = 'success'
+                response['message'] = 'User logged in succesfully'
+                token, _ = Token.objects.get_or_create(user=registered_user)
+                response['token'] = token.key
+                return Response(response)
+
 
 
 class Logout(APIView):
     queryset = User.objects.all()
     def get(self, request, format=None):
+        response = {}
         self.request.user.auth_token.delete()
-        return Response(status=status.HTTP_200_OK)
+        response['status'] = 'success'
+        response['message'] = 'User logged out succesfully'
+        return Response(response, status=status.HTTP_200_OK)
 
 
 class ContactView(APIView):
@@ -87,14 +107,12 @@ class ContactView(APIView):
 
 class SubcribeNewsLetter(APIView):
     def post(self, request):
-        import pdb;pdb.set_trace()
         response = {}
         if Newsletter.objects.filter(email=request.data.get('email')):
             response['status'] = 'failed'
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
-        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
@@ -107,12 +125,8 @@ class SubcribeNewsLetter(APIView):
             msg.attach_alternative(html_content, "text/html")
             msg.send()
             response['status'] = 'success'
-            response['message'] = 'Subcription email has been sent to the email-id'
+            response['message'] = 'Newsletter Subcription email has been sent to the email-id'
             response['newsletter'] = serializer.data
-            try:
-                email.send()
-            except Exception as e:
-                print(e)
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             response['status'] = 'failed'
@@ -130,18 +144,16 @@ class UpdateNewsLetterSubscription(APIView):
                 request_data.is_subscribed = False
             elif request_data.is_subscribed == False:
                 request_data.is_subscribed = True
-            instance = {}
-            instance['id'] = request_data.id
             serializer = NewsletterSerializer(request_data, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
                 response['status'] = 'success'
-                response['message'] = 'Subscription updated'
+                response['message'] = 'Newsletter Subscription updated'
                 response['newsletter'] = serializer.data
                 return Response(response, status=status.HTTP_200_OK)
             else:
                 response['status'] = 'failed'
-                response['message'] = 'Unsubcription failed'
+                response['message'] = 'Newsletter Subscription failed'
                 response['error'] = serializer.errors
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -157,6 +169,33 @@ class UpdateNewsLetterSubscription(APIView):
                 msg.attach_alternative(html_content, "text/html")
                 msg.send()
                 response['status'] = 'success'
-                response['message'] = 'Subcription email sent to the email id'
+                response['message'] = 'Newsletter Subcription email sent to the email id'
                 response['newsletter'] = serializer.data
                 return Response(response, status=status.HTTP_201_CREATED)
+
+
+class UpdatePassword(APIView):
+    """
+    An endpoint for changing password.
+    """
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+    def put(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        serializer = ChangePasswordSerializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check old password
+            old_password = serializer.data.get("old_password")
+            if not self.object.check_password(old_password):
+                return Response({"old_password": ["Wrong password."]},
+                                status=status.HTTP_400_BAD_REQUEST)
+            # set_password also hashes the password that the user will get
+            self.object.set_password(serializer.data.get("new_password"))
+            self.object.save()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

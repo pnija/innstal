@@ -8,9 +8,11 @@ from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
+from .models import Blog
+from common.serializer import UserSerializer, BlogSerializer
 from datetime import datetime
-
 from common.models import Newsletter
 from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer
 from innstal import settings
@@ -36,6 +38,7 @@ class UserCreate(APIView):
             return Response(response, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         return Response({'message':'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
 
 
@@ -64,15 +67,21 @@ class Login(APIView):
                 return Response(response)
 
 
-
 class Logout(APIView):
     queryset = User.objects.all()
+
     def get(self, request, format=None):
         response = {}
         self.request.user.auth_token.delete()
         response['status'] = 'success'
         response['message'] = 'User logged out succesfully'
         return Response(response, status=status.HTTP_200_OK)
+
+
+
+class BlogListingViewSet(ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializer
 
 
 class SubcribeNewsLetter(APIView):

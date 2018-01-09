@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 
@@ -9,6 +10,7 @@ USER_TYPE = (
     ('1', 'General'),
     ('2', 'Business')
 )
+
 
 class Country(models.Model):
     name = models.CharField(max_length=45)
@@ -20,7 +22,6 @@ class Country(models.Model):
     class Meta:
         verbose_name = 'Country'
         verbose_name_plural = 'Countries'
-
 
 
 class City(models.Model):
@@ -52,7 +53,7 @@ class State(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
     address = models.TextField(null=True, blank=True)
@@ -69,6 +70,9 @@ class UserProfile(models.Model):
         verbose_name = 'UserProfile'
         verbose_name_plural = 'UserProfiles'
 
+    def __str__(self):
+        return self.user.username
+
 
 class PricingPlan(models.Model):
     name = models.CharField('Package Name', max_length=50, unique=True)
@@ -81,6 +85,14 @@ class PricingPlan(models.Model):
         return self.name
 
 
+class Blog(models.Model):
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    blog_title = models.CharField(max_length=255, null=True, blank=True)
+    blog_image = models.ImageField(upload_to='blog_images_path/', null=True, blank=True)
+    blog_content = RichTextField()
+
+    def __str__(self):
+        return self.blog_title
 class Newsletter(models.Model):
     email = models.EmailField(max_length=70, blank=False)
     is_subscribed = models.BooleanField(default=False)

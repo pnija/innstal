@@ -22,6 +22,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^user/', include("common.urls"), name="common"),
+    url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^warranty/', include('warranty.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^product/', include('product.urls')),

@@ -4,7 +4,8 @@ from rest_framework import routers
 from django.views.generic import TemplateView
 
 from common.views import UserCreate, Logout, SubcribeNewsLetter, \
-    UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet
+    UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet, ContactView
+
 router = routers.DefaultRouter()
 router.register(r'blog', BlogListingViewSet)
 
@@ -16,5 +17,6 @@ urlpatterns = [
     url(r'^subcribe/newsletter/$', SubcribeNewsLetter.as_view()),
     url(r'^update/newsletter-subscription/$', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
     url(r'^dashboard/$', TemplateView.as_view(template_name='views/dashboard.html'), name='dashboard'),
+    url(r'contact/$', ContactView.as_view(), name='contact'),
     url(r'^', include(router.urls)),
 ]

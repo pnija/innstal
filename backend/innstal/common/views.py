@@ -63,7 +63,6 @@ class Login(APIView):
                 return Response(response)
 
 
-
 class Logout(APIView):
     queryset = User.objects.all()
     def get(self, request, format=None):
@@ -145,9 +144,6 @@ class UpdateNewsLetterSubscription(APIView):
 
 
 class UpdatePassword(APIView):
-    """
-    An endpoint for changing password.
-    """
     permission_classes = (permissions.IsAuthenticated, )
 
     def get_object(self, queryset=None):
@@ -158,14 +154,11 @@ class UpdatePassword(APIView):
         serializer = ChangePasswordSerializer(data=request.data)
 
         if serializer.is_valid():
-            # Check old password
             old_password = serializer.data.get("old_password")
             if not self.object.check_password(old_password):
                 return Response({"old_password": ["Wrong password."]},
                                 status=status.HTTP_400_BAD_REQUEST)
-            # set_password also hashes the password that the user will get
             self.object.set_password(serializer.data.get("new_password"))
             self.object.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

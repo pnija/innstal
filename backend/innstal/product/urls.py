@@ -6,7 +6,7 @@ from product.views import ProductViewSet, UpdateProductViewCount
 
 router = DefaultRouter()
 router.register(r'', ProductViewSet, base_name='products')
-router.register(r'/(?P<id>\d+)/?$', ProductViewSet, base_name='products')
+router.register(r'(?P<id>\d+)/?$', ProductViewSet, base_name='products')
 urlpatterns = router.urls
 
 

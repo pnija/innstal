@@ -1,8 +1,11 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context, exceptions
 from django.template.loader import get_template
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
@@ -12,7 +15,7 @@ from rest_framework.views import APIView
 from datetime import datetime
 
 from common.models import Newsletter
-from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer
+from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, UpdatePasswordSerializer
 from innstal import settings
 
 
@@ -22,15 +25,21 @@ class UserCreate(APIView):
         month = request.data['month']
         year = request.data['year']
         request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
-
         response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            body = 'New Account Created'
-            email = EmailMessage('Account Created', body,
-                                 settings.DEFAULT_FROM_EMAIL, (serializer.data.pop('email'),))
-            email.content_subtype = 'html'
+            id = serializer.data.pop('id')
+            url = {}
+            url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"/user/account/activate"
+            url['pk'] = id
+            email_id = serializer.data.pop('email')
+            html = get_template('signup_confirmation_email.html')
+            subject, from_email, to = 'Innstal Account Created', settings.DEFAULT_FROM_EMAIL, email_id
+            html_content = html.render(url)
+            msg = EmailMultiAlternatives(subject, '', from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
             response['status'] = 'success'
             response['message'] = 'User Account created successfully'
             return Response(response, status=status.HTTP_200_OK)
@@ -162,4 +171,107 @@ class UpdatePassword(APIView):
             self.object.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ActivateUserAccount(APIView):
+    def get(self,request, pk):
+        response = {}
+        if User.objects.filter(pk=pk):
+            user = User.objects.get(pk=pk)
+            user.is_active = True
+            user.save()
+            response['status'] = 'success'
+            response['message'] = 'User Account activated'
+            return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'User Not found'
+            return Response(response)
+
+class ForgotPassword(APIView):
+    def post(self, request):
+        response = {}
+        email = request.data.get('email')
+        if User.objects.filter(email=email):
+            context_values = {}
+            user = User.objects.get(email=email)
+            token = PasswordResetTokenGenerator()
+            token_value = token.make_token(user)
+            # uid = urlsafe_base64_encode(force_bytes(pk))
+            context_values['url_value'] = request.scheme + "://" + request.META['HTTP_HOST'] + "/user/token-check"
+            context_values['token'] = token_value
+            # context_values['uid'] = uid
+            context_values['pk'] = user.pk
+            html = get_template('password_reset_email.html')
+            subject, from_email, to = 'Innstal', settings.DEFAULT_FROM_EMAIL, email
+            html_content = html.render(context_values)
+            msg = EmailMultiAlternatives(subject, '', from_email, [to])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
+            response['status'] = 'success'
+            response['message'] = 'Email to reset password sent successfully'
+            return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Check the email you have entered'
+            return Response(response)
+
+class ResetPasswordCheck(APIView):
+    def get(self, request, pk, **kwargs):
+        response = {}
+        url_token = kwargs['token']
+        id = pk
+        # uuid = kwargs['uuid']
+        if User.objects.filter(pk=id):
+            user = User.objects.get(pk=id)
+            token = PasswordResetTokenGenerator()
+            valid_token = token.check_token(user, url_token)
+            if valid_token == True:
+                response['status'] = 'success'
+                response['message'] = 'Url is valid'
+                response['key'] = pk
+                return Response(response)
+            else:
+                response['status'] = 'failed'
+                response['message'] = 'Url is not valid'
+                return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'This is not a valid user'
+            return Response(response)
+
+class ChangePassword(APIView):
+    def post(self, request, pk):
+        response = {}
+        if User.objects.filter(pk=pk):
+            user = User.objects.get(pk=pk)
+            if user:
+                serializer = UpdatePasswordSerializer(data=request.data)
+                if serializer.is_valid():
+                    user.set_password(serializer.data.get("new_password"))
+                    user.save()
+                    response['status'] = 'success'
+                    response['message'] ='User password updated'
+                    return Response(response)
+                else:
+                    response['status'] = 'failed'
+                    response['message'] = 'Could not update user password'
+                return Response(response)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

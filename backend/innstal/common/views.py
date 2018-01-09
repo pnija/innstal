@@ -3,13 +3,13 @@ from django.contrib.auth.models import User
 from django.core.mail import EmailMessage, EmailMultiAlternatives
 from django.template import Context, exceptions
 from django.template.loader import get_template
-from idna import unicode
 from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.views import APIView
+from datetime import datetime
 
 from common.models import Newsletter
 from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer
@@ -18,6 +18,11 @@ from innstal import settings
 
 class UserCreate(APIView):
     def post(self, request):
+        day = request.data['day']
+        month = request.data['month']
+        year = request.data['year']
+        request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
+
         response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -28,10 +33,6 @@ class UserCreate(APIView):
             email.content_subtype = 'html'
             response['status'] = 'success'
             response['message'] = 'User Account created successfully'
-            try:
-                email.send()
-            except Exception as e:
-                print(e)
             return Response(response, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -75,7 +76,6 @@ class Logout(APIView):
 
 class SubcribeNewsLetter(APIView):
     def post(self, request):
-        import pdb;pdb.set_trace()
         response = {}
         if Newsletter.objects.filter(email=request.data.get('email')):
             response['status'] = 'failed'
@@ -162,3 +162,4 @@ class UpdatePassword(APIView):
             self.object.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

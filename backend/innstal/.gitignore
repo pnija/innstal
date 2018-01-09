@@ -112,7 +112,5 @@ ENV/
 .idea/
 *.css~
 
-**/migrations/**
-**/migrations/__init__.py
 
 

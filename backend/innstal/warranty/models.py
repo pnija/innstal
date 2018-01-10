@@ -8,6 +8,7 @@ class Warranty(models.Model):
     product = models.ForeignKey(ProductType)
     company_name = models.CharField(max_length=200, null=True, blank=True)
     product_color = models.CharField(max_length=200, null=True, blank=True)
+    product_serial_no = models.CharField(max_length=30, null=True, blank=True)
     purchase_country = models.CharField(max_length=200, null=True, blank=True)
     purchase_date = models.DateField(auto_now_add=True)
     additional_info = models.CharField(max_length=200, null=True, blank=True)

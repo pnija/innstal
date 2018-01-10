@@ -87,18 +87,24 @@ Roath, Cardiff CF24 3DG</p>
 <div class="contact-right" ng-controller="ContactController">
 
   <h2>Get In Touch</h2>
+  <p class="has-error"><b class="help-block">{{emailFailed.error}}</b></p>
+  <p class="has-success"><b class="help-block">{{sucessMessage}}</b></p>
   <form novalidate>
-      <div class="form-group" >
+      <div class="form-group {{errors.name[0]?'has-error':''}}">
+          <span class="help-block">{{errors.name[0]}}</span>
         <input type="text" class="form-control" placeholder="Your Name" ng-model="form.name"/>
       </div>
 
-      <div class="form-group">
+      <div class="form-group {{errors.email[0]?'has-error':''}}">
+        <span class="help-block">{{errors.email[0]}}</span>
         <input type="text" class="form-control" placeholder="Email Address" ng-model="form.email"/>
       </div>
-      <div class="form-group">
+      <div class="form-group {{errors.phone[0]?'has-error':''}}">
+        <span class="help-block">{{errors.phone[0]}}</span>
         <input type="text" class="form-control" placeholder="Phone" ng-model="form.phone"/>
       </div>
-      <div class="form-group">
+      <div class="form-group {{errors.message[0]?'has-error':''}}">
+        <span class="help-block">{{errors.message[0]}}</span>
         <textarea rows="8" class="form-control" placeholder="Your Message" ng-model="form.message"></textarea>
       </div>
 
@@ -157,7 +163,7 @@ Roath, Cardiff CF24 3DG</p>
                     <a href="#">How It Works </a>
                     <a href="#"> Business </a>
                     <a href="#"> Blog </a>
-                    <a href="#"> Contact Us </a>
+                    <div ui-sref="contact" ui-sref-opts="{reload: true}"><a href=""> Contact Us </a></div>
                     <a href="#"> Privacy Policy </a>
                     <a href="#"> Disclaimer </a>
                     <a href="#"> Terms and Conditions </a>

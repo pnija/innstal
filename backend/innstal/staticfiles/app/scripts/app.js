@@ -1,13 +1,13 @@
 var app = angular.module("innstalApp", ['ui.router', 'ui.bootstrap']);
 
 app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
-    //$locationProvider.hashPrefix('');
-    //$urlRouterProvider.otherwise("/");
-    $urlRouterProvider.when("", "/")
+    $locationProvider.hashPrefix('');
+    $urlRouterProvider.otherwise("/");
     $stateProvider
         .state('/', {
             url: '/',
             templateUrl: '/static/app/index.html',
+            controller: 'basecontroller',
         })
         .state('dashboard', {
             templateUrl: '/static/app/views/dashboard.html',
@@ -18,7 +18,7 @@ app.config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
         })        
 });
 
-app.controller('basecontroller', ['$scope', '$http', '$modal', function($scope, $http, $modal){
+app.controller('basecontroller', ['$scope', '$http', '$modal', '$state', function($scope, $http, $modal, $state){
     $scope.subscribe = function () {
         var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 

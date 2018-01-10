@@ -4,6 +4,7 @@ from rest_framework import serializers, exceptions
 from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 from common.models import UserProfile, Newsletter,Blog
+import re
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -45,10 +46,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ContactSerializer(serializers.Serializer):
-    name = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Your Name'})
-    email = serializers.EmailField(style={'placeholder': 'Email Address'})
-    phone = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Phone'})
-    message = serializers.CharField(style={'base_template': 'textarea.html', 'placeholder': 'Your Message'})
+    name = serializers.CharField()
+    email = serializers.EmailField()
+    phone = serializers.CharField()
+    message = serializers.CharField()
+
+    def validate_phone(self, value):
+
+        if re.match(r'^(?:\+)?(\d.{10,16})$',value):
+            return value
+
+        raise serializers.ValidationError("Invalid Phone Number")
 
 
 class NewsletterSerializer(serializers.ModelSerializer):

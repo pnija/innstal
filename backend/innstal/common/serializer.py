@@ -1,9 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, exceptions
 from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
-from common.models import UserProfile, Newsletter,Blog
+from common.models import UserProfile, Newsletter, City, State, Country, Blog
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,8 +27,10 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(source='userprofile.avatar', required=False)
 
     def create(self, validated_data):
-        user = User.objects.create_user(validated_data['username'], validated_data['email'],
-                                        validated_data['password'])
+
+        user = User.objectdatas.create_user(validated_data['username'],
+                                            validated_data['email'],
+                                            validated_data['password'])
         self.fields.pop('password')
         profile = UserProfile(user=user)
         userprofile = validated_data['userprofile']
@@ -42,6 +46,34 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'dob', 'password','phone','avatar')
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all())
+    state = serializers.PrimaryKeyRelatedField(queryset=State.objects.all())
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
+
+    class Meta:
+        model = UserProfile
+        fields = ('phone','user_type','avatar','address','user','dob','city','country','state')
+
+    def update(self, instance, validated_data):
+        user_id = instance.user_id
+        user_data = validated_data.pop('user')
+        user = User.objects.get(pk=user_id)
+        user.email = user_data['email']
+        user.username = user_data['username']
+        user.set_password(user_data['password'])
+        user.save()
+        instance.address = validated_data.get('address', instance.address)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.city = validated_data.get('city', instance.city)
+        instance.state = validated_data.get('state', instance.state)
+        instance.country = validated_data.get('country', instance.country)
+        instance.avatar = validated_data.get('avatar', instance.avatar)
+        instance.dob = validated_data.get('dob', instance.dob)
+        instance.save()
+        return instance
 
 
 class ContactSerializer(serializers.Serializer):
@@ -72,15 +104,20 @@ class NewsletterSerializer(serializers.ModelSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    """
-    Serializer for password change endpoint.
-    """
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True)
 
     def validate_new_password(self, value):
         validate_password(value)
         return value
+
+class UpdatePasswordSerializer(serializers.Serializer):
+    new_password = serializers.CharField(required=True)
+
+    def validate_new_password(self, value):
+        validate_password(value)
+        return value
+
 
 
 class BlogSerializer(serializers.ModelSerializer):

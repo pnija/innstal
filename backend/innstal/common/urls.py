@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 
 from common.views import UserCreate, Logout, SubcribeNewsLetter, \
     UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet
+
 router = routers.DefaultRouter()
 router.register(r'blog', BlogListingViewSet)
 
@@ -16,5 +17,5 @@ urlpatterns = [
     url(r'^subcribe/newsletter/$', SubcribeNewsLetter.as_view()),
     url(r'^update/newsletter-subscription/$', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
     url(r'^dashboard/$', TemplateView.as_view(template_name='views/dashboard.html'), name='dashboard'),
-url(r'^', include(router.urls)),
+    url(r'^', include(router.urls)),
 ]

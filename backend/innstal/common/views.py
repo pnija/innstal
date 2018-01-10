@@ -78,7 +78,6 @@ class Logout(APIView):
         return Response(response, status=status.HTTP_200_OK)
 
 
-
 class BlogListingViewSet(ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializer

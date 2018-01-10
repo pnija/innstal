@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('product', '0001_initial'),
-        ('common', '0003_pricingplan'),
     ]
 
     operations = [

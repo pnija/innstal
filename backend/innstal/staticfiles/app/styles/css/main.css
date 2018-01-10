@@ -275,7 +275,7 @@ body {
 .affix {
 	top: 0;
 	width: 100%;
-	z-index: 9999 !important;
+	z-index: 11 !important;
 	background: #535353 !important;
 	margin: 0px;
 	padding-bottom: 5px;

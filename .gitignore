@@ -111,4 +111,5 @@ ENV/
 *.py~
 .idea/
 
-
+**/migrations/**
+!**/migrations/__init__.py

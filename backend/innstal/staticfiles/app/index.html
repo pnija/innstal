@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="">
     <head>
         <meta charset="utf-8">
@@ -16,9 +16,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
         <script src="/static/app/scripts/js/ui-bootstrap-tpls-0.12.1.js"></script>
         <!--<script type="text/javascript" src="/static/app/scripts/js/custom.js"></script>-->
+        <script type="text/javascript" src="/static/app/scripts/app.js"></script>
     </head>
     <body ng-app="innstalApp">
-    <div ng-controller="basecontroller">
+    <div>
         <div ui-view="">
             <div class="banner">
                 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
@@ -327,7 +328,7 @@
                             <a href="#">How It Works </a>
                             <a href="#"> Business </a>
                             <a href="#"> Blog </a>
-                            <a href="#"> Contact Us </a>
+                            <div ui-sref="contact" ui-sref-opts="{reload: true}"><a href=""> Contact Us </a></div>
                             <a href="#"> Privacy Policy </a>
                             <a href="#"> Disclaimer </a>
                             <a href="#"> Terms and Conditions </a>
@@ -716,12 +717,10 @@
             });
 
         </script>
-        <script type="text/javascript" src="/static/app/scripts/app.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/controllers/basecontroller.js"></script>
+        <!-- <script type="text/javascript" src="/static/app/scripts/app.js"></script> // -->
+        <!-- <script type="text/javascript" src="/static/app/scripts/controllers/basecontroller.js"></script>// -->
         <script type="text/javascript" src="/static/app/scripts/controllers/joinincontroller.js"></script>
         <script type="text/javascript" src="/static/app/scripts/controllers/logincontroller.js"></script>
+        <script type="text/javascript" src="/static/app/scripts/controllers/contactcontroller.js"></script>
     </body>
-
-
-
 </html>

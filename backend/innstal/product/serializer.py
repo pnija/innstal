@@ -13,7 +13,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
     def update(self, instance, validated_data):
-        # instance.manual_view_count = validated_data.get('manual_view_count', instance.manual_view_count)
         manual_view_count = validated_data.pop('manual_view_count')
         instance.manual_view_count = manual_view_count
         instance.save()

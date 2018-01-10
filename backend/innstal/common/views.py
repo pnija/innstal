@@ -14,8 +14,9 @@ from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.views import APIView
 from datetime import datetime
 
-from common.models import Newsletter
-from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, UpdatePasswordSerializer
+from common.models import Newsletter, UserProfile
+from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, UpdatePasswordSerializer, \
+    UserProfileSerializer
 from innstal import settings
 
 
@@ -258,7 +259,31 @@ class ChangePassword(APIView):
                     response['message'] = 'Could not update user password'
                 return Response(response)
 
-
+class UpdateUserProfile(APIView):
+    def post(self, request, pk):
+        response = {}
+        if User.objects.filter(pk=pk):
+            print(request.data)
+            profile = UserProfile.objects.get(user_id=pk)
+            day = request.data['day']
+            month = request.data['month']
+            year = request.data['year']
+            request.data['dob'] = datetime.strptime(day + '/' + month + '/' + year, "%d/%m/%Y").date()
+            serializer = UserProfileSerializer(instance=profile, data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                response['status'] = 'success'
+                response['message'] = 'User profile updated'
+                return Response(response)
+            else:
+                response['status'] = 'failed'
+                response['message'] = 'Failed to update user profile'
+                response['error'] = serializer.errors
+                return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'User does not exist'
+            return Response(response)
 
 
 

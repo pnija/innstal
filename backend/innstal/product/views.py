@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
-from .serializers import ProductManualSearchSerializer, ProductCategorySerializer
+from .serializers import ProductManualSearchSerializer, ProductCategorySerializer, ProductSerializer
 from .models import Product, ProductCategory
 
 

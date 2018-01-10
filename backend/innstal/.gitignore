@@ -109,9 +109,7 @@ ENV/
 .*~
 *.txt~
 *.py~
-.idea/
 *.css~
-
 *.idea/
 
 

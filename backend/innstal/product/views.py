@@ -17,7 +17,7 @@ class SearchProductManual(generics.ListAPIView):
 
     def get_queryset(self):
         search = self.request.query_params.get('search', None)
-
+        
         if search:
             
             if self.request.user.is_authenticated():
@@ -35,33 +35,33 @@ class ViewProductCategories(generics.ListAPIView):
     queryset =  ProductCategory.objects.all()
 
 
-class ProductViewSet(ViewSet):
+# class ProductViewSet(ViewSet):
 
-    def list(self, request):
-        response = {}
-        queryset = Product.objects.all()
-        serializer = ProductSerializer(queryset, many=True)
-        response['status'] = 'success'
-        response['message'] = 'Products listed successfully'
-        response['products'] = serializer.data
-        return Response(response)
+#     def list(self, request):
+#         response = {}
+#         queryset = Product.objects.all()
+#         serializer = ProductSerializer(queryset, many=True)
+#         response['status'] = 'success'
+#         response['message'] = 'Products listed successfully'
+#         response['products'] = serializer.data
+#         return Response(response)
 
-    def retrieve(self, request, pk=None):
-        response = {}
-        queryset = Product.objects.all()
-        product = get_object_or_404(queryset, pk=pk)
-        serializer = ProductSerializer(product)
-        response['status'] = 'success'
-        response['message'] = 'Product detail fetched successfully'
-        response['product_detail'] = serializer.data
-        return Response(serializer.data)
+#     def retrieve(self, request, pk=None):
+#         response = {}
+#         queryset = Product.objects.all()
+#         product = get_object_or_404(queryset, pk=pk)
+#         serializer = ProductSerializer(product)
+#         response['status'] = 'success'
+#         response['message'] = 'Product detail fetched successfully'
+#         response['product_detail'] = serializer.data
+#         return Response(serializer.data)
 
-    def update(self, request, pk=None):
-        instance = self.get_object()
-        serializer = self.serialize(instance, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+#     def update(self, request, pk=None):
+#         instance = self.get_object()
+#         serializer = self.serialize(instance, data=request.data, partial=True)
+#         serializer.is_valid(raise_exception=True)
+#         serializer.save()
+#         return Response(serializer.data)
 
 class UpdateProductViewCount(APIView):
     def get(self, request, pk):

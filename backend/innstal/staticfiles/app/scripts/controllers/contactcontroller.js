@@ -1,6 +1,6 @@
 var app = angular.module('innstalApp');
 
-app.controller('ContactController', ['$scope', '$http', '$modal','$window', function($scope, $http, $modal, $window){
+app.controller('ContactController', ['$scope', '$http', '$modal','$window','$timeout', function($scope, $http, $modal, $window, $timeout){
 	
 	$window.scrollTo(0, 0);
 
@@ -20,6 +20,7 @@ app.controller('ContactController', ['$scope', '$http', '$modal','$window', func
 
 			$scope.sucessMessage = 'Contact Submitted Successfully'
 			$scope.form = {}
+			$timeout(function() { $scope.sucessMessage = ''}, 2000);
 
 		}, function (response) {
 

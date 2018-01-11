@@ -53,12 +53,14 @@
                                     Manual?
                                 </h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <br> do eiusmod tempor incididuore magna aliqua.</p>
-                                <div class=" col-sm-10" ng-controller="searchController">
-                                    <form novalidate>
-                                        <input type="text" class="form-control " placeholder="Search for Instruction/Product/Care Manuals..." ng-model="searchText" />
-                                        <button type="submit" class="glyphicon glyphicon-search" ng-click="search()" ></button>
-                                    </form>
+                                <form novalidate ng-controller="searchController">
+                                <div class="input-group col-sm-10 "> 
+                                        <input type="text" class="form-control" placeholder="Search for Instruction/Product/Care Manuals..." name="search" style=" border-right: 0px;" ng-model="searchText">
+                                        <div class="input-group-btn " style=" border-left: 0px;">
+                                            <button style=" " class="btn btn-default btn-search " type="submit" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button> 
+                                        </div> 
                                 </div>
+                                </form>
                                 <div class="clearfix"></div>
                                 <h4>Browse In Your Category</h4>
                                 <div align="left">

@@ -2,12 +2,14 @@ from django.db import models
 from common.models import *
 # Create your models here.
 
+
 class ProductCategory(models.Model):
     name = models.CharField('Product Category', max_length=50)
     category_image = models.ImageField(upload_to='category_directory_path/', blank=True, null=True)
 
     def __str__(self):
         return self.name
+
 
 class ProductType(models.Model):
     type_name = models.CharField('Type Name', max_length=50)
@@ -16,11 +18,13 @@ class ProductType(models.Model):
     def __str__(self):
         return self.type_name
 
+
 class ProductBrand(models.Model):
     brand_name = models.CharField('Brand Name', max_length=50)
 
     def __str__(self):
         return self.brand_name
+
 
 class Product(models.Model):
     product_name = models.CharField('Product Name', max_length=50)

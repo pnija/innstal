@@ -1,6 +1,5 @@
 
 angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap'])
-
 .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.hashPrefix('');
     $stateProvider
@@ -37,10 +36,14 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             url: '/contact',
             templateUrl: '/static/app/views/contact-us.html',
         })
+        .state('warranty', {
+            url: 'user/warranty',
+            templateUrl: '/static/app/views/register-for-warranty.html',
+            controller: 'warrantyregistercontroller',
+        })
 })
 .run(function($http, $window) {
     if($window.sessionStorage.token){
         $http.defaults.headers.common.Authorization = 'Token '+$window.sessionStorage.token;
     }
 });
-

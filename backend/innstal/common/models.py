@@ -61,6 +61,7 @@ class UserProfile(models.Model):
     city = models.ForeignKey(City, null=True, blank=True)
     state = models.ForeignKey(State, null=True, blank=True)
     country = models.ForeignKey(Country, null=True, blank=True)
+    zipcode = models.CharField(max_length= 100,null= True, blank= True)
     avatar = models.ImageField(upload_to='avatar_directory_path/', null=True, blank=True)
 
     def __str__(self):
@@ -88,6 +89,7 @@ class PricingPlan(models.Model):
 class Blog(models.Model):
     user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     blog_title = models.CharField(max_length=255, null=True, blank=True)
+    blog_subtitle = models.CharField(max_length=255, null=True, blank=True)
     blog_image = models.ImageField(upload_to='blog_images_path/', null=True, blank=True)
     blog_content = RichTextField()
 

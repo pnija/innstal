@@ -133,6 +133,12 @@ class UpdatePasswordSerializer(serializers.Serializer):
 
 
 class BlogSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='user.id', read_only = True)
+    first_name = serializers.CharField(source = 'user.user.first_name')
+    last_name = serializers.CharField(source = 'user.user.last_name')
+    username = serializers.CharField(source = 'user.user.username')
+
     class Meta:
         model = Blog
-        fields = '__all__'
+        fields = ('id', 'user_id', 'first_name', 'last_name', 'username', 'blog_title',\
+                  'blog_subtitle', 'blog_image', 'blog_content')

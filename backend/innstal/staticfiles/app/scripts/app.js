@@ -34,8 +34,9 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             controller: 'bloghomecontroller',
         })
         .state('blog-detail', {
-            url: '/blog-detail',
-            templateUrl: '/static/app/views/blog-homepage.html',
+            url: '/blog/:id',
+            params: { id : null },
+            templateUrl: '/static/app/views/blog-details.html',
             controller: 'blogdetailcontroller',
         })
         .state('contact', {

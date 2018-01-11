@@ -21,10 +21,11 @@ from django.conf import settings
 from .models import Blog
 from datetime import datetime
 from common.models import Newsletter, UserProfile
-from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, UpdatePasswordSerializer, \
+
+from common.serializer import UserSerializer, NewsletterSerializer, \
+    ChangePasswordSerializer, UpdatePasswordSerializer, \
     UserProfileSerializer, ContactSerializer, BlogSerializer
 from innstal import settings
-
 
 
 class UserCreate(APIView):
@@ -326,17 +327,11 @@ class UpdateUserProfile(APIView):
             return Response(response)
 
 
+class GetUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
 
+    def get(self, queryset=None):
 
-
-
-
-
-
-
-
-
-
-
-
-
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        serializer = UserProfileSerializer(user_profile)
+        return Response(serializer.data)

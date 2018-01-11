@@ -14,8 +14,8 @@ app.controller('joinincontroller', ['$scope', '$http', function($scope, $http){
         }).then(function (response) {
 
 //                $scope.userdata = angular.copy(user);
-                $scope.logindata = {};
-                $scope.loginForm = {};
+                $scope.user = {};
+                $scope.regForm = {};
 
 //                $modalInstance.dismiss('cancel');
             }, function (response) {

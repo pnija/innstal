@@ -13,6 +13,7 @@
 
     <!-- EXTERNAL STYLESHEET -->
     <link type="text/css" rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
+    <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/css/main.css">-->
     <link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
     <link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
     <!-- EXTERNAL STYLESHEET END -->
@@ -23,39 +24,116 @@
     <div class="container-fluid">
         <div class="row">
             <!-- header -->
-            <header class="header nmr">
-                <!-- container -->
-                <div class="container-lg">
-                    <div class="logo-bx">
-                        <a href="#">
-                            <img src="/static/app/images/logo-1.png" class="logo-img" alt="innstal" />
-                        </a>
+            <div ng-if="user_id">
+                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png" /></a>
+
+                        </div>
+
+                        <div class="col-sm-4 hidden-xs">
+                            <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div id="slidemenu">
+
+                        <div class="user-image pull-right hidden-xs">
+
+                            <img class="img-circle" src="/static/app/images/user-pic.png">
+
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <button style="
+                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                            <div class="xs-user-img visible-xs">
+
+                                <img class="img-circle" src="/static/app/images/user-pic.png">
+
+                            </div>
+
+                            <div style="    margin: 15px;" class=" visible-xs">
+
+                                <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <li ><a href="#">Warranties</a></li>
+
+                            <li><a href="#">Manuals </a></li>
+                            <li><a href="#">Message </a></li>
+                            <li><a href="#">Blog </a></li>
+                            <li><a href="#">Help</a></li>
+
+                        </ul>
+
+
+                        </div>
                     </div>
-                    <span class="menu">
-                        <button class="btn btn-outline-secondary" data-toggle="menu" data-target="#navbar" type="button">Menu</button>
-                    </span>
-                    <ul class="nav-innstal" id="navbar">
-                        <li class="active">
-                            <a href="#">How it work</a>
-                        </li>
-                        <li>
-                            <a href="#">Blog</a>
-                        </li>
-                        <li>
-                            <a href="#">Business</a>
-                        </li>
-                        <li>
-                            <span class="split-nav">
-                                <a href="#">
-                                    <i class="icon-user-1 user"></i> Join in</a>
-                                <span class="seperator"> | </span>
-                                <a href="#">Log in</a>
-                            </span>
-                        </li>
-                    </ul>
                 </div>
-                <!-- container END -->
-            </header>
+            </div>
+            <div ng-if="!user_id">
+                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            </a>
+                            <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png"/></a>
+
+                        </div>
+                        <div id="slidemenu">
+                            <ul class="nav navbar-nav navbar-right">
+
+                            <button style="
+                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                                 <li><a href="#">How it works</a></li>
+                                 <li><a href="#">Blog</a></li>
+                                 <li><a href="#">Business</a></li>
+                                 <ul class="pull-right login">
+                                     <li class="hidden-xs"><a ui-sref="register" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
+                                     <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                                 </ul>
+                            <div align="center">
+                                 <button class="btn xs-login visible-xs">
+                                 <i class="fa fa-lock" aria-hidden="true"></i> Login
+                               </button>
+                               <div class="clearfix"></div>
+                            </div>
+                            <div align="center">
+
+                               <button class="btn xs-login visible-xs xs-join">
+                               <i class="fa fa-user" aria-hidden="true"></i> Join
+                               </button>
+                            </div>
+
+
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- header END -->
 
             <!-- content-section -->
@@ -143,225 +221,147 @@
         </div>
 
         <!-- Footer -->
-        <footer class="footer">
-            <!-- footer-section -->
-            <div class="footer-section">
-                <div class="container-cs">
-                    <div class="row">
 
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <!-- Instruction Manual -->
-                                <div class="col-md-6">
-                                    <h5 class="footer-head">
-                                        Instruction Manual
-                                    </h5>
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <ul class="footer-links">
-                                                <li>
-                                                    <a href="#">
-                                                        Accer
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        AEG
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Asus
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Black & Decker
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Bosch
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Brother
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Canon
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Casino
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <div class="col-md-6">
-                                            <ul class="footer-links">
-                                                <li>
-                                                    <a href="#">
-                                                        Espon
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        AEG
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Asus
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Black & Decker
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Bosch
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Brother
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        Canon
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">
-                                                        More
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <!-- Instruction Manual End -->
-
-                                <!-- Company -->
-                                <div class="col-md-6">
-                                    <h5 class="footer-head">
-                                        Company
-                                    </h5>
-                                    <ul class="footer-links">
-                                        <li>
-                                            <a href="#">
-                                                How It Works
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Business
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Blog
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Contact Us
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Privacy policy
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Disclaimer
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                Terms & Conditions
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Company END -->
-
-                            </div>
-                        </div>
-
-                        <!-- Contact -->
-                        <div class="col-md-6">
-                            <h5 class="footer-head">
-                                Contact Details
-                            </h5>
-                            <ul class="footer-cnt">
-                                <li class="envolop-icon">
-                                    info@innstal.com
-                                </li>
-                                <li class="mapmark-icon">
-                                    Studio 103, The Business Centre, 61 Wellfield Road, </br>Roath, Cardiff CF24 3DG
-                                </li>
-                            </ul>
-
-                            <h5>
-                                <b>Subscribe</b>
-                            </h5>
-                            <p class="white-txt">Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="Enter Your Email Address" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-theme" type="button">
-                                        <i class="icon-paper-plane"></i> Subscribe</button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Contact END -->
-
-                    </div>
-                </div>
-            </div>
-            <!-- footer-section END -->
-
-            <!-- footer-copyrights -->
-            <div class="footer-copyrights">
-                <div class="container-lg">
-                    <span>&copy; Copyright 2017 Innstal. All Rights Reserved</span>
-
-                    <ul class="footer-social">
-                        <li>
-                            <a href="#">
-                                <i class="icon-google-plus"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-fb-logo"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="icon-twitter"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <!-- footer-copyrights END -->
-        </footer>
         <!-- Footer END -->
     </div>
     <!-- Main Box END -->
-</body>
 
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                            <h2>
+                                Instruction Manual
+                                <hr align="left" />
+                            </h2>
+                            <a href="#" class="col-sm-6">Acer</a>
+                            <a href="#" class="col-sm-6">Epson</a>
+                            <a href="#" class="col-sm-6">AEG</a>
+                            <a href="#" class="col-sm-6">Frigidaire</a>
+                            <a href="#" class="col-sm-6">Asus</a>
+                            <a href="#" class="col-sm-6">Fujitsu</a>
+                            <a href="#" class="col-sm-6">Black & Decker</a>
+                            <a href="#" class="col-sm-6">GE</a>
+                            <a href="#" class="col-sm-6">Bosch</a>
+                            <a href="#" class="col-sm-6">Haier</a>
+                            <a href="#" class="col-sm-6">Brother</a>
+                            <a href="#" class="col-sm-6">Hitachi</a>
+                            <a href="#" class="col-sm-6">Canon</a>
+                            <a href="#" class="col-sm-6">Honda</a>
+                            <a href="#" class="col-sm-6">Casio</a>
+                            <a href="#" class="col-sm-6">More</a>
+                        </div>
+                        <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                            <h2>
+                                Company
+                                <hr align="left" />
+                            </h2>
+                            <a href="#">How It Works </a>
+                            <a href="#"> Business </a>
+                            <a href="#"> Blog </a>
+                            <a href="#"> Contact Us </a>
+                            <a href="#"> Privacy Policy </a>
+                            <a href="#"> Disclaimer </a>
+                            <a href="#"> Terms and Conditions </a>
+                        </div>
+                        <div class="col-sm-6" data-aos="fade-up" data-aos-once="true">
+                            <h2>
+                                Contact Details
+                                <hr align="left" />
+                            </h2>
+                            <p> <i class="fa fa-envelope" aria-hidden="true"></i>  Info@innstal.com</p>
+                            <p> <i class="fa fa-map-marker" aria-hidden="true"></i>  Studio 103, The Business Centre, 61 Wellfield Road,<br>
+                                Roath, Cardiff CF24 3DG
+                            </p>
+                            <h4>Subscribe</h4>
+                            <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h5>
+                            <div class="inner-addon right-addon">
+                                <p id="id_email_subscribe" style="    position: absolute;
+                                    margin: 0px;
+                                    right: 10px;
+                                    color: #ff9837;
+                                    top: 15px;"><i class="fa fa-paper-plane" aria-hidden="true"></i>Subscribe</p>
+                                <input id="id_emailid" placeholder="Enter Your Email Address" type="text" class="form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <div class="footer-bottom">
+                <div class="container-fluid">
+                    <p>© Copyright 2017 Innstal. All Rights Reserved</p>
+                    <div class="pull-right">
+                        <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
+                        <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
+                        <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
+                    </div>
+                </div>
+            </div>
+
+            <script src="/static/app/scripts/js/main.js"></script>
+       <script>
+            $(document).ready(function () {
+
+                //stick in the fixed 100% height behind the navbar but don't wrap it
+                $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+
+                $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+
+                // Enter your ids or classes
+                var toggler = '.navbar-toggle';
+                var pagewrapper = '#page-content';
+                var navigationwrapper = '.navbar-header';
+                var menuwidth = '100%'; // the menu inside the slide menu itself
+                var slidewidth = '80%';
+                var menuneg = '-100%';
+                var slideneg = '-80%';
+
+                function toggleSideBar(selected){
+
+                  $('#slidemenu').stop().animate({
+                      left: selected ? menuneg : '0px'
+                  });
+
+                  $('#navbar-height-col').stop().animate({
+                      left: selected ? slideneg : '0px'
+                  });
+
+                  $(pagewrapper).stop().animate({
+                      left: selected ? '0px' : slidewidth
+                  });
+
+                  $(navigationwrapper).stop().animate({
+                      left: selected ? '0px' : slidewidth
+                  });
+
+
+                  $(this).toggleClass('slide-active', !selected);
+                  $('#slidemenu').toggleClass('slide-active');
+
+
+                  $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
+                }
+
+                $("#slide-nav").on("click", toggler, function (e) {
+
+                    var selected = false;
+                    toggleSideBar(selected);
+                });
+
+                $("body").on("click", '.nav-close', function (e) {
+                    var selected = true;
+                    toggleSideBar(selected);
+                });
+
+                var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+
+                $(window).on("resize", function () {
+                    if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                        $(selected).removeClass('slide-active');
+                    }
+                });
+            });
+
+        </script>
+</body>
 </html>

@@ -1,11 +1,10 @@
 
 var app = angular.module('innstalApp');
 
-app.controller('logincontroller', ['$scope', '$http', '$window',  function($scope, $http, $window ){
+app.controller('logincontroller',  function($scope, $http, $state){
     $scope.submitted = false;
 
     $scope.login = function (logindata) {
-        alert()
 
         $scope.logindata = logindata;
 
@@ -14,10 +13,10 @@ app.controller('logincontroller', ['$scope', '$http', '$window',  function($scop
             url: 'user/login/',
             data: logindata,
         }).then(function (response) {
-                $scope.user = {};
-                $scope.regForm = {};
-
-                $window.location.href = 'user/dashboard/';
+                console.log('sgdfhgdsfhsd');
+                $scope.logindata = {};
+                $scope.loginForm = {};
+                $state.go("dashboard");
 
             }, function (response) {
                 console.log('i am in error');
@@ -25,4 +24,5 @@ app.controller('logincontroller', ['$scope', '$http', '$window',  function($scop
         });
     };
 
-}])
+})
+

@@ -1,3 +1,4 @@
+import re
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -6,11 +7,15 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
 from common.models import UserProfile, Newsletter, City, State, Country, Blog
 
-
 class UserProfileSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='user.id', read_only = True)
+    first_name = serializers.CharField(source = 'user.first_name')
+    last_name = serializers.CharField(source = 'user.last_name')
+    email = serializers.CharField(source = 'user.email')
+
     class Meta:
         model = UserProfile
-        fields = ('phone', 'user_type', 'avatar')
+        fields = ('user_id', 'first_name', 'last_name', 'email', 'phone', 'user_type', 'avatar')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -77,10 +82,17 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
 
 class ContactSerializer(serializers.Serializer):
-    name = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Your Name'})
-    email = serializers.EmailField(style={'placeholder': 'Email Address'})
-    phone = serializers.CharField(style={'input_type': 'text', 'placeholder': 'Phone'})
-    message = serializers.CharField(style={'base_template': 'textarea.html', 'placeholder': 'Your Message'})
+    name = serializers.CharField()
+    email = serializers.EmailField()
+    phone = serializers.CharField()
+    message = serializers.CharField()
+
+    def validate_phone(self, value):
+
+        if re.match(r'^(?:\+)?(\d.{10,16})$',value):
+            return value
+
+        raise serializers.ValidationError("Invalid Phone Number")
 
 
 class NewsletterSerializer(serializers.ModelSerializer):

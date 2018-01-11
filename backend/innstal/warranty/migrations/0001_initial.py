@@ -12,7 +12,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('product', '0001_initial'),
-        ('common', '0001_initial'),
     ]
 
     operations = [
@@ -22,6 +21,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('company_name', models.CharField(blank=True, max_length=200, null=True)),
                 ('product_color', models.CharField(blank=True, max_length=200, null=True)),
+                ('product_serial_no', models.CharField(blank=True, max_length=30, null=True)),
                 ('purchase_country', models.CharField(blank=True, max_length=200, null=True)),
                 ('purchase_date', models.DateField(auto_now_add=True)),
                 ('additional_info', models.CharField(blank=True, max_length=200, null=True)),

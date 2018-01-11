@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ViewSet
 
-from .serializers import ProductManualSearchSerializer, ProductCategorySerializer
+from .serializers import ProductManualSearchSerializer, ProductCategorySerializer, ProductSerializer
 from .models import Product, ProductCategory
 
 
@@ -46,7 +46,6 @@ class ProductViewSet(ViewSet):
         response['products'] = serializer.data
         return Response(response)
 
-
     def retrieve(self, request, pk=None):
         response = {}
         queryset = Product.objects.all()
@@ -65,10 +64,11 @@ class ProductViewSet(ViewSet):
         return Response(serializer.data)
 
 class UpdateProductViewCount(APIView):
-    def post(self, request, pk):
+    def get(self, request, pk):
         response = {}
-        request_data = Product.objects.get(pk=pk)
-        if request_data.manual_view_count:
+        request_data = Product.objects.filter(pk=pk)
+        if request_data:
+            request_data = Product.objects.get(pk=pk)
             manual_view_count = request_data.manual_view_count
             manual_view_count = manual_view_count + 1
             request_data.manual_view_count = manual_view_count
@@ -78,5 +78,5 @@ class UpdateProductViewCount(APIView):
             return Response(response, status=status.HTTP_200_OK)
         else:
             response['status'] = 'failed'
-            response['message'] = 'Failed to update manual view count'
+            response['message'] = 'Product Does not exist'
             return Response(response)

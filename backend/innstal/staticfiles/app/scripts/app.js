@@ -34,9 +34,14 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             url: 'user/blog',
             templateUrl: '/static/app/views/blog-homepage.html',
         })
+        .state('contact', {
+            url: '/contact',
+            templateUrl: '/static/app/views/contact-us.html',
+        })
 })
 .run(function($http, $window) {
     if($window.sessionStorage.token){
         $http.defaults.headers.common.Authorization = 'Token '+$window.sessionStorage.token;
     }
 });
+

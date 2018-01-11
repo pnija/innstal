@@ -119,7 +119,7 @@ angular.module('innstal.controllers', [])
     .controller('warrantyregistercontroller', function($scope) {
         $scope.firstName= "John";
         $scope.lastName= "Doe";
-    });
+    })
     .controller('bloghomecontroller', function($scope, $http, $window) {
         $http({
             method: 'GET',

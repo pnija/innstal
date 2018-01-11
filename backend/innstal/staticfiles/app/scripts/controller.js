@@ -43,6 +43,7 @@ angular.module('innstal.controllers', [])
 
     })
     .controller('joinincontroller', function($scope, $http, $window) {
+        $window.scrollTo(0, 0);
         $scope.submitted = false;
 
         $scope.submit = function (user) {
@@ -116,6 +117,19 @@ angular.module('innstal.controllers', [])
         };
     }])
     .controller('warrantyregistercontroller', function($scope) {
-    $scope.firstName= "John";
-    $scope.lastName= "Doe";
-});
+        $scope.firstName= "John";
+        $scope.lastName= "Doe";
+    });
+    .controller('bloghomecontroller', function($scope, $http, $window) {
+        $http({
+            method: 'GET',
+            url: 'user/blog/',
+        }).then(function (response) {
+               $scope.blogdata = response.data;
+            }, function (response) {
+                console.log('i am in error');
+        });
+    })
+    .controller('blogdetailcontroller', function($scope, $http, $window) {
+
+    })

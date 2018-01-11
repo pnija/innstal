@@ -18,11 +18,11 @@
                             " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
 
                                  <li><a href="#">How it works</a></li>
-                                 <li><a ui-sref="blog">Blog</a></li>
+                                 <li><a ui-sref="blog" ui-sref-opts="{reload: true}">Blog</a></li>
                                  <li><a href="#">Business</a></li>
                                  <ul class="pull-right login">
-                                     <li class="hidden-xs"><a ui-sref="register" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
-                                     <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                                     <li class="hidden-xs"><a ui-sref="register" ui-sref-opts="{reload: true}" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
+                                     <li class="hidden-xs"><a ui-sref="login" ui-sref-opts="{reload: true}"> Log in</a></li>
                                  </ul>
                             <div align="center">
                                  <button class="btn xs-login visible-xs">
@@ -304,7 +304,7 @@
                             </h2>
                             <a href="#">How It Works </a>
                             <a href="#"> Business </a>
-                            <a ui-sref="blog"> Blog </a>
+                            <a ui-sref="blog" ui-sref-opts="{reload: true}"> Blog </a>
                             <a ui-sref="contact" ui-sref-opts="{reload: true}"> Contact Us </a>
                             <a href="#"> Privacy Policy </a>
                             <a href="#"> Disclaimer </a>

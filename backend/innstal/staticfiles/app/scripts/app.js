@@ -3,7 +3,6 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
 
 .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.hashPrefix('');
-    $urlRouterProvider.otherwise('');
     $stateProvider
         .state('home', {
             url: '',

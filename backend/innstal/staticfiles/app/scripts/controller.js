@@ -43,6 +43,7 @@ angular.module('innstal.controllers', [])
 
     })
     .controller('joinincontroller', function($scope, $http, $window) {
+        $window.scrollTo(0, 0);
         $scope.submitted = false;
 
         $scope.submit = function (user) {

@@ -17,8 +17,10 @@ from django.conf import settings
 
 from .models import Blog
 from datetime import datetime
-from common.models import Newsletter
-from common.serializer import UserSerializer, NewsletterSerializer, ChangePasswordSerializer, ContactSerializer, BlogSerializer
+from common.models import Newsletter, UserProfile
+from common.serializer import UserSerializer, NewsletterSerializer,\
+    ChangePasswordSerializer, ContactSerializer, BlogSerializer,\
+    UserProfileSerializer
 
 
 class UserCreate(APIView):
@@ -206,3 +208,13 @@ class UpdatePassword(APIView):
             return Response(status=status.HTTP_204_NO_CONTENT)
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class GetUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get(self, queryset=None):
+
+        user_profile = UserProfile.objects.get(user=self.request.user)
+        serializer = UserProfileSerializer(user_profile)
+        return Response(serializer.data)

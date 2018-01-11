@@ -6,9 +6,14 @@ from rest_framework.validators import UniqueValidator
 from common.models import UserProfile, Newsletter,Blog
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(source='user.id', read_only = True)
+    first_name = serializers.CharField(source = 'user.first_name')
+    last_name = serializers.CharField(source = 'user.last_name')
+    email = serializers.CharField(source = 'user.email')
+
     class Meta:
         model = UserProfile
-        fields = ('phone', 'user_type', 'avatar')
+        fields = ('user_id', 'first_name', 'last_name', 'email', 'phone', 'user_type', 'avatar')
 
 
 class UserSerializer(serializers.ModelSerializer):

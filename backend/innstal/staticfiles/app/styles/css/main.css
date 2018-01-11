@@ -25,7 +25,7 @@ body {
 
 .banner-left {
 	background: #ff9837;
-	min-height: 100vh;
+	height: 100vh;
 	text-align: center;
 	display: table;
 }
@@ -119,7 +119,7 @@ body {
 .banner-right {
 	background: url(../../images/banner-bg.png);
 	display: table;
-	min-height: 100vh;
+	height: 100vh;
 	background-size: cover;
 	text-align: center;
 }
@@ -496,6 +496,7 @@ footer h5 {
     border-bottom: 1px solid #f3f3f3 !important;
     padding-bottom: 10px !important;
     padding-top: 10px;
+    background: #fff!important;
     }
 
 /* enable absolute positioning */
@@ -685,10 +686,10 @@ nav.sub-head .navbar-brand {
     background: none;
 }
 
-.navbar-nav {     margin-top: 10px; }
+.navbar-nav {margin-top: 10px !important;}
 
 
-.user-image {margin-top:  10px;margin-left: 20px;}
+.user-image {/* margin-top:  10px; */margin-left: 20px;}
 .user-image img { width: 49px; height: 49px; }
 
 .page-name {
@@ -1149,7 +1150,11 @@ color: #ff9837;
 
 
 .sign-up {
-    height: 100vh;
+    background: url(../../images/log-bg.png) center #fff;
+    height: 100%;
+    background-position-x: -66px;
+    background-repeat: no-repeat;
+    background-size: cover;
     overflow: hidden;
 }
 	.outer {
@@ -1187,11 +1192,10 @@ color: #ff9837;
 	.signup-outer  label {
     display: inline-block;
     max-width: 100%;
+    padding-left: 5px;
     margin-bottom: 5px;
-    font-weight: 600;
     color: #696464;
-    font-size: 12px;
-    margin-top: 9px;
+    font-size: 16px;
 }
 
 
@@ -1208,6 +1212,42 @@ color: #ff9837;
     float: none;
 }
 
+.xs-sign-logo {     margin-top: 4em;}
+
+
+.bs-example-modal-join  .nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    text-align: center;
+}
+
+
+ .sign-up  .nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 4px 4px 0 0;
+    font-size: 18px;
+    color: #fff;
+    font-weight: bold;
+    text-decoration:  underline;
+    background-color: #f99a3f;
+    text-align: center;
+}
+
+ .sign-up   .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #333;
+    cursor: default;
+    background-color: #ffffff;
+    border: 0px;
+    border-bottom-color: transparent;
+}
+
+
+
+
 .Already { margin-top: 10px;
     margin-bottom: 2em; }
 		#container-01,
@@ -1217,8 +1257,7 @@ color: #ff9837;
 		}
 
 .signin-form {     margin: 1em; }
-.signin-wrapper:before {content: '';position: absolute;width: 103%;height: 100%;background: url(../../images/signup-before.png);z-index: -1;left: -206px;background-repeat: no-repeat;bottom: -191px;}
-.signin-wrapper:after {content: '';position: absolute;width: 111%;height: 100%;background: url(../../images/signup-after.png);z-index: -1;right: -140px;background-repeat: no-repeat;top: -53px;}
+
 
 .btn-primary {
     color: #fff;
@@ -1332,6 +1371,7 @@ button {
     width: 100%;
     margin-bottom: 0;
     border-right: 0px;
+    height: 51px;
 }
 
 .signin-form  .input-group-btn>.btn {
@@ -2037,6 +2077,12 @@ svg:not(:root) {
 
 @media (max-width: 767px) {
 
+.xs-sign-logo {  background: #ed923f;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
 	.modal-dialog {
 	    width: 600px;
 	    margin: 30px auto;
@@ -2103,7 +2149,7 @@ svg:not(:root) {
 	}
 
 
-	.sign-up { overflow-y:scroll;}
+	.si-up {overflow-y: hidden;overflow-x: hidden;}
 
 	.sep { margin-top: 0px !important;}
 

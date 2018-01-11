@@ -95,6 +95,8 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.blog_title
+
+
 class Newsletter(models.Model):
     email = models.EmailField(max_length=70, blank=False)
     is_subscribed = models.BooleanField(default=False)

@@ -70,9 +70,6 @@ angular.module('innstal.controllers', [])
             url: 'user/profile/',
         }).then(function (response) {
                 $scope.userid = response.data.user_id;
-
-                alert($scope.userid);
-
             }, function (response) {
                 console.log('i am in error');
         });
@@ -141,4 +138,27 @@ angular.module('innstal.controllers', [])
                 });
             }
         };
+    })
+    .controller('bloghomecontroller', function($scope, $http, $window) {
+        $http({
+            method: 'GET',
+            url: 'user/blog/',
+        }).then(function (response) {
+                $scope.blogdata = response.data;
+            }, function (response) {
+                console.log('i am in error');
+        });
+    })
+    .controller('blogdetailcontroller', function($scope, $http, $window, $stateParams) {
+        if($stateParams){
+            var blog_id = $stateParams.id;
+            $http({
+                method: 'GET',
+                url: 'user/blog/'+blog_id,
+            }).then(function (response) {
+                    $scope.blogdetail = response.data;
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
     })

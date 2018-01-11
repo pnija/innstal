@@ -33,7 +33,7 @@
                                     <button style="
                                         " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
                                     <li><a href="#">How it works</a></li>
-                                    <li><a href="#">Blog</a></li>
+                                    <li><a ui-sref="blog">Blog</a></li>
                                     <li><a href="#">Business</a></li>
                                     <ul class="pull-right login">
                                         <li class="hidden-xs"><a href="#" class="li-divide"><i class="fa fa-user" aria-hidden="true"></i>  Join in</a></li>
@@ -66,13 +66,13 @@
                                     <div class="blog-right">
                                         <div id="container-01">
                                             <div class="pinto" ng-repeat="x in blogdata">
-                                                <a ui-sref="blog-detail"><img ng-src="{{x.blog_image}}"></a>
+                                                <a ui-sref="blog-detail({id:x.id})"><img ng-src="{{x.blog_image}}"></a>
                                                 <div class="info">
                                                     <a ui-sref="blog-detail">
                                                         <h4>{{x.blog_title}}</h4>
                                                     </a>
                                                     <a ui-sref="blog-detail">
-                                                        <h2>{{x.blog_title}}</h2>
+                                                        <h2>{{x.blog_subtitle}}</h2>
                                                     </a>
                                                     <p>{{x.blog_content}}</p>
                                                 </div>

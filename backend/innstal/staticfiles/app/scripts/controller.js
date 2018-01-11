@@ -81,7 +81,7 @@ angular.module('innstal.controllers', [])
        $scope.user_id = null;
        alert($scope.userid);
     })
-    .controller('ContactController', ['$scope', '$http', '$modal','$window','$timeout', function($scope, $http, $modal, $window, $timeout){
+    .controller('ContactController', function($scope, $http, $modal, $window, $timeout){
     
         $window.scrollTo(0, 0);
 
@@ -114,8 +114,30 @@ angular.module('innstal.controllers', [])
 
             });
         };
-    }])
+    })
     .controller('warrantyregistercontroller', function($scope) {
-    $scope.firstName= "John";
-    $scope.lastName= "Doe";
-});
+            $scope.firstName= "John";
+            $scope.lastName= "Doe";
+    })
+    .controller('searchController', function($scope, $http, $modal, $location){
+        $scope.search = function () {
+            if($scope.searchText){
+                var searchText = $scope.searchText
+
+                $http({
+
+                    method: 'GET',
+                    url: 'product/search/?search='+searchText
+
+                }).then(function (response) {
+                    products = response.data;
+                    $location.path("contact");
+                    console.log(products);
+                    $scope.products = products; 
+
+                }, function (response) {
+                    alert('error');
+                });
+            }
+        };
+    })

@@ -27,10 +27,9 @@ class SearchProductManual(generics.ListAPIView):
         return Product.objects.none()
 
 
-class ViewProductCategories(generics.ListAPIView):
-    serializer_class = ProductCategorySerializer
-    queryset =  ProductCategory.objects.all()
-
+# class ViewProductCategories(generics.ListAPIView):
+#     serializer_class = ProductCategorySerializer
+#     queryset =  ProductCategory.objects.all()
 
 class ProductViewSet(ViewSet):
     def list(self, request):
@@ -77,7 +76,7 @@ class UpdateProductViewCount(APIView):
             response['message'] = 'Product Does not exist'
             return Response(response)
 
-class ProductCategoryViewSet(viewsets.ViewSet):
+class ProductCategoryViewSet(ViewSet):
     def list(self, request):
         response = {}
         queryset = ProductCategory.objects.all()

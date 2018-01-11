@@ -24,19 +24,18 @@
         <div ui-view="">
 
         </div>
+
     </div>
-
-
-
 
         <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
         <script>
-            window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
+        window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
         </script>
         <script src="/static/app/scripts/js/vendor/bootstrap.min.js"></script>
         <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
         <script src="/static/app/scripts/js/main.js"></script>
-
+        <script type="text/javascript" src="/static/app/scripts/js/jquery.pinto.js"></script>
+        <script type="text/javascript" src="/static/app/scripts/js/imagesloaded.pkgd.min.js"></script>
         <script>
             AOS.init({
               offset: 200,
@@ -46,68 +45,79 @@
             });
         </script>
         <script>
-            $(document).ready(function () {
-
-                //stick in the fixed 100% height behind the navbar but don't wrap it
-                $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-
-                $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-
-                // Enter your ids or classes
-                var toggler = '.navbar-toggle';
-                var pagewrapper = '#page-content';
-                var navigationwrapper = '.navbar-header';
-                var menuwidth = '100%'; // the menu inside the slide menu itself
-                var slidewidth = '80%';
-                var menuneg = '-100%';
-                var slideneg = '-80%';
-
-                function toggleSideBar(selected){
-
-                  $('#slidemenu').stop().animate({
-                      left: selected ? menuneg : '0px'
-                  });
-
-                  $('#navbar-height-col').stop().animate({
-                      left: selected ? slideneg : '0px'
-                  });
-
-                  $(pagewrapper).stop().animate({
-                      left: selected ? '0px' : slidewidth
-                  });
-
-                  $(navigationwrapper).stop().animate({
-                      left: selected ? '0px' : slidewidth
-                  });
+            $(document).ready(function() {
 
 
-                  $(this).toggleClass('slide-active', !selected);
-                  $('#slidemenu').toggleClass('slide-active');
+              //stick in the fixed 100% height behind the navbar but don't wrap it
+              $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+
+              $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+
+              // Enter your ids or classes
+              var toggler = '.navbar-toggle';
+              var pagewrapper = '#page-content';
+              var navigationwrapper = '.navbar-header';
+              var menuwidth = '100%'; // the menu inside the slide menu itself
+              var slidewidth = '80%';
+              var menuneg = '-100%';
+              var slideneg = '-80%';
+
+              function toggleSideBar(selected) {
+
+                $('#slidemenu').stop().animate({
+                  left: selected ? menuneg : '0px'
+                });
+
+                $('#navbar-height-col').stop().animate({
+                  left: selected ? slideneg : '0px'
+                });
+
+                $(pagewrapper).stop().animate({
+                  left: selected ? '0px' : slidewidth
+                });
+
+                $(navigationwrapper).stop().animate({
+                  left: selected ? '0px' : slidewidth
+                });
 
 
-                  $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
+                $(this).toggleClass('slide-active', !selected);
+                $('#slidemenu').toggleClass('slide-active');
+
+
+                $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
+              }
+
+              $("#slide-nav").on("click", toggler, function(e) {
+
+                var selected = false;
+                toggleSideBar(selected);
+
+              });
+
+              $("body").on("click", '.nav-close', function(e) {
+                var selected = true;
+                toggleSideBar(selected);
+
+
+              });
+
+              var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+
+
+              $(window).on("resize", function() {
+
+                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                  $(selected).removeClass('slide-active');
                 }
 
-                $("#slide-nav").on("click", toggler, function (e) {
 
-                    var selected = false;
-                    toggleSideBar(selected);
-                });
+              });
 
-                $("body").on("click", '.nav-close', function (e) {
-                    var selected = true;
-                    toggleSideBar(selected);
-                });
 
-                var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
 
-                $(window).on("resize", function () {
-                    if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                        $(selected).removeClass('slide-active');
-                    }
-                });
+
             });
-
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>

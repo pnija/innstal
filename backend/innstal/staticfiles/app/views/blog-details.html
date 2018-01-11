@@ -25,43 +25,114 @@
                     <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
                 </head>
                 <body>
-                    <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                <a class="navbar-toggle">
+
+
+
+             <div ng-if="user_id">
+                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle">
                                 <span class="sr-only">Toggle navigation</span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
-                                </a>
-                                <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png" /></a>
-                            </div>
-                            <div id="slidemenu">
-                                <ul class="nav navbar-nav navbar-right">
-                                    <button style="
-                                        " class="btn hidden-md hidden-lg hidden-sm nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    <li><a href="#">How it works</a></li>
-                                    <li><a ui-sref="blog">Blog</a></li>
-                                    <li><a href="#">Business</a></li>
-                                    <ul class="pull-right login">
-                                        <li class="hidden-xs"><a href="#" class="li-divide"><i class="fa fa-user" aria-hidden="true"></i>  Join in</a></li>
-                                        <li class="hidden-xs"><a href="#"> Log in</a></li>
-                                    </ul>
-                                    <div align="center">
-                                        <button class="btn xs-login hidden-sm hidden-lg hidden-md">
-                                        <i class="fa fa-lock" aria-hidden="true"></i> Login
-                                        </button>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <div align="center">
-                                        <button class="btn xs-login hidden-sm hidden-lg hidden-md xs-join">
-                                        <i class="fa fa-user" aria-hidden="true"></i> Join
-                                        </button>
-                                    </div>
-                                </ul>
+                            </a>
+                            <a class="navbar-brand" ui-sref="home"><img src="/static/app/images/logo-primary.png" /></a>
+
+                        </div>
+
+                        <div class="col-sm-4 hidden-xs">
+                            <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
                             </div>
                         </div>
+
+
+                        <div id="slidemenu">
+
+                        <div class="user-image pull-right hidden-xs">
+
+                            <img class="img-circle" src="/static/app/images/user-pic.png">
+
+                        </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <button style="
+                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                            <div class="xs-user-img visible-xs">
+
+                                <img class="img-circle" src="/static/app/images/user-pic.png">
+
+                            </div>
+
+                            <div style="    margin: 15px;" class=" visible-xs">
+
+                                <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <li ><a href="#">Warranties</a></li>
+
+                            <li><a href="#">Manuals </a></li>
+                            <li><a href="#">Message </a></li>
+                            <li><a ui-sref="blog">Blog </a></li>
+                            <li><a href="#">Help</a></li>
+
+                        </ul>
+
+
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div ng-if="!user_id">
+
+                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            </a>
+                            <a class="navbar-brand" ui-sref="home"><img src="/static/app/images/logo-primary.png" /></a>
+                        </div>
+                        <div id="slidemenu">
+                            <ul class="nav navbar-nav navbar-right">
+                                <button style="
+                                    " class="btn hidden-md hidden-lg hidden-sm nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                <li><a href="#">How it works</a></li>
+                                <li><a ui-sref="blog">Blog</a></li>
+                                <li><a href="#">Business</a></li>
+                                <ul class="pull-right login">
+                                    <li class="hidden-xs"><a ui-sref="register" class="li-divide"><i class="fa fa-user" aria-hidden="true"></i>  Join in</a></li>
+                                    <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                                </ul>
+                                <div align="center">
+                                    <button class="btn xs-login hidden-sm hidden-lg hidden-md">
+                                    <i class="fa fa-lock" aria-hidden="true"></i> Login
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div align="center">
+                                    <button class="btn xs-login hidden-sm hidden-lg hidden-md xs-join">
+                                    <i class="fa fa-user" aria-hidden="true"></i> Join
+                                    </button>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
                     <div class="blog-wrapper">
                         <div class="container-fluid">
                             <div class="row">
@@ -152,8 +223,8 @@
                                     </h2>
                                     <a href="#">How It Works </a>
                                     <a href="#"> Business </a>
-                                    <a href="#"> Blog </a>
-                                    <a href="#"> Contact Us </a>
+                                    <a ui-sref="blog"> Blog </a>
+                                    <a ui-sref="contact"> Contact Us </a>
                                     <a href="#"> Privacy Policy </a>
                                     <a href="#"> Disclaimer </a>
                                     <a href="#"> Terms and Conditions </a>

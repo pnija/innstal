@@ -49,8 +49,4 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             controller: 'warrantyregistercontroller',
         })
 })
-.run(function($http, $window) {
-    if($window.sessionStorage.token){
-        $http.defaults.headers.common.Authorization = 'Token '+$window.sessionStorage.token;
-    }
-});
+

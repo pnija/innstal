@@ -18,6 +18,7 @@ angular.module('innstal.controllers', [])
         };
     })
     .controller('logincontroller', function($scope, $http, $state, $window) {
+        $window.scrollTo(0, 0);
         $scope.submitted = false;
 
         $scope.login = function (logindata) {
@@ -64,20 +65,21 @@ angular.module('innstal.controllers', [])
         };
 
     })
-    .controller('dashboardcontroller', function($scope, $http, $window) {
+    .controller('dashboardcontroller', function($scope, $rootScope, $http, $window) {
+        $window.scrollTo(0, 0);
         $http({
             method: 'GET',
             url: 'user/profile/',
+            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
         }).then(function (response) {
-                $scope.userid = response.data.user_id;
+                $rootScope.user_id = response.data.user.id
             }, function (response) {
                 console.log('i am in error');
         });
 
     })
-    .controller('dashboardhomecontroller', function($scope, $http, $window) {
-       $scope.user_id = null;
-       alert($scope.userid);
+    .controller('dashboardhomecontroller', function($scope, $rootScope, $window, $http, $window) {
+        $window.scrollTo(0, 0);
     })
     .controller('ContactController', function($scope, $http, $modal, $window, $timeout){
     
@@ -140,6 +142,7 @@ angular.module('innstal.controllers', [])
         };
     })
     .controller('bloghomecontroller', function($scope, $http, $window) {
+        $window.scrollTo(0, 0);
         $http({
             method: 'GET',
             url: 'user/blog/',
@@ -150,6 +153,7 @@ angular.module('innstal.controllers', [])
         });
     })
     .controller('blogdetailcontroller', function($scope, $http, $window, $stateParams) {
+        $window.scrollTo(0, 0);
         if($stateParams){
             var blog_id = $stateParams.id;
             $http({

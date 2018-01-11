@@ -14,12 +14,9 @@ from .models import Product, ProductCategory
 
 class SearchProductManual(generics.ListAPIView):
     serializer_class = ProductManualSearchSerializer
-
     def get_queryset(self):
         search = self.request.query_params.get('search', None)
-        
         if search:
-            
             if self.request.user.is_authenticated():
                 product = Product.objects.filter(product_search_string__icontains=search)
             else:
@@ -30,13 +27,11 @@ class SearchProductManual(generics.ListAPIView):
         return Product.objects.none()
 
 
-class ViewProductCategories(generics.ListAPIView):
-    serializer_class = ProductCategorySerializer
-    queryset =  ProductCategory.objects.all()
-
+# class ViewProductCategories(generics.ListAPIView):
+#     serializer_class = ProductCategorySerializer
+#     queryset =  ProductCategory.objects.all()
 
 class ProductViewSet(ViewSet):
-
     def list(self, request):
         response = {}
         queryset = Product.objects.all()
@@ -80,3 +75,23 @@ class UpdateProductViewCount(APIView):
             response['status'] = 'failed'
             response['message'] = 'Product Does not exist'
             return Response(response)
+
+class ProductCategoryViewSet(ViewSet):
+    def list(self, request):
+        response = {}
+        queryset = ProductCategory.objects.all()
+        serializer = ProductCategorySerializer(queryset, many=True)
+        response['status'] = 'success'
+        response['message'] = 'Products listed successfully'
+        response['products'] = serializer.data
+        return Response(response)
+
+    def retrieve(self, request, pk=None):
+        response = {}
+        queryset = ProductCategory.objects.all()
+        product_category = get_object_or_404(queryset, pk=pk)
+        serializer = ProductCategorySerializer(product_category)
+        response['status'] = 'success'
+        response['message'] = 'Product detail fetched successfully'
+        response['product_detail'] = serializer.data
+        return Response(serializer.data)

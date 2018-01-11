@@ -32,3 +32,10 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.manual_view_count = manual_view_count
         instance.save()
         return instance
+
+
+class ProductCategorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ProductCategory
+        fields = ('id','name','category_image')

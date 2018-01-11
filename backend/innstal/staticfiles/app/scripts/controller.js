@@ -92,7 +92,6 @@ angular.module('innstal.controllers', [])
             $scope.sucessMessage =''
 
             $http({
-
                 method: 'POST',
                 url: 'user/contact/',
                 data: $scope.form

@@ -20,7 +20,15 @@ body {
 }
 
 
-
+.btn-search {
+	height: 47px !important;
+	font-size: 21px;
+	background: white;
+	z-index: 3;
+	margin-top: 0px;
+	border: 0px;
+	padding-top: 13px;
+}
 
 
 .banner-left {
@@ -54,7 +62,6 @@ body {
 	height: 47px;
 	border: 0px;
 	box-shadow: 0px 0px 30px 0px #00000045;
-	padding-right: 43px;
 }
 
 .banner input::placeholder {

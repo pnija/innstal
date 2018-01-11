@@ -18,11 +18,11 @@
                             " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
 
                                  <li><a href="#">How it works</a></li>
-                                 <li><a ui-sref="blog">Blog</a></li>
+                                 <li><a ui-sref="blog" ui-sref-opts="{reload: true}">Blog</a></li>
                                  <li><a href="#">Business</a></li>
                                  <ul class="pull-right login">
-                                     <li class="hidden-xs"><a ui-sref="register" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
-                                     <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                                     <li class="hidden-xs"><a ui-sref="register" ui-sref-opts="{reload: true}" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
+                                     <li class="hidden-xs"><a ui-sref="login" ui-sref-opts="{reload: true}"> Log in</a></li>
                                  </ul>
                             <div align="center">
                                  <button class="btn xs-login visible-xs">
@@ -53,10 +53,14 @@
                                     Manual?
                                 </h2>
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed <br> do eiusmod tempor incididuore magna aliqua.</p>
-                                <div class="inner-addon col-sm-10">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                    <input type="text" class="form-control " placeholder="Search for Instruction/Product/Care Manuals..." />
+                                <form novalidate ng-controller="searchController">
+                                <div class="input-group col-sm-10 "> 
+                                        <input type="text" class="form-control" placeholder="Search for Instruction/Product/Care Manuals..." name="search" style=" border-right: 0px;" ng-model="searchText">
+                                        <div class="input-group-btn " style=" border-left: 0px;">
+                                            <button style=" " class="btn btn-default btn-search " type="submit" ng-click="search()"><i class="glyphicon glyphicon-search"></i></button> 
+                                        </div> 
                                 </div>
+                                </form>
                                 <div class="clearfix"></div>
                                 <h4>Browse In Your Category</h4>
                                 <div align="left">
@@ -304,7 +308,7 @@
                             </h2>
                             <a href="#">How It Works </a>
                             <a href="#"> Business </a>
-                            <a ui-sref="blog"> Blog </a>
+                            <a ui-sref="blog" ui-sref-opts="{reload: true}"> Blog </a>
                             <a ui-sref="contact" ui-sref-opts="{reload: true}"> Contact Us </a>
                             <a href="#"> Privacy Policy </a>
                             <a href="#"> Disclaimer </a>

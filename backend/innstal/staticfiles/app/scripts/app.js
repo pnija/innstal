@@ -9,28 +9,35 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             controller: 'basecontroller',
         })
         .state('login', {
-            url: 'user/login',
+            url: '/login',
             templateUrl: '/static/app/views/signin.html',
             controller: 'logincontroller',
         })
         .state('register', {
-            url: 'user/register',
+            url: '/register',
             templateUrl: '/static/app/views/sign-up.html',
             controller: 'joinincontroller',
         })
         .state('dashboard', {
-            url: 'user/dashboard',
+            url: '/dashboard',
             templateUrl: '/static/app/views/dashboard.html',
             controller: 'dashboardcontroller',
         })
         .state('dashboard_home', {
-            url: 'user/dashboard',
+            url: '/dashboard',
             templateUrl: '/static/app/views/dashboard.html',
             controller: 'dashboardhomecontroller',
         })
         .state('blog', {
-            url: 'user/blog',
+            url: '/blog',
             templateUrl: '/static/app/views/blog-homepage.html',
+            controller: 'bloghomecontroller',
+        })
+        .state('blog-detail', {
+            url: '/blog/:id',
+            params: { id : null },
+            templateUrl: '/static/app/views/blog-details.html',
+            controller: 'blogdetailcontroller',
         })
         .state('contact', {
             url: '/contact',

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'product',
     'warranty',
     'ckeditor',
+    'django_countries',
 ]
 
 MIDDLEWARE = [

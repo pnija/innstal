@@ -115,6 +115,7 @@ angular.module('innstal.controllers', [])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
                     $window.sessionStorage.clear();
+                    $rootScope.user_id = '';
                     $state.go('home');
 
 
@@ -210,6 +211,7 @@ angular.module('innstal.controllers', [])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
                 $window.sessionStorage.clear();
+                $rootScope.user_id = '';
                 $state.go('home');
 
                 }, function (response) {
@@ -262,6 +264,7 @@ angular.module('innstal.controllers', [])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
                 $window.sessionStorage.clear();
+                $rootScope.user_id = '';
                 $state.go('home');
 
                 }, function (response) {

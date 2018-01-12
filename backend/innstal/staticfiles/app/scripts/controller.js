@@ -1,6 +1,6 @@
 
 angular.module('innstal.controllers', [])
-    .controller('basecontroller', function($scope, $state, $modal, $window) {
+    .controller('basecontroller', function($scope, $http, $state, $modal, $window) {
         $scope.subscribe = function () {
             var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
@@ -17,7 +17,7 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-    .controller('logincontroller', function($scope, $http, $state, $window, $stateParams) {
+    .controller('logincontroller', function($scope, $http, $state, $window, $stateParams, $modal) {
 
         if($stateParams.id){
             $http({
@@ -32,9 +32,10 @@ angular.module('innstal.controllers', [])
 
         $window.scrollTo(0, 0);
         $scope.submitted = false;
+        $scope.submittedforgot = false;
 
         $scope.login = function (logindata) {
-
+            console.log('logindata', logindata)
             $scope.logindata = logindata;
 
             $http({
@@ -54,18 +55,19 @@ angular.module('innstal.controllers', [])
             });
         };
 
-        $scope.change_password = function(){
-            var params = $.param({email: $scope.forgotEmail});
-            $http({
-                method: 'POST',
-                url: 'user/forgot-password/',
-                data: params,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                    console.log(response);
-                }, function (response) {
-                    console.log('i am in error');
-            });
+        $scope.change_password = function(data){
+            if(data != null)
+            {
+                $http({
+                    method: 'POST',
+                    url: 'user/forgot-password/',
+                    data: data,
+                }).then(function (response) {
+                        $('.forget-password').modal('hide');
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
         }
 
     })
@@ -92,12 +94,9 @@ angular.module('innstal.controllers', [])
 
         function open(){
             alert('Mail has been sent to your account.');
-//            $modal.open({
-//                templateUrl: '/static/app/views/mail_sent.html',
-//            });
         }
     })
-    .controller('dashboardcontroller', function($scope, $rootScope, $http, $window) {
+    .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
         $http({
             method: 'GET',
@@ -108,6 +107,22 @@ angular.module('innstal.controllers', [])
             }, function (response) {
                 console.log('i am in error');
         });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                    $window.sessionStorage.clear();
+                    $state.go('home');
+
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
 
     })
     .controller('dashboardhomecontroller', function($scope, $rootScope, $window, $http, $window) {
@@ -186,7 +201,23 @@ angular.module('innstal.controllers', [])
                 $scope.blogdata = response.data;
             }, function (response){
                 console.log('i am in error');
-        })
+        });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({
@@ -223,6 +254,21 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
     })
     .controller('changepasswordcontroller', function($scope, $http, $window, $state, $stateParams) {
         $window.scrollTo(0, 0);

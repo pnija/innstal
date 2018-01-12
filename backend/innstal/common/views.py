@@ -36,7 +36,7 @@ class UserCreate(APIView):
         day = request.data['day']
         month = request.data['month']
         year = request.data['year']
-        request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
+        request.data['dob'] = datetime.strptime(str(day)+'/'+str(month)+'/'+year, "%d/%m/%Y").date()
         response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -142,6 +142,7 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
+        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():

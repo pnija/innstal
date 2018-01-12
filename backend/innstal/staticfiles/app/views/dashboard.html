@@ -48,10 +48,12 @@
 
                         <div id="slidemenu">
 
-                        <div class="user-image pull-right hidden-xs">
-
-                            <img class="img-circle" src="/static/app/images/user-pic.png">
-
+                        <div class="user-image pull-right hidden-xs dropdown ">
+                            <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
+                            <div class="dropdown-content">
+                                <a href="#"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
+                                <a ng-click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                            </div>
                         </div>
 
                         <ul class="nav navbar-nav navbar-right">

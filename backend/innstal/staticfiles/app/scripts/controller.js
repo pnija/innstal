@@ -173,6 +173,22 @@ angular.module('innstal.controllers', [])
                 $state.go("search-results",{searchText: $scope.searchText});
             }
         };
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
     })
     .controller('searchResultController', function($scope, $http, $modal, $state){
         
@@ -192,6 +208,22 @@ angular.module('innstal.controllers', [])
         }, function (response) {
             alert('error');
         });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
     })
     .controller('bloghomecontroller', function($scope, $http, $window) {
         $window.scrollTo(0, 0);

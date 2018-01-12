@@ -44,8 +44,8 @@
                                                     Remember Me
                                                     </label>
                                                     </div>
-                                                    <span class="forgot-password link link--light fontWeight-3 pull-right">
-                                                    Forgotten password?
+                                                    <span data-target=".forget-password" data-toggle="modal" class="forgot-password link link--light fontWeight-3 pull-right">
+                                                    Forgot password?
                                                     </span>
                                                     </div>
                                                     <div>
@@ -68,6 +68,26 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade forget-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3><b>Forgot Password</b></h3>
+                <p>Forgot your password? Don’t panic it happens with anyone.</p>
+                <div class="input-group col-sm-10 col-sm-offset-1 ">
+                    <input type="email" ng-model="forgotEmail" class="form-control" placeholder="Enter Your Email" >
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit" ng-click="change_password()">Submit</button>
+                    </div>
+                </div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                    ut labore et dolore magna aliqu ut enim ad mini.</p>
             </div>
         </div>
     </div>

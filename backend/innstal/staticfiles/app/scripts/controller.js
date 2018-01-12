@@ -17,7 +17,19 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-    .controller('logincontroller', function($scope, $http, $state, $window) {
+    .controller('logincontroller', function($scope, $http, $state, $window, $stateParams) {
+
+        if($stateParams.id){
+            $http({
+                method: 'GET',
+                url: 'user/account/activate/'+$stateParams.id+'/',
+            }).then(function (response) {
+                    alert('Your account has been activated');
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
         $window.scrollTo(0, 0);
         $scope.submitted = false;
 
@@ -42,8 +54,22 @@ angular.module('innstal.controllers', [])
             });
         };
 
+        $scope.change_password = function(){
+            var params = $.param({email: $scope.forgotEmail});
+            $http({
+                method: 'POST',
+                url: 'user/forgot-password/',
+                data: params,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                    console.log(response);
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
     })
-    .controller('joinincontroller', function($scope, $http, $window) {
+    .controller('joinincontroller', function($scope, $http, $window, $modal) {
         $window.scrollTo(0, 0);
         $scope.submitted = false;
 
@@ -58,12 +84,18 @@ angular.module('innstal.controllers', [])
 
                     $scope.user = {};
                     $scope.regForm = {};
-
+                    open();
                 }, function (response) {
                     console.log('i am in error');
             });
         };
 
+        function open(){
+            alert('Mail has been sent to your account.');
+//            $modal.open({
+//                templateUrl: '/static/app/views/mail_sent.html',
+//            });
+        }
     })
     .controller('dashboardcontroller', function($scope, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
@@ -180,6 +212,36 @@ angular.module('innstal.controllers', [])
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
                     $scope.blogdetail = response.data;
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+    })
+    .controller('changepasswordcontroller', function($scope, $http, $window, $state, $stateParams) {
+        $window.scrollTo(0, 0);
+        if($stateParams){
+            var user_id = $stateParams.id;
+            var token = $stateParams.token;
+            $http({
+                method: 'GET',
+                url: 'user/token-check/'+user_id+'/'+token+'/',
+            }).then(function (response) {
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+        $scope.changepassword = function(changedata){
+
+            $http({
+                method: 'POST',
+                url: 'user/update-password/'+$stateParams.id+'/',
+                data: changedata
+            }).then(function (response) {
+                    if(response.data.status == 'success'){
+                        $state.go('login')
+                    }
                 }, function (response) {
                     console.log('i am in error');
             });

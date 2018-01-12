@@ -32,8 +32,7 @@ class UserSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(source='userprofile.avatar', required=False)
 
     def create(self, validated_data):
-
-        user = User.objectdatas.create_user(validated_data['username'],
+        user = User.objects.create_user(validated_data['username'],
                                             validated_data['email'],
                                             validated_data['password'])
         self.fields.pop('password')

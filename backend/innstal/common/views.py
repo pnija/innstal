@@ -66,15 +66,20 @@ class Login(APIView):
         if User.objects.get(email=email):
             user = User.objects.get(email=email)
             if user:
-                registered_user = authenticate(username=user.username, password=password)
+                if user.is_active == True:
+                    registered_user = authenticate(username=user.username, password=password)
+                else:
+                    response['status'] = 'failed'
+                    response['message'] = 'User not activated'
+                    return Response(response, status=HTTP_401_UNAUTHORIZED)
             else:
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'
-                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+                return Response(response, status=HTTP_401_UNAUTHORIZED)
             if not registered_user:
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'
-                return Response({"error": "Login failed"}, status=HTTP_401_UNAUTHORIZED)
+                return Response(response, status=HTTP_401_UNAUTHORIZED)
             else:
                 response['status'] = 'success'
                 response['message'] = 'User logged in succesfully'

@@ -115,24 +115,32 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-
-    .controller('searchController', function($scope, $http, $modal, $location){
+    .controller('warrantyregistercontroller', function($scope) {
+            $scope.firstName= "John";
+            $scope.lastName= "Doe";
+    })
+    .controller('searchController', function($scope, $http, $modal, $state){
         $scope.search = function () {
             if($scope.searchText){
-                var searchText = $scope.searchText
+                $state.go("search-results",{searchText: $scope.searchText});
+            }
+        };
+    })
+    .controller('searchResultController', function($scope, $http, $modal, $state){
+        
+        $scope.Text = $state.params.searchText;
 
-                $http({
+        $http({
 
-                    method: 'GET',
-                    url: 'product/search/?search='+searchText
+            method: 'GET',
+            url: 'product/search/?search='+$scope.Text
 
-                }).then(function (response) {
-                    products = response.data;
-                    $location.path("contact");
-                    console.log(products);
-                    $scope.products = products; 
+        }).then(function (response) {
+            
+            $scope.products = response.data;
+            console.log($scope.products)
 
-                }, function (response) {
+            }, function (response) {
                     alert('error');
                 });
             }

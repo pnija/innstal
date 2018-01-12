@@ -9,6 +9,7 @@ from .views import SearchProductManual
 router = DefaultRouter()
 router.register(r'', ProductViewSet, base_name='products')
 router.register(r'category/list', ProductCategoryViewSet, base_name='product_category')
+
 urlpatterns = router.urls
 
 urlpatterns = [

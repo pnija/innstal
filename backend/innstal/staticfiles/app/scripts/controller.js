@@ -115,10 +115,7 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-    .controller('warrantyregistercontroller', function($scope) {
-            $scope.firstName= "John";
-            $scope.lastName= "Doe";
-    })
+
     .controller('searchController', function($scope, $http, $modal, $location){
         $scope.search = function () {
             if($scope.searchText){
@@ -148,6 +145,25 @@ angular.module('innstal.controllers', [])
             url: 'user/blog/',
         }).then(function (response) {
                 $scope.blogdata = response.data;
+    }])
+    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+        $http({
+            method: 'GET',
+            url: 'warranty/country-list',
+        }).then(function (response) {
+                $scope.countries = response.data.countries;
+                $scope.companies = response.data.companies;
+            }, function (response) {
+                console.log('i am in error');
+        });
+    })
+    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+        $http({
+            method: 'GET',
+            url: 'warranty/users',
+        }).then(function (response) {
+                $scope.form = response.data[0];
+                console.log(response.data[0])
             }, function (response) {
                 console.log('i am in error');
         });

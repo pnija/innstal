@@ -218,7 +218,21 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
+        $scope.subscribe = function () {
+            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: params,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                    $scope.firstname = '';
+                    $scope.subscribe_email = '';
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
 
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
@@ -256,7 +270,21 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
+        $scope.subscribe = function () {
+            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: params,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                    $scope.firstname = '';
+                    $scope.subscribe_email = '';
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
         $scope.logout=function(){
             $http({
                 method: 'GET',

@@ -60,5 +60,10 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/new-password.html',
             controller: 'changepasswordcontroller',
         })
+        .state('search-results', {
+            url: '/product/search-results/:searchText',
+            templateUrl: '/static/app/views/search-results.html',
+            controller: 'searchResultController'
+        })
 })
 

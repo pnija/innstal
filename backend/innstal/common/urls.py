@@ -4,15 +4,16 @@ from rest_framework import routers
 from django.views.generic import TemplateView
 
 from common.views import UserCreate, Logout, SubcribeNewsLetter, \
-    UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet,\
-    ContactView, UpdateUserProfile, ActivateUserAccount, ForgotPassword,\
-    ChangePassword, ResetPasswordCheck, GetUserProfile
+    UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet, \
+    ContactView, UpdateUserProfile, ActivateUserAccount, ForgotPassword, \
+    ChangePassword, ResetPasswordCheck, GetUserProfile, BusinessAccountRegistration
 
 router = routers.DefaultRouter()
 router.register(r'blog', BlogListingViewSet)
 
 urlpatterns = [
     url(r'^register/$', UserCreate.as_view(), name='account-create'),
+    url(r'^register/business/account$', BusinessAccountRegistration.as_view(), name='account-create'),
     url(r'^login/$', Login.as_view()),
     url(r'^logout/$', Logout.as_view()),
     url(r'^account/activate/(?P<pk>\d+)/?$', ActivateUserAccount.as_view()),

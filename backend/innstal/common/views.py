@@ -18,13 +18,13 @@ from rest_framework import viewsets
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
-from .models import Blog
+from .models import Blog, BusinessUserProfile
 from datetime import datetime
 from common.models import Newsletter, UserProfile
 
 from common.serializer import UserSerializer, NewsletterSerializer, \
     ChangePasswordSerializer, UpdatePasswordSerializer, \
-    UserProfileSerializer, ContactSerializer, BlogSerializer
+    UserProfileSerializer, ContactSerializer, BlogSerializer, BusinessAccountSerializer
 from innstal import settings
 
 
@@ -337,7 +337,38 @@ class GetUserProfile(APIView):
     permission_classes = (permissions.IsAuthenticated, )
 
     def get(self, queryset=None):
-
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
         return Response(serializer.data)
+
+
+class BusinessAccountRegistration(APIView):
+    def post(self, request):
+        response = {}
+        serializer = BusinessAccountSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            id = serializer.data.pop('id')
+            url = {}
+            url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"/user/account/activate"
+            url['pk'] = id
+            user = serializer.data.pop('user')
+            email_id = None
+            for key in user:
+                if key == 'email':
+                    email_id = dict(user)[key]
+            if email_id != None:
+                html = get_template('signup_confirmation_email.html')
+                subject, from_email, to = 'Innstal Business Account Created', settings.DEFAULT_FROM_EMAIL, email_id
+                html_content = html.render(url)
+                msg = EmailMultiAlternatives(subject, '', from_email, [to])
+                msg.attach_alternative(html_content, "text/html")
+                msg.send()
+                response['status'] = 'success'
+                response['message'] = 'Business Account created successfully'
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                return Response({'message': 'Account not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message':'Account not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)

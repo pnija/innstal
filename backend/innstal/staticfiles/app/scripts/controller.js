@@ -139,12 +139,11 @@ angular.module('innstal.controllers', [])
             
             $scope.products = response.data;
             console.log($scope.products)
+            
 
-            }, function (response) {
-                    alert('error');
-                });
-            }
-        };
+        }, function (response) {
+            alert('error');
+        });
     })
     .controller('bloghomecontroller', function($scope, $http, $window) {
         $window.scrollTo(0, 0);

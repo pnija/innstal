@@ -31,6 +31,7 @@ class SearchProductManual(generics.ListAPIView):
 #     serializer_class = ProductCategorySerializer
 #     queryset =  ProductCategory.objects.all()
 
+
 class ProductViewSet(ViewSet):
     def list(self, request):
         response = {}

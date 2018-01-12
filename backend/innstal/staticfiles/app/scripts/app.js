@@ -48,5 +48,10 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/register-for-warranty.html',
             controller: 'warrantyregistercontroller',
         })
+        .state('search-results', {
+            url: '/product/search-results/:searchText',
+            templateUrl: '/static/app/views/search-results.html',
+            controller: 'searchResultController'
+        })
 })
 

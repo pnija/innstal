@@ -144,8 +144,9 @@ angular.module('innstal.controllers', [])
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-                $scope.blogdata = response.data;
-    }])
+            $scope.blogdata = response.data;
+        })
+    })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({
             method: 'GET',

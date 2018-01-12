@@ -3,7 +3,7 @@ from django_countries.fields import CountryField
 from common.models import UserProfile
 from product.models import ProductType
 
-GENDER_CHOICES = (
+COMPANY_CHOICES = (
     ('--', '--'),
     ('LG', 'LG'),
     ('APPLE', 'APPLE'),
@@ -15,7 +15,7 @@ GENDER_CHOICES = (
 class Warranty(models.Model):
     user_profile = models.ForeignKey(UserProfile, null=True)
     product = models.ForeignKey(ProductType)
-    company_name = models.CharField(max_length=200, choices=GENDER_CHOICES, default=1)
+    company_name = models.CharField(max_length=200, choices=COMPANY_CHOICES, default=1)
     product_name = models.CharField(max_length=200, null=True, blank=True)
     product_color = models.CharField(max_length=200, null=True, blank=True)
     product_serial_no = models.CharField(max_length=30, null=True, blank=True)
@@ -25,6 +25,6 @@ class Warranty(models.Model):
     warranty_image = models.ImageField(upload_to='warranty_images/')
 
     def __str__(self):
-        return self.user_profile
+        return self.product.type_name
 
 

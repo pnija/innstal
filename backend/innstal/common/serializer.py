@@ -90,7 +90,7 @@ class ContactSerializer(serializers.Serializer):
 
     def validate_phone(self, value):
 
-        if re.match(r'^(?:\+)?(\d.{10,16})$',value):
+        if re.match(r'^(?:\+)?(\d{10,16})$',value):
             return value
 
         raise serializers.ValidationError("Invalid Phone Number")

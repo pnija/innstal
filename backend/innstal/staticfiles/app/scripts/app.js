@@ -48,5 +48,22 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/register-for-warranty.html',
             controller: 'warrantyregistercontroller',
         })
+        .state('activate', {
+            url: '/activate/:id',
+            params: { id : null },
+            templateUrl: '/static/app/views/signin.html',
+            controller: 'logincontroller',
+        })
+        .state('change_password', {
+            url: '/change_password/:id/:token/',
+            params: { id : null , token : null},
+            templateUrl: '/static/app/views/new-password.html',
+            controller: 'changepasswordcontroller',
+        })
+        .state('search-results', {
+            url: '/product/search-results/:searchText',
+            templateUrl: '/static/app/views/search-results.html',
+            controller: 'searchResultController'
+        })
 })
 

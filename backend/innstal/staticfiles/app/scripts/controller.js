@@ -1,6 +1,6 @@
 
 angular.module('innstal.controllers', [])
-    .controller('basecontroller', function($scope, $state, $modal, $window) {
+    .controller('basecontroller', function($scope, $http, $state, $modal, $window) {
         $scope.subscribe = function () {
             var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
@@ -17,12 +17,25 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-    .controller('logincontroller', function($scope, $http, $state, $window) {
+    .controller('logincontroller', function($scope, $http, $state, $window, $stateParams, $modal) {
+
+        if($stateParams.id){
+            $http({
+                method: 'GET',
+                url: 'user/account/activate/'+$stateParams.id+'/',
+            }).then(function (response) {
+                    alert('Your account has been activated');
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
         $window.scrollTo(0, 0);
         $scope.submitted = false;
+        $scope.submittedforgot = false;
 
         $scope.login = function (logindata) {
-
+            console.log('logindata', logindata)
             $scope.logindata = logindata;
 
             $http({
@@ -42,8 +55,23 @@ angular.module('innstal.controllers', [])
             });
         };
 
+        $scope.change_password = function(data){
+            if(data != null)
+            {
+                $http({
+                    method: 'POST',
+                    url: 'user/forgot-password/',
+                    data: data,
+                }).then(function (response) {
+                        $('.forget-password').modal('hide');
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
+        }
+
     })
-    .controller('joinincontroller', function($scope, $http, $window) {
+    .controller('joinincontroller', function($scope, $http, $window, $modal) {
         $window.scrollTo(0, 0);
         $scope.submitted = false;
 
@@ -58,14 +86,17 @@ angular.module('innstal.controllers', [])
 
                     $scope.user = {};
                     $scope.regForm = {};
-
+                    open();
                 }, function (response) {
                     console.log('i am in error');
             });
         };
 
+        function open(){
+            alert('Mail has been sent to your account.');
+        }
     })
-    .controller('dashboardcontroller', function($scope, $rootScope, $http, $window) {
+    .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
         $http({
             method: 'GET',
@@ -76,6 +107,23 @@ angular.module('innstal.controllers', [])
             }, function (response) {
                 console.log('i am in error');
         });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                    $window.sessionStorage.clear();
+                    $rootScope.user_id = '';
+                    $state.go('home');
+
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
 
     })
     .controller('dashboardhomecontroller', function($scope, $rootScope, $window, $http, $window) {
@@ -115,28 +163,67 @@ angular.module('innstal.controllers', [])
             });
         };
     })
-
-    .controller('searchController', function($scope, $http, $modal, $location){
+    .controller('warrantyregistercontroller', function($scope) {
+            $scope.firstName= "John";
+            $scope.lastName= "Doe";
+    })
+    .controller('searchController', function($scope, $http, $modal, $state){
         $scope.search = function () {
             if($scope.searchText){
-                var searchText = $scope.searchText
-
-                $http({
-
-                    method: 'GET',
-                    url: 'product/search/?search='+searchText
-
-                }).then(function (response) {
-                    products = response.data;
-                    $location.path("contact");
-                    console.log(products);
-                    $scope.products = products; 
-
-                }, function (response) {
-                    alert('error');
-                });
+                $state.go("search-results",{searchText: $scope.searchText});
             }
         };
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+    })
+    .controller('searchResultController', function($scope, $http, $modal, $state){
+        
+        $scope.Text = $state.params.searchText;
+
+        $http({
+
+            method: 'GET',
+            url: 'product/search/?search='+$scope.Text
+
+        }).then(function (response) {
+            
+            $scope.products = response.data;
+            console.log($scope.products)
+            
+
+        }, function (response) {
+            alert('error');
+        });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
     })
     .controller('bloghomecontroller', function($scope, $http, $window) {
         $window.scrollTo(0, 0);
@@ -147,7 +234,38 @@ angular.module('innstal.controllers', [])
                 $scope.blogdata = response.data;
             }, function (response){
                 console.log('i am in error');
-        })
+        });
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+        $scope.subscribe = function () {
+            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
+
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: params,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                    $scope.firstname = '';
+                    $scope.subscribe_email = '';
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
+
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({
@@ -180,6 +298,66 @@ angular.module('innstal.controllers', [])
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
                     $scope.blogdetail = response.data;
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+        $scope.subscribe = function () {
+            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
+
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: params,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            }).then(function (response) {
+                    $scope.firstname = '';
+                    $scope.subscribe_email = '';
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+    })
+    .controller('changepasswordcontroller', function($scope, $http, $window, $state, $stateParams) {
+        $window.scrollTo(0, 0);
+        if($stateParams){
+            var user_id = $stateParams.id;
+            var token = $stateParams.token;
+            $http({
+                method: 'GET',
+                url: 'user/token-check/'+user_id+'/'+token+'/',
+            }).then(function (response) {
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+        $scope.changepassword = function(changedata){
+
+            $http({
+                method: 'POST',
+                url: 'user/update-password/'+$stateParams.id+'/',
+                data: changedata
+            }).then(function (response) {
+                    if(response.data.status == 'success'){
+                        $state.go('login')
+                    }
                 }, function (response) {
                     console.log('i am in error');
             });

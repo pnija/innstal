@@ -9,7 +9,7 @@
                                 <div class="col-md-6 col-md-offset-3">
                                     <div class="signin-wrapper">
                                         <div align="center">
-                                            <img  src="/static/app/images/logo.png" style="margin:5px" />
+                                            <a ui-sref="home"><img  src="/static/app/images/logo.png" style="margin:5px" /></a>
                                         </div>
                                         <div class="signup-outer">
                                             <div class="signin-form">
@@ -44,8 +44,8 @@
                                                     Remember Me
                                                     </label>
                                                     </div>
-                                                    <span class="forgot-password link link--light fontWeight-3 pull-right">
-                                                    Forgotten password?
+                                                    <span data-target=".forget-password" data-toggle="modal" class="forgot-password link link--light fontWeight-3 pull-right">
+                                                    Forgot password?
                                                     </span>
                                                     </div>
                                                     <div>
@@ -68,6 +68,34 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade forget-password" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3><b>Forgot Password</b></h3>
+                <p>Forgot your password? Don’t panic it happens with anyone.</p>
+                <form name="myForm" novalidate>
+                    <div class="input-group col-sm-10 col-sm-offset-1 ">
+                        <input type="email" name="email" ng-model="data.email" class="form-control" placeholder="Enter Your Email" >
+                        <div class="input-group-btn">
+                            <input class="btn btn-default" type="submit" ng-click="submittedforgot=true;change_password(data)" value="Submit">
+
+                        </div>
+
+                    </div>
+                        <span style="color:red" ng-show="myForm.email.$error">
+                            <span ng-show="submittedforgot && myForm.email.$error.required">This field is required.</span>
+                            <span ng-show="submittedforgot && myForm.email.$error.email">Invalid email address.</span>
+                        </span>
+                </form>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                    ut labore et dolore magna aliqu ut enim ad mini.</p>
             </div>
         </div>
     </div>

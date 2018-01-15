@@ -124,7 +124,7 @@ class ContactSerializer(serializers.Serializer):
 
     def validate_phone(self, value):
 
-        if re.match(r'^(?:\+)?(\d.{10,16})$',value):
+        if re.match(r'^(?:\+)?(\d{10,16})$',value):
             return value
 
         raise serializers.ValidationError("Invalid Phone Number")
@@ -161,9 +161,9 @@ class ChangePasswordSerializer(serializers.Serializer):
 class UpdatePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True)
 
-    def validate_new_password(self, value):
-        validate_password(value)
-        return value
+    # def validate_new_password(self, value):
+    #     validate_password(value)
+    #     return value
 
 
 

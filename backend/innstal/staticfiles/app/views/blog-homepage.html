@@ -17,6 +17,76 @@
                     <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
                 </head>
                 <body>
+                <div ng-if="user_id">
+<div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-toggle">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </a>
+                            <a class="navbar-brand" ui-sref="home"><img src="/static/app/images/logo-primary.png" /></a>
+
+                        </div>
+
+                        <div class="col-sm-4 hidden-xs">
+                            <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
+                            </div>
+                        </div>
+
+
+                        <div id="slidemenu">
+
+                        <div class="user-image pull-right hidden-xs dropdown ">
+                                <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
+                                <div class="dropdown-content">
+                                    <a ng-click="logout()"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
+                                    <a href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
+
+                        <ul class="nav navbar-nav navbar-right">
+
+                            <button style="
+                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+
+                            <div class="xs-user-img visible-xs">
+
+                                <img class="img-circle" src="/static/app/images/user-pic.png">
+
+                            </div>
+
+                            <div style="    margin: 15px;" class=" visible-xs">
+
+                                <div class="inner-addon right-addon">
+                                <span class="glyphicon glyphicon-search"></span>
+                                <input type="text" placeholder="Search User Manual" class="form-control">
+                                </div>
+
+                            </div>
+
+                            <li ><a href="#">Warranties</a></li>
+
+                            <li><a href="#">Manuals </a></li>
+                            <li><a href="#">Message </a></li>
+                            <li><a ui-sref="blog">Blog </a></li>
+                            <li><a href="#">Help</a></li>
+
+                        </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                </div>
+                <div ng-if="!user_id">
                     <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
                         <div class="container-fluid">
                             <div class="navbar-header">
@@ -54,6 +124,7 @@
                             </div>
                         </div>
                     </div>
+                </div>
                     <div class="blog-wrapper">
                         <div class="container-fluid">
                             <div class="row">
@@ -68,10 +139,10 @@
                                             <div class="pinto" ng-repeat="x in blogdata">
                                                 <a ui-sref="blog-detail({id:x.id})"><img ng-src="{{x.blog_image}}"></a>
                                                 <div class="info">
-                                                    <a ui-sref="blog-detail">
+                                                    <a ui-sref="blog-detail({id:x.id})">
                                                         <h4>{{x.blog_title}}</h4>
                                                     </a>
-                                                    <a ui-sref="blog-detail">
+                                                    <a ui-sref="blog-detail({id:x.id})">
                                                         <h2>{{x.blog_subtitle}}</h2>
                                                     </a>
                                                     <p>{{x.blog_content}}</p>
@@ -88,15 +159,16 @@
                             <h2>Join over 2 million people already subscribed to Innstal. Subscribe Now</h2>
                             <div class="row" >
                                 <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <input type="text" class="form-control" placeholder="First Name" />
+                                    <input ng-model="firstname" type="text" class="form-control" placeholder="First Name" />
                                 </div>
                                 <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <input type="text" class="form-control" placeholder="Email" />
+                                    <input ng-model="subscribe_email" type="text" class="form-control" placeholder="Email" />
                                 </div>
                                 <div class="col-sm-3 col-sm-offset-3" data-aos="fade-up" data-aos-once="true">
-                                    <button class="btn">Subscribe Now</button>
+                                    <button class="btn" ng-click='subscribe()'>Subscribe Now</button>
                                 </div>
                             </div>
+                            <span id="messageSpan" style="float:right"></span>
                             <p>By clicking "Subscribe Now" I agree to Innstal's <a href="#">Terms and Conditions.</a></p>
                         </div>
                     </div>

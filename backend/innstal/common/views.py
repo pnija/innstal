@@ -6,6 +6,9 @@ from django.template import Context, exceptions
 from django.template.loader import get_template
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.views.generic import TemplateView
+from django.shortcuts import render
+
 from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
@@ -33,14 +36,14 @@ class UserCreate(APIView):
         day = request.data['day']
         month = request.data['month']
         year = request.data['year']
-        request.data['dob'] = datetime.strptime(day+'/'+month+'/'+year, "%d/%m/%Y").date()
+        request.data['dob'] = datetime.strptime(str(day)+'/'+str(month)+'/'+year, "%d/%m/%Y").date()
         response = {}
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             id = serializer.data.pop('id')
             url = {}
-            url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"/user/account/activate"
+            url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"#/activate"
             url['pk'] = id
             email_id = serializer.data.pop('email')
             html = get_template('signup_confirmation_email.html')
@@ -114,7 +117,7 @@ class ContactView(APIView):
                 send_mail('Innstal : New Contact Submission',
                     '',
                     settings.DEFAULT_FROM_EMAIL,
-                    ['jaseemtechversant@gmail.com'],
+                    ['innstaltest@gmail.com'],
                     html_message = html_message,
                     fail_silently=False
                 )
@@ -139,6 +142,7 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
+        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
@@ -221,7 +225,9 @@ class UpdatePassword(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ActivateUserAccount(APIView):
+class ActivateUserAccount(TemplateView):
+    template_name = 'views/dashboard.html'
+
     def get(self,request, pk):
         response = {}
         if User.objects.filter(pk=pk):
@@ -230,11 +236,12 @@ class ActivateUserAccount(APIView):
             user.save()
             response['status'] = 'success'
             response['message'] = 'User Account activated'
-            return Response(response)
+            return render(request, self.template_name)
         else:
             response['status'] = 'failed'
             response['message'] = 'User Not found'
             return Response(response)
+
 
 class ForgotPassword(APIView):
     def post(self, request):
@@ -246,8 +253,8 @@ class ForgotPassword(APIView):
             token = PasswordResetTokenGenerator()
             token_value = token.make_token(user)
             # uid = urlsafe_base64_encode(force_bytes(pk))
-            context_values['url_value'] = request.scheme + "://" + request.META['HTTP_HOST'] + "/user/token-check"
-            context_values['token'] = token_value
+            context_values['url_value'] = request.scheme + "://" + request.META['HTTP_HOST'] + "#/change_password"
+            context_values['token'] = token_value+'/'
             # context_values['uid'] = uid
             context_values['pk'] = user.pk
             html = get_template('password_reset_email.html')
@@ -264,7 +271,9 @@ class ForgotPassword(APIView):
             response['message'] = 'Check the email you have entered'
             return Response(response)
 
-class ResetPasswordCheck(APIView):
+class ResetPasswordCheck(TemplateView):
+    template_name = 'views/dashboard.html'
+
     def get(self, request, pk, **kwargs):
         response = {}
         url_token = kwargs['token']
@@ -278,7 +287,7 @@ class ResetPasswordCheck(APIView):
                 response['status'] = 'success'
                 response['message'] = 'Url is valid'
                 response['key'] = pk
-                return Response(response)
+                return render(request, self.template_name)
             else:
                 response['status'] = 'failed'
                 response['message'] = 'Url is not valid'

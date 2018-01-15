@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'^register/business/account$', BusinessAccountRegistration.as_view(), name='account-create'),
     url(r'^login/$', Login.as_view()),
     url(r'^logout/$', Logout.as_view()),
-    url(r'^account/activate/(?P<pk>\d+)/?$', ActivateUserAccount.as_view()),
+    url(r'^account/activate/(?P<pk>\d+)/$', ActivateUserAccount.as_view()),
     url(r'^update/(?P<pk>\d+)/?$', UpdateUserProfile.as_view()),
     url(r'^forgot-password/', ForgotPassword.as_view()),
     url(r'^token-check/(?P<pk>\d+)?/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', ResetPasswordCheck.as_view()),

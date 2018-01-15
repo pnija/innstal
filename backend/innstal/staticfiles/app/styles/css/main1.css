@@ -604,7 +604,7 @@ nav.sub-head .navbar-brand {
   margin-top: 15px;
   background: url(../../images/page-header-bg.png);
   min-height: 148px;
-  margin-top: 6em;
+  margin-top: 4em;
 }
 
 .page-name p {
@@ -618,6 +618,20 @@ nav.sub-head .navbar-brand {
   color: #fff;
   font-weight: bold;
   font-size: 32px;
+}
+
+
+.page-name h2 span {     color: #000;}
+
+
+.btn-viewmore  {
+    font-size: 22px;
+    background: none;
+    border: 1px solid #c2c2c2;
+    border-radius: 0px;
+    color: #797979;
+    margin: 20px;
+    padding: 5px 20px;
 }
 
 .form-warranty {
@@ -1188,7 +1202,8 @@ body.slide-active {
 }
 
 .Searched-lists {
-    margin-top: 5em;
+    margin-top: 7em;
+    margin-bottom: 5em;
 }
 
 .Searched-lists h2  {
@@ -1303,6 +1318,145 @@ body.slide-active {
 }
 
 .affix { border: 0px !important; }
+
+.most-lists {
+    margin: 0px;
+    box-shadow: 0px 0px 5px 0px #cdcdce8a;
+    border: 1px solid #ecedef;
+    border-radius: 4px;
+    margin-top:  1em;
+    margin-bottom: 1em;
+    }
+
+.most-list-left {     border-right: 1px solid #ecedef;}
+
+.most-lists h4 {
+    margin-top: 1.5em;
+    color: #d57c29;
+    text-transform:  uppercase;
+    font-size: 16px;
+}
+
+.v-items {
+    box-shadow: 0px 0px 5px 0px #cdcdce8a;
+    border: 1px solid #ecedef;
+    margin-top: 1em;
+    margin-bottom:  1em;
+}
+
+
+.v-title {color: #fa9637;
+    padding: 8px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    text-transform: uppercase;
+    font-size: 16px;}
+.v-title h4 { font-weight: bold; font-size: 16px;}
+
+.Searched-lists  hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #d7d9da;
+}
+
+
+.product-slide {
+    padding: 2em 0px;
+    border-top: 1px solid #d7d9da;
+    margin-top: 2em;
+    border-bottom: 1px solid #d7d9da;
+    margin-bottom: 2em;
+}
+
+.product-slide  .v-items {
+    margin-top: 2em;
+}
+
+.product-slide h2 {
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.product-slide p {
+    font-size: 16px;
+    color: #7f7f7f;
+    line-height: 28px;
+    margin-bottom: 20px;
+}
+
+.product-slide  .btn-primary {
+    color: #fff;
+    background-color: #ff9837 !important;
+    border-color: #ff9837 !important;
+    font-size: 18px;
+    padding: 8px 20px;
+}
+
+.product-slide .owl-nav {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    }
+
+
+
+.product-slide .owl-carousel .owl-nav .owl-prev , .owl-next {
+    cursor: pointer;
+    cursor: hand;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    background: #fff;
+    -moz-user-select: none;
+    border-radius: 50%;
+    -ms-user-select: none;
+    user-select: none;
+    width: 52px;
+    font-size: 0px;
+    position: absolute;
+    height: 52px;
+    box-shadow: 0px 0px 5px 0px #cdcdce8a;
+    border: 1px solid #ecedef;
+}
+
+.product-slide .owl-carousel .owl-next {right: 0px;position: absolute;}
+.product-slide .owl-carousel .owl-prev {  }
+
+.product-slide .owl-carousel .owl-next:before {
+    content: '';
+    width: 0px;
+    height: 0px;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 7px solid #ff9837;
+    position: absolute;
+    left: 46%;
+    top: 37%;
+    }
+
+
+    .product-slide .owl-carousel .owl-prev:before {
+        content: '';
+        width: 0px;
+        height: 0px;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 7px solid #ff9837;
+        position: absolute;
+        left: 40%;
+        top: 37%;
+        }
+
+
+.login-search-cat .v-title {
+    color: #ffffff;
+    padding: 8px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+    text-transform: uppercase;
+    font-size: 16px;
+    background: #ff9837;
+}
 
 
 /* screw writing importants and shit, just stick it in max width since these classes are not shared between sizes */

@@ -1,0 +1,218 @@
+<link rel="stylesheet" href="/static/app/styles/css/main1.css">
+
+
+<div ng-if="user_id" >
+
+    <div ng-controller="searchResultController" class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </a>
+                <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png" /></a>
+            </div>
+            <div class="col-sm-4 hidden-xs">
+                <form novalidate ng-controller="searchController">
+                    <div class="input-group " style="">
+                        <input class="form-control ng-pristine ng-valid ng-empty ng-touched" placeholder="Search" name="search" style="border-right: 0px;height: 45px;" ng-model="searchText" type="text">
+                        <div class="input-group-btn" style=" border-left: 0px;">
+                            <button ng-click="search()" style="border-left: 0px;font-size: 20px;border-top-left-radius: 0px;border-bottom-left-radius: 0px;" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="slidemenu">
+                <div class="user-image pull-right hidden-xs dropdown ">
+                    <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
+                    <div class="dropdown-content">
+                        <a ng-click="logout()"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
+                        <a href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <button style="
+                        " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <div class="xs-user-img visible-xs">
+                        <img class="img-circle" src="/static/app/images/user-pic.png">
+                    </div>
+                    <div style="    margin: 15px;" class=" visible-xs">
+                        <form novalidate ng-controller="searchController">
+                            <div class="input-group col-sm-6 col-sm-offset-3" style="margin-top: 4em;margin-bottom: 2em;">
+                                <input type="text" class="form-control" placeholder="Search for Product Manuals..." name="search" style="border-right: 0px;height: 45px;" ng-model="searchText">
+                                <div class="input-group-btn" style=" border-left: 0px;">
+                                    <button ng-click="search()" style="border-left: 0px;font-size: 20px;" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <li ><a href="#">Warranties</a></li>
+                    <li><a href="#">Manuals </a></li>
+                    <li><a href="#">Message </a></li>
+                    <li><a ui-sref="blog">Blog </a></li>
+                    <li><a href="#">Help</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div ng-if="!user_id" >
+
+    <div ng-controller="searchResultController" class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </a>
+                <a class="navbar-brand" ui-sref="home"><img src="/static/app/images/logo-primary.png" /></a>
+            </div>
+            <div id="slidemenu">
+                <ul class="nav navbar-nav navbar-right">
+                    <button style="
+                        " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                    <li><a href="#">How it works</a></li>
+                    <li><a ui-sref="blog">Blog</a></li>
+                    <li><a href="#">Business</a></li>
+                    <ul class="pull-right login">
+                        <li class="hidden-xs"><a ui-sref="register" class="li-divide"><i class="fa fa-user" aria-hidden="true"></i>  Join in</a></li>
+                        <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                    </ul>
+                    <div align="center">
+                        <button class="btn xs-login visible-xs">
+                        <i class="fa fa-lock" aria-hidden="true"></i> Login
+                        </button>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div align="center">
+                        <button class="btn xs-login visible-xs xs-join">
+                        <i class="fa fa-user" aria-hidden="true"></i> Join
+                        </button>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="page-name">
+    <div class="container">
+        <p>Instuction Manual</p>
+        <h2>Showing Result for <span>{{Text}}</span></h2>
+    </div>
+</div>
+<div class="search-cat">
+    <div class="container">
+        <form novalidate ng-controller="searchController">
+            <div class="input-group col-sm-6 col-sm-offset-3" style="margin-top: 4em;margin-bottom: 2em;">
+                <input type="text" class="form-control" placeholder="Search for Product Manuals..." name="search" style="border-right: 0px;height: 45px;" ng-model="searchText">
+                <div class="input-group-btn" style=" border-left: 0px;">
+                    <button ng-click="search()" style="border-left: 0px;font-size: 20px;" class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                </div>
+            </div>
+        </form>
+        <div class="row">
+            <div class="col-sm-3" ng-repeat="product in products">
+                <div class="v-items">
+                    <div class="img-div">
+                        <img src="{{product.product_image1}}" width="100%">
+                    </div>
+                    <div class="v-title">
+                        <h4>{{product.product_name}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div align="center">
+                <button class="btn btn-viewmore">View More</button>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                <h2>
+                    Instruction Manual
+                    <hr align="left" />
+                </h2>
+                <a href="#" class="col-sm-6">Acer</a>
+                <a href="#" class="col-sm-6">Epson</a>
+                <a href="#" class="col-sm-6">AEG</a>
+                <a href="#" class="col-sm-6">Frigidaire</a>
+                <a href="#" class="col-sm-6">Asus</a>
+                <a href="#" class="col-sm-6">Fujitsu</a>
+                <a href="#" class="col-sm-6">Black & Decker</a>
+                <a href="#" class="col-sm-6">GE</a>
+                <a href="#" class="col-sm-6">Bosch</a>
+                <a href="#" class="col-sm-6">Haier</a>
+                <a href="#" class="col-sm-6">Brother</a>
+                <a href="#" class="col-sm-6">Hitachi</a>
+                <a href="#" class="col-sm-6">Canon</a>
+                <a href="#" class="col-sm-6">Honda</a>
+                <a href="#" class="col-sm-6">Casio</a>
+                <a href="#" class="col-sm-6">More</a>
+            </div>
+            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                <h2>
+                    Company
+                    <hr align="left" />
+                </h2>
+                <a href="#">How It Works </a>
+                <a href="#"> Business </a>
+                <a ui-sref="blog"> Blog </a>
+                <a href="#"> Contact Us </a>
+                <a href="#"> Privacy Policy </a>
+                <a href="#"> Disclaimer </a>
+                <a href="#"> Terms and Conditions </a>
+            </div>
+            <div class="col-sm-6" data-aos="fade-up" data-aos-once="true">
+                <h2>
+                    Contact Details
+                    <hr align="left" />
+                </h2>
+                <p> <i class="fa fa-envelope" aria-hidden="true"></i> Info@innstal.com</p>
+                <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Studio 103, The Business Centre, 61 Wellfield Road,<br> Roath, Cardiff CF24 3DG
+                </p>
+                <h4>Subscribe</h4>
+                <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h5>
+                <div class="inner-addon right-addon">
+                    <p style="    position: absolute;
+                        margin: 0px;
+                        right: 10px;
+                        color: #ff9837;
+                        top: 15px;"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Subscribe </p>
+                    <input placeholder="Enter Your Email Address" type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="footer-bottom">
+    <div class="container-fluid">
+        <p>© Copyright 2017 Innstal. All Rights Reserved</p>
+        <div class="pull-right">
+            <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
+            <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
+            <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
+        </div>
+    </div>
+</div>

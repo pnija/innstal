@@ -52,11 +52,13 @@
 
                         <div id="slidemenu">
 
-                        <div class="user-image pull-right hidden-xs">
-
-                            <img class="img-circle" src="/static/app/images/user-pic.png">
-
-                        </div>
+                            <div class="user-image pull-right hidden-xs dropdown ">
+                                <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
+                                <div class="dropdown-content">
+                                    <a ng-click="logout()"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
+                                    <a href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                                </div>
+                            </div>
 
                         <ul class="nav navbar-nav navbar-right">
 
@@ -91,6 +93,9 @@
                         </div>
                     </div>
                 </div>
+
+
+
             </div>
 
             <div ng-if="!user_id">
@@ -179,15 +184,16 @@
                             <h2>Join over 2 million people already subscribed to Innstal. Subscribe Now</h2>
                             <div class="row" >
                                 <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <input type="text" class="form-control" placeholder="First Name" />
+                                    <input ng-model="firstname" type="text" class="form-control" placeholder="First Name" />
                                 </div>
                                 <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <input type="text" class="form-control" placeholder="Email" />
+                                    <input ng-model="subscribe_email" type="text" class="form-control" placeholder="Email" />
                                 </div>
                                 <div class="col-sm-3 col-sm-offset-3" data-aos="fade-up" data-aos-once="true">
-                                    <button class="btn">Subscribe Now</button>
+                                    <button class="btn" ng-click='subscribe()'>Subscribe Now</button>
                                 </div>
                             </div>
+                            <span id="messageSpan" style="float:right"></span>
                             <p>By clicking "Subscribe Now" I agree to Innstal's <a href="#">Terms and Conditions.</a></p>
                         </div>
                     </div>

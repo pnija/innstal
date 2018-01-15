@@ -78,7 +78,6 @@ class BusinessUserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
     company_name = models.CharField(max_length= 100,null= True, blank= True)
-    # company_email = models.EmailField(max_length= 100,null= True, blank= True)
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     person_to_contact = models.CharField(max_length= 100,null= True, blank= True)
     address = models.TextField(null=True, blank=True)
@@ -87,6 +86,7 @@ class BusinessUserProfile(models.Model):
     country = models.ForeignKey(Country, null=True, blank=True)
     fax_number = models.CharField(max_length=100, null=True, blank=True)
     avatar = models.ImageField(upload_to='avatar_directory_path/', null=True, blank=True)
+    is_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
         return "%s" % (self.user.username)
@@ -112,6 +112,11 @@ class Blog(models.Model):
 
     def __str__(self):
         return self.blog_title
+
+
+class UserPlans(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pricing_plan = models.ForeignKey(PricingPlan, on_delete=models.CASCADE)
 
 
 class Newsletter(models.Model):

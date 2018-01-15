@@ -5,7 +5,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers, exceptions
 from rest_framework.generics import get_object_or_404
 from rest_framework.validators import UniqueValidator
-from common.models import UserProfile, Newsletter, City, State, Country, Blog, BusinessUserProfile
+from common.models import UserProfile, Newsletter, City, State, Country, Blog, BusinessUserProfile, UserPlans
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -42,6 +42,7 @@ class UserSerializer(serializers.ModelSerializer):
         profile = UserProfile(user=user)
         userprofile = validated_data['userprofile']
         profile.phone = userprofile['phone']
+        # profile.address = userprofile['address']
         profile.dob = userprofile['dob']
         try:
             profile.avatar = userprofile['avatar']
@@ -161,11 +162,6 @@ class ChangePasswordSerializer(serializers.Serializer):
 class UpdatePasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(required=True)
 
-    # def validate_new_password(self, value):
-    #     validate_password(value)
-    #     return value
-
-
 
 class BlogSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(source='user.id', read_only = True)
@@ -177,3 +173,12 @@ class BlogSerializer(serializers.ModelSerializer):
         model = Blog
         fields = ('id', 'user_id', 'first_name', 'last_name', 'username', 'blog_title',\
                   'blog_subtitle', 'blog_image', 'blog_content')
+
+class UserPlanSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField(source='user.id', read_only=True)
+    plan_id = serializers.IntegerField(source='plan.id')
+
+
+    class Meta:
+        model = UserPlans
+        fields = ('id', 'user_id', 'plan_id')

@@ -1,7 +1,7 @@
 import re
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from .models import Warranty
+from .models import Warranty, ClaimedWarranty
 from product.models import UserProfile
 
 
@@ -24,6 +24,14 @@ class WarrantyApplicationSerializer(ModelSerializer):
 
     class Meta:
         model = Warranty
+        fields = '__all__'
+
+class ClaimedWarrantySerializer(ModelSerializer):
+    # user_profile = UserProfileSerializer()
+    warranty = WarrantyApplicationSerializer()
+
+    class Meta:
+        model = ClaimedWarranty
         fields = '__all__'
 
 

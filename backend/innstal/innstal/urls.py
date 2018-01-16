@@ -26,7 +26,9 @@ urlpatterns = [
     url(r'^warranty/', include('warranty.urls')),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^product/', include('product.urls')),
-    url(r'^$', TemplateView.as_view(template_name='index.html'))
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
+    url(r'^channels-api/', include('channels_api.urls'))
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

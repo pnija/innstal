@@ -50,7 +50,7 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
         })
         .state('warranty', {
             url: '/warranty',
-            templateUrl: '/static/app/views/register-for-warranty.html',
+            templateUrl: '/static/app/views/register-for-warranty1.html',
             controller: 'warrantyregistercontroller',
         })
         .state('activate', {

@@ -53,7 +53,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'dob', 'password','phone','avatar')
+        fields = ('id', 'username', 'email', 'dob', 'password', 'phone', 'avatar')
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()

@@ -7,3 +7,4 @@ $(".reveal").mousedown(function() {
 .mouseout(function() {
 	$(".pwd").replaceWith($('.pwd').clone().attr('type', 'password'));
 });
+

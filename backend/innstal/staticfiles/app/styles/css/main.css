@@ -19,7 +19,6 @@ body {
 	overflow: hidden;
 }
 
-
 .btn-search {
 	height: 51px !important;
 	font-size: 21px;
@@ -29,7 +28,6 @@ body {
 	border: 0px;
 	padding-top: 13px;
 }
-
 
 .banner-left {
 	background: #ff9837;
@@ -62,6 +60,7 @@ body {
 	height: 47px;
 	border: 0px;
 	box-shadow: 0px 0px 30px 0px #00000045;
+	padding-right: 43px;
 }
 
 .banner input::placeholder {
@@ -124,7 +123,7 @@ body {
 }
 
 .banner-right {
-	background: url(../../images/banner-bg.png);
+	background: url(../img/banner-bg.png);
 	display: table;
 	height: 100vh;
 	background-size: cover;
@@ -503,7 +502,6 @@ footer h5 {
     border-bottom: 1px solid #f3f3f3 !important;
     padding-bottom: 10px !important;
     padding-top: 10px;
-    background: #fff!important;
     }
 
 /* enable absolute positioning */
@@ -687,10 +685,10 @@ nav.sub-head .navbar-brand {
     background: none;
 }
 
-.navbar-nav {margin-top: 10px !important;}
+.navbar-nav {     margin-top: 10px; }
 
 
-.user-image {/* margin-top:  10px; */margin-left: 20px;}
+.user-image {margin-top:  10px;margin-left: 20px;}
 .user-image img { width: 49px; height: 49px; }
 
 .page-name {
@@ -1151,7 +1149,7 @@ color: #ff9837;
 
 
 .sign-up {
-    background: url(../../images/log-bg.png) center #fff;
+    background: url(../img/log-bg.png) center #fff;
     height: 100%;
     background-position-x: -66px;
     background-repeat: no-repeat;
@@ -1372,7 +1370,6 @@ button {
     width: 100%;
     margin-bottom: 0;
     border-right: 0px;
-    height: 51px;
 }
 
 .signin-form  .input-group-btn>.btn {

@@ -317,6 +317,7 @@ class ChangePassword(APIView):
                 return Response(response)
 
 class UpdateUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
     def post(self, request, pk):
         response = {}
         if User.objects.filter(pk=pk):
@@ -407,6 +408,7 @@ class SelectPricingPlan(APIView):
 
 
 class UpdatePricingPlan(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
     def post(self, request, pk):
         response = {}
         pricing_plan = UserPlans.objects.get(pk=pk)

@@ -1,7 +1,7 @@
 from django.core.mail import send_mail
 from collections import OrderedDict
 from django.db import IntegrityError
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, permissions
 from rest_framework.viewsets import ViewSet
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
@@ -69,14 +69,15 @@ class UserProfileView(ModelViewSet):
 class ClaimWarrantyViewSet(ModelViewSet):
     queryset = ClaimedWarranty.objects.all()
     serializer_class = ClaimedWarrantySerializer
+    permission_classes = (permissions.IsAuthenticated,)
     response = {}
 
-    def post(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
-        warranty = Warranty.objects.get(warranty=kwargs)
+        warranty = Warranty.objects.get(id=request.data['warranty'])
         serializer.save(user_profile=user_profile, warranty=warranty)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

@@ -28,7 +28,7 @@ class WarrantyApplicationSerializer(ModelSerializer):
 
 class ClaimedWarrantySerializer(ModelSerializer):
     # user_profile = UserProfileSerializer()
-    warranty = WarrantyApplicationSerializer()
+    # warranty = WarrantyApplicationSerializer()
 
     class Meta:
         model = ClaimedWarranty

@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -33,6 +33,7 @@ class SearchProductManual(generics.ListAPIView):
 
 
 class ProductViewSet(ViewSet):
+    permission_classes = (permissions.IsAuthenticated, )
     def list(self, request):
         response = {}
         queryset = Product.objects.all()
@@ -60,6 +61,7 @@ class ProductViewSet(ViewSet):
         return Response(serializer.data)
 
 class UpdateProductViewCount(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
     def get(self, request, pk):
         response = {}
         request_data = Product.objects.filter(pk=pk)
@@ -78,6 +80,7 @@ class UpdateProductViewCount(APIView):
             return Response(response)
 
 class ProductCategoryViewSet(ViewSet):
+    permission_classes = (permissions.IsAuthenticated, )
     def list(self, request):
         response = {}
         queryset = ProductCategory.objects.all()

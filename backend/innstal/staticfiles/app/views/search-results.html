@@ -139,6 +139,10 @@
                     </div>
                 </div>
             </div>
+            <div ng-if="!products[0]">
+                <h3 class="text-center">Nothing Found.</h3>
+                <br/>
+            </div>
             <div class="clearfix"></div>
             <div align="center">
                 <button class="btn btn-viewmore" ng-if="next" ng-click="get_result()">View More</button>

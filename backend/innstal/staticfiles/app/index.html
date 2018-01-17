@@ -15,17 +15,35 @@
         <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">-->
 
         <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-
-        <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>-->
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+        <script src="/static/app/scripts/js/ui-bootstrap-tpls-0.12.1.js"></script>
+        <script type="text/javascript" src="/static/app/scripts/app.js"></script>
+        <script type="text/javascript" src="/static/app/scripts/controller.js"></script>
     </head>
     <body>
-    <div>
-        <div ui-view="">
+        <div>
 
+            <div ui-view="">
+
+            </div>
+
+            <subscribe ng-hide="state == 'contact' || state == 'login' || state == 'register' || state=='profile' " ng-include="'/static/app/views/directives/subscribe.html'"></subscribe>
+
+
+            <footer ng-hide="state == 'register' || state == 'login' || state=='profile'" ng-include="'/static/app/views/directives/footer.html'"></footer>
+
+            <div ng-hide="state == 'register' || state == 'login' || state=='profile'" class="footer-bottom">
+                <div class="container-fluid">
+                    <p>© Copyright 2017 Innstal. All Rights Reserved</p>
+                    <div class="pull-right">
+                        <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
+                        <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
+                        <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
+                    </div>
+                </div>
+            </div>
         </div>
-
-    </div>
 
         <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
         <script>
@@ -44,15 +62,12 @@
               delay: 150,
             });
         </script>
+
         <script>
             $(document).ready(function() {
-
-
               //stick in the fixed 100% height behind the navbar but don't wrap it
               $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-
               $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-
               // Enter your ids or classes
               var toggler = '.navbar-toggle';
               var pagewrapper = '#page-content';
@@ -61,68 +76,43 @@
               var slidewidth = '80%';
               var menuneg = '-100%';
               var slideneg = '-80%';
-
               function toggleSideBar(selected) {
-
                 $('#slidemenu').stop().animate({
                   left: selected ? menuneg : '0px'
                 });
-
                 $('#navbar-height-col').stop().animate({
                   left: selected ? slideneg : '0px'
                 });
-
                 $(pagewrapper).stop().animate({
                   left: selected ? '0px' : slidewidth
                 });
-
                 $(navigationwrapper).stop().animate({
                   left: selected ? '0px' : slidewidth
                 });
-
-
                 $(this).toggleClass('slide-active', !selected);
                 $('#slidemenu').toggleClass('slide-active');
-
-
                 $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
               }
-
               $("#slide-nav").on("click", toggler, function(e) {
-
                 var selected = false;
                 toggleSideBar(selected);
-
               });
-
               $("body").on("click", '.nav-close', function(e) {
                 var selected = true;
                 toggleSideBar(selected);
-
-
               });
-
               var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-
-
               $(window).on("resize", function() {
-
                 if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
                   $(selected).removeClass('slide-active');
                 }
-
-
               });
-
-
-
-
             });
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-        <script src="/static/app/scripts/js/ui-bootstrap-tpls-0.12.1.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/app.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/controller.js"></script>
-    </body>
+
+
+       </body>
+
+
+
 </html>

@@ -1211,6 +1211,67 @@ body.slide-active {
     font-weight: bold;
 }
 
+.checkbox label:after,
+.radio label:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.checkbox .cr,
+.radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    float: left;
+    margin-right: .5em;
+}
+
+.radio .cr {
+    border-radius: 50%;
+}
+
+.checkbox .cr .cr-icon,
+.radio .cr .cr-icon {
+    position: absolute;
+    font-size: .8em;
+    line-height: 0;
+    top: 50%;
+    left: 20%;
+}
+
+.radio .cr .cr-icon {
+    margin-left: 0.04em;
+}
+
+.checkbox label input[type="checkbox"],
+.radio label input[type="radio"] {
+    display: none;
+}
+
+.checkbox label input[type="checkbox"] + .cr > .cr-icon,
+.radio label input[type="radio"] + .cr > .cr-icon {
+    transform: scale(3) rotateZ(-20deg);
+    opacity: 0;
+    transition: all .3s ease-in;
+}
+
+.checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+.radio label input[type="radio"]:checked + .cr > .cr-icon {
+    transform: scale(1) rotateZ(0deg);
+    opacity: 1;
+}
+
+.checkbox label input[type="checkbox"]:disabled + .cr,
+.radio label input[type="radio"]:disabled + .cr {
+    opacity: .5;
+}
+
+
+
 /* Safari 4.0 - 8.0 */
 
 @-webkit-keyframes mymove {
@@ -1458,6 +1519,306 @@ body.slide-active {
     background: #ff9837;
 }
 
+.we-register {
+    padding-top: 7em;
+}
+
+.we-register .nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
+
+.we-register .nav-tabs>li>a {
+  margin-right: 2px;
+  line-height: 1.42857143;
+  border: 1px solid transparent;
+  border-radius: 15px 15px 0 0;
+  color: #000000;
+  font-size: 16px;
+  font-weight:  bold;
+  background: #dddddd;
+}
+
+.we-register  .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #000;
+    cursor: default;
+    background-color: #fff !important;
+    border-bottom-color: transparent;
+    border-top: 2px solid #dddddd;
+    border-left: 2px solid #dddddd;
+    border-right: 2px solid #dddddd;
+}
+
+.we-register  .nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+    margin: -1px 8px;
+}
+
+.we-register h1 {     font-size: 18px;
+    text-align: center;
+    padding: 15px;
+    background: #cdcdcd;
+    color: #ff373c;
+    font-weight: bold;
+}
+
+.datepicker {
+    background: url(../img/datepicker.png) right no-repeat;
+    background-size: contain;
+    margin-right: 30px;
+    background-color: #fff;
+    }
+
+
+#Registered-Warranties h3 {
+    font-size: 32px;
+    margin-top: 1em;
+    font-weight: bold;
+    margin-left: 18px;
+    }
+
+.claim {text-align: center;border: 20px solid #e1e1e1;margin-top:  20px;margin-bottom: 20px;}
+
+.claim h4 {font-size: 24px !important;text-align: center;text-transform: uppercase;font-weight:  bold;color: #ff9837;}
+
+.claim h5 {
+    font-size: 22px;
+    text-align: left;
+    padding: 5px;
+    font-weight:  bold;
+    margin-bottom: 5px;
+}
+
+.claim h6 {
+    text-align: left;
+    padding: 5px;
+    font-size: 22px;
+    color: #949494;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+.claim-btn {
+    margin-top: -85px;
+    text-align: center;
+    background: #ff9837;
+    color: #fff !important;
+    font-size: 18px;
+    }
+
+
+.datepicker-days { background: #fff;}
+
+.claim-head {
+    background: #f9f9f9;
+    padding: 5px;
+    border-bottom: 1px solid #cccccc;
+    }
+.claim-head h2 {
+    margin-top: 15px;
+    margin-bottom: 0.5em;
+    font-size: 36px;
+    padding-left: 15px;
+    display: inline-block;
+    font-weight: bold;
+    }
+
+.claim-head .btn-default {    background: #ff9837;
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: 1px 1px 7px 0px #2d2d2da8;}
+
+
+.claim-left {}
+
+.claim-left h2 {
+    font-size: 18px;
+    font-weight:  bold;
+}
+
+
+.claim-right h2 { text-align: center;
+    font-size: 18px;
+    font-weight: bold;}
+
+
+.Claim-list { margin: 0px;
+    border-top: 1px solid #dedede;}
+
+.Claim-list h4 {
+    color: #ff9837;
+    margin-bottom: 2px;
+}
+.Claim-list ul {
+    list-style-type:  none;
+    padding: 0px;
+    margin-bottom: 0px;
+}
+.Claim-list ul li  {
+    display: inline-block;
+    margin: 5px;
+}
+.Claim-list ul li a {
+    font-size: 14px;
+    color: #646464;
+    text-decoration:  none;
+}
+
+.Claim-list h6 {
+    margin-top: 0px;
+    margin-left: 5px;
+    color: #000000;
+    font-weight:  bold;
+    font-size: 14px;
+}
+
+.Claim-list h5 {  font-size: 18px;
+color: #000;
+font-weight: bold;
+margin-top: 1em; }
+
+
+.message-wrapper {
+    padding-top: 6em;
+    background: #f2f2f2;
+}
+
+
+.settings {
+    padding: 5px 10px;
+    background: white;
+    border-radius: 82%;
+    font-size: 20px;
+    box-shadow: 0px 0px 5px 0px #cdcdce;
+    color: #ff9837;
+    margin-top: 1.5em;
+}
+
+
+.message-head {
+    min-height: 90px;
+}
+
+.btn-message {
+    margin-right: -3px;
+    margin-top: 1.5em;
+    margin-left: 15px;
+    background: #fff;
+    box-shadow: 0px 0px 5px 0px #cdcdce;
+    font-size: 20px;
+    padding: 5px 20px;
+    border-radius: 2px;
+    }
+.btn-contacts {
+    background: #fff;
+    box-shadow: 0px 0px 5px 0px #cdcdce;
+    font-size: 20px;
+    padding: 5px 20px;
+    margin-top: 1.5em;
+    border-radius: 2px;
+}
+
+.message-head h2 {
+    margin-top:  0px;
+    padding-top: 15px;
+    font-size: 26px;
+    display: inline-block;
+    color: #000000;
+}
+
+.message-head h5 {
+    margin-top:  0px;
+    display: inline-block;
+    font-size: 16px;
+    color: #404545;
+    margin-left: 5px;
+}
+
+.message-head h4 {
+    margin-top: 0px;
+    color: #989898;
+    }
+
+.btn-option {
+    border-radius: 100%;
+    font-size: 15px;
+    background: #fff;
+    border: 2px solid #a0a09f;
+    color: #a0a09f;
+    margin-top: 20px;
+    padding: 5px 10px;
+    margin-right: 10px;
+}
+
+
+.btn-folder {
+    background: #fff;
+    border: 0px;
+    box-shadow: none;
+    color: #a0a09f;
+    margin-right: 10px;
+    font-size: 30px;
+    padding-top: 20px;
+    }
+
+
+  .message-head  .btn-default {
+        color: #fff !important;
+        background-color: #fff;
+        border-color: #ccc;
+        background: #ff9939 !important;
+        margin-top: 15px;
+        padding: 8px 21px;
+        margin-right: 2em;
+        font-size: 17px;
+        border: 0px;
+    }
+
+.message-left .input-group  {border: 1px solid #e6e6e6;margin-bottom: 10px;}
+
+.message-left .input-group-btn .btn-default {
+    border: 0px;
+    background: #fff !important;
+    color: #ff9e43;
+    height: 45px;
+    font-size: 18px;
+    }
+.message-left  .input-group  .form-control {
+    height: 45px;
+    border: 0px;
+    }
+
+
+    .message-left { min-height: 100vh;}
+
+.message-left .select {
+    box-shadow: 0px 0px 4px 0px #8e8a8a;
+    border: 0px;
+    margin-top: 1em;
+    background: #fff;
+}
+.message-left  .select::after {
+      content: "\f107";
+      position: absolute;
+      top: 10px;
+      font: normal normal normal 14px/1 FontAwesome;
+      right: -17px;
+      font-size: 33px;
+      bottom: 0;
+      padding: 0 1em;
+      background: none;
+      pointer-events: none;
+      color: #ff9837;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn.active.focus {
+    outline: thin dotted;
+    outline: 0px;
+    outline-offset: -2px;
+}
 
 /* screw writing importants and shit, just stick it in max width since these classes are not shared between sizes */
 
@@ -1564,6 +1925,54 @@ body.slide-active {
 }
 
 @media (max-width: 768px) {
+
+  .we-register .nav-tabs>li {
+      float: none;
+      margin-bottom: -1px;
+      margin: -1px 8px;
+  }
+
+  .we-register .nav-tabs>li>a {
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 0;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    background: #dddddd;
+}
+
+.claim-head h2 {
+    margin-top: 15px;
+    margin-bottom: 0.5em;
+    font-size: 24px;
+    padding-left: 15px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.claim-head .btn-default {
+    background: #ff9837;
+    color: #fff;
+    padding: 7px;
+    font-size: 13px;
+    margin-top: 10px;
+    margin-right: 10px;
+    box-shadow: 1px 1px 7px 0px #2d2d2da8;
+}
+
+.claim-left h2 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.claim-right h2 {
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+}
+
   .blog-details p {
     font-size: 14px;
     color: #7f7f7f;

@@ -18,6 +18,9 @@ body{
     position: relative;
     display: block;
 }
+.text-theme{
+    color: #fe9738;
+}
 a{
     color: #fe9738;
     transition: all 300ms ease-in-out;
@@ -35,6 +38,13 @@ a:active{
     -webkit-transition: all 300ms ease-in-out;
     -moz-transition: all 300ms ease-in-out;
     -ms-transition: all 300ms ease-in-out;
+    outline: none;
+}
+.btn:hover,
+.btn:focus,
+.btn:active,
+.btn.active{
+    outline: none;
 }
 .head-title{
     margin-bottom: 55px;
@@ -57,6 +67,9 @@ a:active{
     color: #ffffff;
     border-radius: 100px;
 }
+.b-curve{
+    border-radius: 5px !important;
+}
 .btn-icons {
     background-color: transparent;
     color: #969595;
@@ -76,6 +89,33 @@ a:active{
     color: #fe9738;
     text-decoration: none;
 }
+.btn-link-secondary {
+    background-color: transparent;
+    color: #949393;
+    font-size: 20px;
+}
+.btn-link-secondary:hover,
+.btn-link-secondary:focus{
+    color: #da751e;
+}
+.btn-secondary {
+    background-color: #969595;
+    color: #3c3a3a;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    -moz-transition: all 300ms ease-in-out;
+    -ms-transition: all 300ms ease-in-out;
+}
+.btn-secondary:hover,
+.btn-secondary:focus
+.btn-secondary:active,
+.btn-secondary.active {
+    background-color: #363636;
+    color: #ffffff;
+    text-decoration: none;
+}
 .btn-theme {
     background-color: #fe9738;
     color: #fff;
@@ -89,10 +129,59 @@ a:active{
     background-color: #da751e;
     color: #fff;
 }
+.text-lg{
+    font-size: 18px;
+}
 .width-pixer{
     padding: 7px 35px;
 }
 /* CHECKBOX STYLE */
+.cs-checkbox{
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+.cs-checkbox label{
+    color: #fe9738;
+    font-weight: 600;
+    padding-left: 0px;
+}
+.cs-checkbox input[type=checkbox] ~ label .cs-checkbox-input{
+    margin-right: 7px;
+}
+.cs-checkbox input[type=checkbox] ~ label .cs-checkbox-input::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background-color: rgb(255, 255, 255);
+    content: '';
+    z-index: 111;
+    height: 11px;
+    width: 11px;
+    border-radius: 2px;
+}
+.cs-checkbox input[type=checkbox]:checked ~ label .cs-checkbox-input::after {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    background-color: #fe9738;
+    content: '';
+    z-index: 111;
+    height: 11px;
+    width: 11px;
+    border-radius: 2px;
+}
+.cs-checkbox .cs-checkbox-input{
+    position: relative;
+    display: inline-block;
+    height: 17px;
+    width: 17px;
+    border-radius: 3px;
+    border: 1px solid #fe9738;
+    background-color: #ffffff;
+    content: '';
+    vertical-align: middle;
+}
   .custom-radio {
     display: none;
   }
@@ -148,7 +237,7 @@ a:active{
   .custom-radio:disabled + label, .custom-radio:disabled + label span {
     cursor: default;
   }
-
+  
   .custom-checkbox {
     display: none;
   }
@@ -198,7 +287,7 @@ a:active{
   .custom-checkbox:disabled + label, .custom-checkbox:disabled + label span {
     cursor: default;
   }
-
+  
   .chkbx-toggle {
     display: none;
   }
@@ -303,7 +392,38 @@ a:active{
   }
 
 /* CHECKBOX STYLE END */
-
+.btn-sm-wl{
+    padding: 5px 20px;
+    min-width: 120px;
+}
+.custome-uplode-file {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+.custome-uplode-file .input-form-upload {
+    position: absolute;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    cursor: pointer;
+    opacity: 0;
+}
+.custome-uplode-file .input-form-upload + .btn-theme,
+.custome-uplode-file .input-form-upload + .btn-theme{
+    color: #fff;
+    padding: 5px 20px;
+}
+.custome-uplode-file .input-form-upload:hover + .btn-theme,
+.custome-uplode-file .input-form-upload:focus + .btn-theme{
+    background-color: #da751e;
+    color: #fff;
+    padding: 5px 20px;
+}
 h1,
 h2,
 h3,
@@ -652,7 +772,7 @@ h6{
     background-color: #00000015;
     padding: 0px 18px;
     vertical-align: middle;
-
+    
     transition: all 300ms ease-in-out;
     -webkit-transition: all 300ms ease-in-out;
     -moz-transition: all 300ms ease-in-out;
@@ -1022,7 +1142,7 @@ h6{
 }
 .dash-body{
     background-color: #f8f9fb;
-    overflow-x: hidden;
+    overflow-x: hidden; 
 }
 .top-navbx {
     position: fixed;
@@ -1121,13 +1241,13 @@ h6{
 }
 .jqplot-title{
     text-align: left !important;
-    margin-bottom: 15px;
+    margin-bottom: 15px; 
 }
 .chart-colorcom {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    z-index: 100;
+    position: relative;
+    text-align: right;
+    width: 100%;
+    display: inline-block;
     color: #9c9c9c;
 }
 .color-spot {
@@ -1140,12 +1260,11 @@ h6{
     vertical-align: middle;
 }
 .chart-colorcom.down {
-    top: 40px;
-    left: 15px;
+   text-align: left;
 }
 .chart-colorcom.down ~ .jqplot-target .jqplot-title{
     text-align: left !important;
-    margin-bottom: 25px;
+    margin-bottom: 25px; 
 }
 .chart-section-btn{
     margin-bottom: 15px;
@@ -1154,10 +1273,510 @@ h6{
     display: block;
     text-align: center;
 }
+select.input-form{
+    height: 25px;
+    width: 100%;
+    max-width: 200px;
+    padding: 1px 7px;
+    padding-right: 25px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: #ffffff;
+    background-image: url('../../images/dropdown2.png');
+    background-position: center right 7px;
+    background-repeat: no-repeat;
+    background-size: 10px;
+}
+select.form-control{
+    padding-right: 25px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('../../images/dropdown.png');
+    background-position: center right 10px;
+    background-repeat: no-repeat;
+    background-size: 10px;
+}
+.input-form-chart{
+    height: 30px;
+    width: 100%;
+    max-width: 200px;
+    padding: 5px 7px;
+    border: 1px solid #ccc;
+}
+.input-form-chart:focus{
+    height: 30px;
+    width: 100%;
+    max-width: 200px;
+    padding: 5px 7px;
+    border: 1px solid #fea551;
+}
+select.input-form-chart{
+    height: 30px;
+    width: 100%;
+    max-width: 200px;
+    padding: 5px 7px;
+    border: 1px solid #ccc;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('../../images/dropdown.png');
+    background-position: center right 7px;
+    background-repeat: no-repeat;
+    background-size: 10px;
+}
+.input-form-chart.calendar{
+    background-image: url('../../images/calendar.png');
+    background-position: center right 7px;
+    background-repeat: no-repeat;
+    background-size: 20px;
+}
+.chart-common{
+    width: 100% !important;
+}
+.grid-manualcard{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+    text-align: center;
+}
+.grid-manualcard li{
+    list-style: none;
+    padding: 10px;
+    margin: 0px;
+    display: inline-block;
+    max-width: 350px;
+}
+.grid-manualcard li .manual-card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.grid-manualcard li .manual-card .manual-image{
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+}
+.manual-img{
+    max-width: 100%;
+    display: block;
+    position: relative;
+}
+.manula-card-btns{
+    width: 100%;
+    display: inline-block;
+    padding: 5px;
+}
+.manula-card-btns button{
+    margin-bottom: 5px;
+}
+.publish.btn-theme {
+    background-color: #5e676f;
+    color: #fff;
+}
+.publish-sticker {
+    background-color: #fe9738;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+    padding: 20px 5px;
+    border-radius: 0px 0px 100%;
+    color: #fff;
+    font-size: 12px;
+    min-width: 75px;
+    text-align: left;
+    height: 65px;
+}
+.nav-item.nav-link span {
+    border: 1px solid #a9a9a9;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #464646;
+    transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    -moz-transition: all 300ms ease-in-out;
+    -ms-transition: all 300ms ease-in-out;
+}
+
+.nav-item.nav-link{
+    padding: 10px; 
+}
+.nav.nav-tabs li.active .nav-item.nav-link span,
+.nav.nav-tabs li:hover .nav-item.nav-link span {
+    border: 1px solid transparent;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: transparent;
+}
+.manual-image .overlay-img{
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    transform: scale(0,0);
+    -webkit-transform: scale(0,0);
+    -moz-transform: scale(0,0);
+    background-color: #fea551b2;
+    transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    -moz-transition: all 300ms ease-in-out;
+    -ms-transition: all 300ms ease-in-out;
+}
+.manual-image:hover .overlay-img{
+    position: absolute;
+    display: block;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: #fea551b2;
+    transform: scale(1,1);
+    -webkit-transform: scale(1,1);
+    -moz-transform: scale(1,1);
+}
+.overlay-content {
+    position: absolute;
+    top: 40%;
+    text-align: center;
+    width: 100%;
+    left: 0px;
+    color: #fff;
+    z-index: 100;
+    font-size: 24px;
+}
+.widger-sector h6 {
+    font-size: 16px;
+}
+.font-lsit{
+    font-size: 14px;
+    font-weight: 600;
+}
+.icon-font-lsit{
+    color: #969696;    
+}
+.icon-font-lsit.theme{
+    color: #fe9738;    
+}
+.b-curve.btn-block{
+    min-width: 100%;
+}
+.claim-listbx .box-sect:not(:last-child){
+    border-bottom: 1px solid #cccccc;
+}
+.claim-listbx .box-sect{
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+.wrrnty-name{
+    color: #303030;
+}
+.innstal-modal {
+    z-index: 10000;
+}
+.innstal-modal .modal-dialog {
+    width: 86%;
+    margin-right: 0px;
+    margin-top: 0px;
+}
+.innstal-modal .close {
+    position: absolute;
+    left: -70px;
+    background-color: #fff;
+    opacity: 1;
+    height: 50px;
+    line-height: 1;
+    width: 50px;
+    border-radius: 100px;
+    font-size: 42px;
+    font-weight: 500;
+    vertical-align: middle;
+    color: #fe9738;
+}
+.innstal-modal .close > span[aria-hidden=true]{
+    top: -3px;
+    position: relative;
+}
+.innstal-modal .modal-content{
+    border-radius: 0px;
+}
+.innstal-modal .modal-header {
+    min-height: 16.43px;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0px 0px 20px #00000042;
+}
+.innstal-modal  .modal-body {
+    position: relative;
+    padding: 15px;
+    background-color: #f1f1f1;
+}
+.detailbx {
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 15px;
+    padding: 15px 35px;
+    display: block;
+    position: relative;
+    clear: both;
+}
+.detailbx-sect{
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+.label-lab {
+    display: inline-block;
+    position: relative;
+    min-width: 150px;
+}
+.shadow{
+    box-shadow: 0px 0px 10px #00000065;
+}
+.has-scroll{
+    max-height: 400px;
+    position: relative;
+    overflow-y: auto;
+    display: block;
+}
+.panel-topbx{
+    color: #fe9738;
+    font-weight: 600;
+}
+.panel-body.history{
+    border-bottom: 1px solid #c3c3c3;
+}
+.content-panel{
+    max-height: 400px;
+    overflow-y: auto;
+    display: block;
+    position: relative;
+    min-height: 300px;
+    padding: 15px;
+}
+.panal-controls{
+    border-top: 1px solid #cccccc;
+    padding: 15px;
+    display: block;
+    position: relative;
+}
+.input-group-btn .btn-attach {
+    background-color: transparent;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-size: 18px;
+    color: #a2a2a2;
+}
+.input-group-btn .btn-attach:hover,
+.input-group-btn .btn-attach:focus{
+    color: #fea551;
+}
+.input-group-btn .btn-attach:last-child {
+    background-color: transparent;
+    border-right: 1px solid #ccc;
+}
+.dash-user-email{
+    margin-bottom: 5px;
+    font-size: 12px;
+    color: #ffffff;
+    text-align: center
+}
+.croppie-container{
+    text-align: center;
+}
 /* DASHBOARD END */
 
 /* MEDIA QUERY */
+@media (min-width: 992px) and (max-width: 1300px){
+    .split-col-md{
+        width: 100%;
+    }
+}
+@media (min-width: 992px) and (max-width: 1100px){
+    .top-navbx {
+        position: fixed;
+        left: 220px;
+        top: 0px;
+        z-index: 10000;
+        right: 0px;
+        padding: 15px 20px;
+        background-color: #f8f9fb;
+    }
+    .side-nav {
+        background-color: #ff9937;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        display: block;
+        z-index: 1000;
+        max-width: 220px;
+    }
+    .dash-menubx.absolute-fix {
+        position: relative;
+        z-index: 100;
+        bottom: 0px;
+        margin-top: 0px;
+    }
+    .dash-menubx li a{
+        display: block;
+        position: relative;
+        padding: 10px 15px;
+        font-weight: 700;
+        padding-left: 15px;
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 12px;
+        text-align: center;
+    }
+    .dash-menubx li a .icon-menubar {
+        position: relative;
+        left: initial;
+        top: initial;
+        font-weight: 500;
+        font-size: 30px;
+        display: block;
+        text-align: center;
+    }
+    .dash-content {
+        padding-left: 240px;
+        margin-top: 100px;
+        padding-right: 15px;
+        transition: all 300ms ease-in-out;
+        -webkit-transition: all 300ms ease-in-out;
+        -moz-transition: all 300ms ease-in-out;
+        -ms-transition: all 300ms ease-in-out;
+    }
+}
+@media screen and (max-width: 991px){
+    .innstal-modal .modal-header .btn span{
+        display: none;
+    }
+    .b-curve.btn-block{
+        min-width: 100%;
+    }
+    .dash-menubx{
+        list-style: none;
+        position: relative;
+        display: block;
+        margin: 0px;
+        margin-top: 20px;
+        padding: 0px;
+    }
+    .dash-menubx.absolute-fix{
+        position: relative;
+        z-index: 100;
+        bottom: 20px;
+        margin-top: 20px;
+    }
+    .dash-menubx li a{
+        display: block;
+        position: relative;
+        padding: 13px 15px;
+        font-weight: 700;
+        padding-left: 0px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+    .side-nav{
+        background-color: #ff9937;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        display: block;
+        z-index: 1000;
+        max-width: 280px;
+        left: -100%;
+        top: 0px;
+    }
+    .dash-content {
+        padding-left: 15px;
+        margin-top: 100px;
+        padding-right: 15px;
+    }
+    .top-navbx {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        z-index: 10000;
+        right: 0px;
+        padding: 15px 20px;
+        background-color: #f8f9fb;
+    }
+    .menu-btn {
+        position: fixed;
+        display: block;
+        bottom: 15px;
+        right: 15px;
+        z-index: 10000;
+    }
+    .menu-btn .btn {
+        border-radius: 100px;
+        height: 70px;
+        width: 70px;
+        padding: 15px;
+        font-size: 12px;
+        box-shadow: 0px 0px 13px #ffcc9b;
+        cursor: pointer;
+    }
+    body.open .side-nav{
+        background-color: #ff9937;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        display: block;
+        z-index: 1000;
+        max-width: 280px;
+        left: 0%;
+        top: 0px;
+    }
+    body.open .dash-content {
+        padding-left: 300px;
+        margin-top: 100px;
+        padding-right: 15px;
+        min-width: 500px;
+    }
+    body.open .top-navbx {
+        position: fixed;
+        left: 300px;
+        top: 0px;
+        z-index: 10000;
+        right: 0px;
+        padding: 15px 20px;
+        background-color: #f8f9fb;
+    }
+    .menu-btn {
+        position: fixed;
+        display: block;
+        bottom: 0px;
+        right: 0px;
+        left: 0px;
+        z-index: 10000;
+        width: 100%;
+    }
+    .menu-btn .btn {
+        width: 100%;
+        padding: 15px;
+        border-radius: 0px;
+    }
+}
 @media screen and (max-width: 767px){
+    .b-curve.btn-block{
+        min-width: 100%;
+    }
     .menu{
         float: right;
         display: inline-block;
@@ -1338,5 +1957,11 @@ h6{
         width: 100%;
         padding: 15px;
         border-radius: 0px;
+    }
+    .innstal-modal .modal-dialog {
+        width: 86%;
+        margin-right: 0px !important;
+        margin-top: 0px;
+        margin-left: auto;
     }
 }

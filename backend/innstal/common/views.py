@@ -59,11 +59,12 @@ class UserCreate(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        return Response({'message':'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+        return Response({'message' : 'User not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
 
 
 class Login(APIView):
-    def post(self,request):
+
+    def post(self, request):
         response = {}
         email = request.data.get("email")
         password = request.data.get("password")

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'warranty',
     'ckeditor',
     'django_countries',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +59,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'innstal.urls'
+
+# APPEND_SLASH = False
 
 TEMPLATES = [
     {
@@ -109,10 +112,14 @@ DATABASES = {
 # }
 
 REST_FRAMEWORK = {
+    # 'DEFAULT_PERMISSION_CLASSES': (
+    #     'rest_framework.permissions.AllowAny',
+    #     # 'rest_framework.permissions.IsAuthenticated',
+    #     # 'rest_framework.permissions.IsAdminUser',
+    # ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication'
     )
 }
 
@@ -159,7 +166,7 @@ SITE_ID = 1
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR,'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'staticfiles'),)
 

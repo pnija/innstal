@@ -16,7 +16,7 @@
                                                 <form name="loginForm" class="marginBottom-m breakPointS-marginBottom-l" novalidate>
                                                     <div class="marginBottom-m email">
                                                         <div class="width-100 uiIcon uiIcon--l">
-                                                            <input class="width-100 input input--default input--l" type="email" ng-model="logindata.email" spellcheck="false" name="signin-email" placeholder="Email address">
+                                                            <input class="width-100 input input--default input--l" type="email" ng-model="logindata.email" spellcheck="false" name="signin-email" placeholder="Email address" required>
                                                             <span style="color:red" ng-show="loginForm.signin-email.$error">
                                                                 <span ng-show="submitted && loginForm.signin-email.$error.required">This field is required.</span>
                                                                 <span ng-show="submitted && loginForm.signin-email.$error.email">Invalid email address.</span>
@@ -37,21 +37,21 @@
                                                     </div>
 
                                                     <div class="marginBottom-m textAlign-center breakPointS-textAlign-right">
-                                                    <div class="checkbox pull-left">
-                                                    <label>
-                                                    <input type="checkbox" value="">
-                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                    Remember Me
-                                                    </label>
-                                                    </div>
-                                                    <span data-target=".forget-password" data-toggle="modal" class="forgot-password link link--light fontWeight-3 pull-right">
-                                                    Forgot password?
-                                                    </span>
+                                                        <div class="checkbox pull-left">
+                                                            <label>
+                                                                <input type="checkbox" value="">
+                                                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                                Remember Me
+                                                            </label>
+                                                        </div>
+                                                        <span data-target=".forget-password" data-toggle="modal" class="forgot-password link link--light fontWeight-3 pull-right">
+                                                        Forgot password?
+                                                        </span>
                                                     </div>
                                                     <div>
-                                                    <button id="login-button" type="submit" class="width-100 button button--l btn-primary button--flat  c-white" ng-click="submitted=true;login(logindata);">
-                                                    Sign in
-                                                    </button>
+                                                        <button id="login-button" type="submit" class="width-100 button button--l btn-primary button--flat  c-white" ng-click="submitted=true;login(logindata);">
+                                                        Sign in
+                                                        </button>
                                                     </div>
                                                 </form>
 

@@ -2,16 +2,19 @@
 angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap'])
 .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.hashPrefix('');
+    $urlRouterProvider.otherwise('/');
     $stateProvider
         .state('home', {
-            url: '',
+            url: '/',
             templateUrl: '/static/app/base.html',
             controller: 'basecontroller',
+            cache: false,
         })
         .state('login', {
             url: '/login',
             templateUrl: '/static/app/views/signin.html',
             controller: 'logincontroller',
+            cache: false,
         })
         .state('register', {
             url: '/register',
@@ -32,12 +35,14 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             url: '/blog',
             templateUrl: '/static/app/views/blog-homepage.html',
             controller: 'bloghomecontroller',
+            cache: false,
         })
         .state('blog-detail', {
             url: '/blog/:id',
             params: { id : null },
             templateUrl: '/static/app/views/blog-details.html',
             controller: 'blogdetailcontroller',
+            cache: false,
         })
         .state('contact', {
             url: '/contact',
@@ -45,7 +50,7 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
         })
         .state('warranty', {
             url: '/warranty',
-            templateUrl: '/static/app/views/register-for-warranty.html',
+            templateUrl: '/static/app/views/register-for-warranty1.html',
             controller: 'warrantyregistercontroller',
         })
         .state('activate', {
@@ -65,5 +70,32 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/search-results.html',
             controller: 'searchResultController'
         })
+        .state('profile', {
+            url: '/profile/',
+            templateUrl: '/static/app/views/general_profile.html',
+            controller: 'profileController'
+        })
 })
+.run(function($rootScope, $http, $window, $state) {
+    $rootScope.logout = function() {
+        $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
 
+                }, function (response) {
+                    console.log('i am in error');
+            });
+    };
+    if($window.sessionStorage.token){
+
+        $rootScope.user_id = $window.sessionStorage.token;
+    }
+    else{
+        $rootScope.user_id = null;
+    }
+})

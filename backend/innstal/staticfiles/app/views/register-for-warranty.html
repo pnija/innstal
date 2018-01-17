@@ -71,13 +71,13 @@
                         <div class="row">
                             <div class="col-sm-8">
                                 <div class="form-warranty">
-                                    <form action="" method="get">
+                                        <form  name="warrantyForm" novalidate>
                                         <h2>Do it once but do it better</h2>
                                         <h4>Your Information</h4>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Enter Your Name" ng-model="form.first_name"/>
+                                                    <input type="text" class="form-control" placeholder="Enter Your Name" ng-model="form.username"/>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -92,6 +92,7 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
+                                                    <input type="hidden" value="{{form.id}}" name="user_profile" ng-model="form.id">
                                                     <input type="text" class="form-control" placeholder="Address" ng-model="form.address"/>
                                                 </div>
                                             </div>
@@ -100,24 +101,18 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <div class="select">
-                                                                <select name="slct" id="slct">
-                                                                    <option>City</option>
-                                                                    <option value="1">Pure CSS</option>
-                                                                    <option value="2">No JS</option>
-                                                                    <option value="3">Nice!</option>
-                                                                </select>
+                                                            <select name="purchase_city" id="" ng-model="form.city">
+                                                            <option value="{{city.id}}" ng-repeat="city in user_profile_city">{{city.name}}</option>
+                                                        </select>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
-                                                            <div class="select">
-                                                                <select name="slct" id="slct1">
-                                                                    <option>State</option>
-                                                                    <option value="1">Pure CSS</option>
-                                                                    <option value="2">No JS</option>
-                                                                    <option value="3">Nice!</option>
-                                                                </select>
+                                                           <div class="select">
+                                                                <select name="purchase_state" id="" ng-model="form.state">
+                                                            <option value="{{state.code}}" ng-repeat="state in user_profile_state">{{state.name}}</option>
+                                                            </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -128,12 +123,9 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <div class="select">
-                                                                <select name="slct" id="slct">
-                                                                    <option>Country</option>
-                                                                    <option value="1">Pure CSS</option>
-                                                                    <option value="2">No JS</option>
-                                                                    <option value="3">Nice!</option>
-                                                                </select>
+                                                                <select name="purchase_country" ng-model="form.country">
+                                                            <option value="{{country.code}}" ng-repeat="country in user_profile_countries">{{country.name}}</option>
+                                                            </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -161,12 +153,9 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="slct" id="slct">
-                                                            <option>Product Type</option>
-                                                            <option value="1">Pure CSS</option>
-                                                            <option value="2">No JS</option>
-                                                            <option value="3">Nice!</option>
-                                                        </select>
+                                                        <select name="product" id="slct2">
+                                                        <option  ng-model="form.product" value="{{product_type.id}}" ng-repeat="product in product_type">{{product.type_name}}</option>
+                                                    </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,7 +172,7 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="slct" id="slct3" ng-model="form.purchase_country">
+                                                        <select name="purchase_country" id="slct3" ng-model="form.purchase_country">
                                                             <option value="{{country.code}}" ng-repeat="country in countries">{{country.label}}</option>
                                                         </select>
                                                     </div>
@@ -191,9 +180,10 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Date of Purchase" ng-model="form.purchase_date"/>
+                                                    <!--<input type="text" class="form-control" placeholder="Date of Purchase" ng-model="form.purchase_date"/>-->
                                                 </div>
                                             </div>
+
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <textarea rows="5" class="form-control" placeholder="Additional Info" ng-model="form.additional_info"></textarea>
@@ -202,7 +192,7 @@
                                             <div class="clearfix"></div>
                                             <div class="col-sm-6" style="padding:0px;">
                                                 <div class="col-sm-7">
-                                                    <input type="file" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                                    <input type="file" name="warranty_image" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
                                                     <label for="file-1">
                                                         <spa>
                                                         <i class="fa fa-upload" aria-hidden="true"></i>  Upload Image</span>
@@ -218,7 +208,7 @@
                                         <span class="checkmark"></span>
                                         </label>
                                         <div align="center">
-                                            <button  class="btn btn-Register">Register Warranty Card</button>
+                                            <button  type="button" class="btn btn-Register" ng-click="submit(form)">Register Warranty Card</button>
                                         </div>
                                     </form>
                                 </div>

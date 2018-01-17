@@ -1,394 +1,88 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="#">
-    <link rel="apple-touch-icon-precomposed" href="#">
-    <!-- favicon END -->
-    <title>innstal</title>
-
-    <!-- EXTERNAL STYLESHEET -->
-    <link type="text/css" rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="/static/app/styles/css/main1.css">
-    <link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
-    <link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
-    <!-- EXTERNAL STYLESHEET END -->
-</head>
-
-<body>
-    <!-- Main Box -->
-    <div class="container-fluid">
-        <div class="row">
-            <!-- header -->
-            <div ng-if="user_id">
-                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-toggle">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </a>
-                            <a class="navbar-brand" ui-sref="home"><img src="/static/app/images/logo-primary.png" /></a>
-
-                        </div>
-
-                        <div class="col-sm-4 hidden-xs">
-                            <div class="inner-addon right-addon">
-                                <span class="glyphicon glyphicon-search"></span>
-                                <input type="text" placeholder="Search User Manual" class="form-control">
-                            </div>
-                        </div>
-
-
-                        <div id="slidemenu">
-
-                        <div class="user-image pull-right hidden-xs dropdown ">
-                            <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
-                            <div class="dropdown-content">
-                                <a href="#"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
-                                <a ng-click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
-                            </div>
-                        </div>
-
-                        <ul class="nav navbar-nav navbar-right">
-
-                            <button style="
-                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
-
-                            <div class="xs-user-img visible-xs">
-
-                                <img class="img-circle" src="/static/app/images/user-pic.png">
-
-                            </div>
-
-                            <div style="    margin: 15px;" class=" visible-xs">
-
-                                <div class="inner-addon right-addon">
-                                <span class="glyphicon glyphicon-search"></span>
-                                <input type="text" placeholder="Search User Manual" class="form-control">
-                                </div>
-
-                            </div>
-
-                            <li ><a href="#">Warranties</a></li>
-
-                            <li><a href="#">Manuals </a></li>
-                            <li><a href="#">Message </a></li>
-                            <li><a ui-sref="blog">Blog </a></li>
-                            <li><a href="#">Help</a></li>
-
-                        </ul>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div ng-if="!user_id">
-                <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
-                    <div class="container-fluid">
-                        <div class="navbar-header">
-                            <a class="navbar-toggle">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            </a>
-                            <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png"/></a>
-
-                        </div>
-                        <div id="slidemenu">
-                            <ul class="nav navbar-nav navbar-right">
-
-                            <button style="
-                            " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
-
-                                 <li><a href="#">How it works</a></li>
-                                 <li><a ui-sref="blog">Blog</a></li>
-                                 <li><a href="#">Business</a></li>
-                                 <ul class="pull-right login">
-                                     <li class="hidden-xs"><a ui-sref="register" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
-                                     <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
-                                 </ul>
-                            <div align="center">
-                                 <button class="btn xs-login visible-xs">
-                                 <i class="fa fa-lock" aria-hidden="true"></i> Login
-                               </button>
-                               <div class="clearfix"></div>
-                            </div>
-                            <div align="center">
-
-                               <button class="btn xs-login visible-xs xs-join">
-                               <i class="fa fa-user" aria-hidden="true"></i> Join
-                               </button>
-                            </div>
-
-
-                            </ul>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- header END -->
-
-            <!-- content-section -->
-            <div class="content-section">
-
-                <!-- Banner -->
-                <section class="section">
-                    <div class="banner" style="background-image: url('/static/app/images/bg_01.jpg')">
-                        <div class="content-overlay">
-                            All Categories
-                        </div>
-                    </div>
-                </section>
-                <!-- Banner END -->
-
-                <!-- contentbx -->
-                <section class="section">
-                    <div class="container-cs content-box">
-                        <ul class="grid-cntent">
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Laptops</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Smart Watch</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img03.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text ">Camera</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img04.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Drones</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img05.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text ">Solar Panel</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img06.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Refrigerators</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img07.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text">Mobile Phones</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Laptops</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
-                                    <span class="grid-text bottom">Smart Watch</span>
-                                </a>
-                            </li>
-                        </ul>
-
-                        <div class="form-group text-center">
-                            <button class="btn btn-outline-secondary btn-round">Load More</button>
-                        </div>
-                    </div>
-                </section>
-                <!-- contentbx END -->
-
-            </div>
-            <!-- content-section END -->
-        </div>
-
-        <!-- Footer -->
-
-        <!-- Footer END -->
-    </div>
-    <!-- Main Box END -->
-
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                        <h2>
-                            Instruction Manual
-                            <hr align="left" />
-                        </h2>
-                        <a href="#" class="col-sm-6">Acer</a>
-                        <a href="#" class="col-sm-6">Epson</a>
-                        <a href="#" class="col-sm-6">AEG</a>
-                        <a href="#" class="col-sm-6">Frigidaire</a>
-                        <a href="#" class="col-sm-6">Asus</a>
-                        <a href="#" class="col-sm-6">Fujitsu</a>
-                        <a href="#" class="col-sm-6">Black & Decker</a>
-                        <a href="#" class="col-sm-6">GE</a>
-                        <a href="#" class="col-sm-6">Bosch</a>
-                        <a href="#" class="col-sm-6">Haier</a>
-                        <a href="#" class="col-sm-6">Brother</a>
-                        <a href="#" class="col-sm-6">Hitachi</a>
-                        <a href="#" class="col-sm-6">Canon</a>
-                        <a href="#" class="col-sm-6">Honda</a>
-                        <a href="#" class="col-sm-6">Casio</a>
-                        <a href="#" class="col-sm-6">More</a>
-                    </div>
-                    <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                        <h2>
-                            Company
-                            <hr align="left" />
-                        </h2>
-                        <a href="#">How It Works </a>
-                        <a href="#"> Business </a>
-                        <a ui-sref="blog"> Blog </a>
-                        <a ui-sref="contact"> Contact Us </a>
-                        <a href="#"> Privacy Policy </a>
-                        <a href="#"> Disclaimer </a>
-                        <a href="#"> Terms and Conditions </a>
-                    </div>
-                    <div class="col-sm-6" data-aos="fade-up" data-aos-once="true">
-                        <h2>
-                            Contact Details
-                            <hr align="left" />
-                        </h2>
-                        <p> <i class="fa fa-envelope" aria-hidden="true"></i> Info@innstal.com</p>
-                        <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Studio 103, The Business Centre, 61 Wellfield Road,<br> Roath, Cardiff CF24 3DG
-                        </p>
-                        <h4>Subscribe</h4>
-                        <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h5>
-                        <div class="inner-addon right-addon">
-                            <p style="    position: absolute;
-                                margin: 0px;
-                                right: 10px;
-                                color: #ff9837;
-                                top: 15px;"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Subscribe </p>
-                            <input placeholder="Enter Your Email Address" type="text" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <div class="footer-bottom">
-            <div class="container-fluid">
-                <p>© Copyright 2017 Innstal. All Rights Reserved</p>
-                <div class="pull-right">
-                    <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
-                    <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
-                    <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
-                </div>
+<link type="text/css" rel="stylesheet" href="/static/app/styles/css/main1.css">
+<link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
+<link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
+<div ng-if="user_id">
+    <header ng-include="'/static/app/views/directives/header-after-login.html'"></header>
+</div>
+<div ng-if="!user_id">
+    <header ng-include="'/static/app/views/directives/header-before-login.html'"></header>
+</div>
+<!-- header END -->
+<!-- content-section -->
+<div class="content-section">
+    <!-- Banner -->
+    <section class="section">
+        <div class="banner" style="background-image: url('/static/app/images/bg_01.jpg')">
+            <div class="content-overlay">
+                All Categories
             </div>
         </div>
-        <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
-        <script>
-            window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
-        </script>
-        <script src="/static/app/scripts/js/vendor/bootstrap.min.js"></script>
-        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-        <script src="/static/app/scripts/js/main.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/js/jquery.pinto.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/js/imagesloaded.pkgd.min.js"></script>
-        <script>
-            AOS.init({
-              offset: 200,
-              duration: 600,
-              easing: 'ease-in-sine',
-              delay: 150,
-            });
-        </script>
-        <script>
-            $(document).ready(function() {
-
-
-              //stick in the fixed 100% height behind the navbar but don't wrap it
-              $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-
-              $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-
-              // Enter your ids or classes
-              var toggler = '.navbar-toggle';
-              var pagewrapper = '#page-content';
-              var navigationwrapper = '.navbar-header';
-              var menuwidth = '100%'; // the menu inside the slide menu itself
-              var slidewidth = '80%';
-              var menuneg = '-100%';
-              var slideneg = '-80%';
-
-              function toggleSideBar(selected) {
-
-                $('#slidemenu').stop().animate({
-                  left: selected ? menuneg : '0px'
-                });
-
-                $('#navbar-height-col').stop().animate({
-                  left: selected ? slideneg : '0px'
-                });
-
-                $(pagewrapper).stop().animate({
-                  left: selected ? '0px' : slidewidth
-                });
-
-                $(navigationwrapper).stop().animate({
-                  left: selected ? '0px' : slidewidth
-                });
-
-
-                $(this).toggleClass('slide-active', !selected);
-                $('#slidemenu').toggleClass('slide-active');
-
-
-                $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
-              }
-
-              $("#slide-nav").on("click", toggler, function(e) {
-
-                var selected = false;
-                toggleSideBar(selected);
-
-              });
-
-              $("body").on("click", '.nav-close', function(e) {
-                var selected = true;
-                toggleSideBar(selected);
-
-
-              });
-
-              var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-
-
-              $(window).on("resize", function() {
-
-                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                  $(selected).removeClass('slide-active');
-                }
-
-
-              });
-
-
-
-
-            });
-        </script>
-</body>
-</html>
+    </section>
+    <!-- Banner END -->
+    <!-- contentbx -->
+    <section class="section">
+        <div class="container-cs content-box">
+            <ul class="grid-cntent">
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Laptops</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Smart Watch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img03.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text ">Camera</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img04.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Drones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img05.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text ">Solar Panel</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img06.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Refrigerators</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img07.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text">Mobile Phones</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Laptops</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
+                    <span class="grid-text bottom">Smart Watch</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="form-group text-center">
+                <button class="btn btn-outline-secondary btn-round">Load More</button>
+            </div>
+        </div>
+    </section>
+    <!-- contentbx END -->
+</div>
+<!-- content-section END -->

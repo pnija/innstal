@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 
+
 # Create your models here.
 
 
@@ -27,8 +28,8 @@ class Country(models.Model):
 class City(models.Model):
     name = models.CharField(max_length=45)
     code = models.CharField(max_length=45)
-    state = models.ForeignKey('common.State')
-    country = models.ForeignKey('common.Country')
+    state = models.ForeignKey('common.State', null=True, blank=True)
+    country = models.ForeignKey('common.Country', null=True, blank=True)
 
     def __str__(self):
         return "%s" % (self.name)
@@ -38,11 +39,10 @@ class City(models.Model):
         verbose_name_plural = 'Cities'
 
 
-
 class State(models.Model):
-    name = models.CharField(max_length=45)
-    code = models.CharField(max_length=45)
-    country = models.ForeignKey('common.Country')
+    name = models.CharField(max_length=45,null=True,blank=True)
+    code = models.CharField(max_length=45,null=True,blank=True)
+    country = models.ForeignKey('common.Country', null=True)
 
     def __str__(self):
         return "%s" % (self.name)

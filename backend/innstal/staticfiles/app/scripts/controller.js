@@ -337,4 +337,4 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         };
-})
+    })

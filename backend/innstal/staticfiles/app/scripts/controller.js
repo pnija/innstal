@@ -155,10 +155,6 @@ angular.module('innstal.controllers', [])
         $rootScope.state = $state.current.name;
 
     })
-    .controller('warrantyregistercontroller', function($scope) {
-            $scope.firstName= "John";
-            $scope.lastName= "Doe";
-    })
     .controller('searchController', function($scope, $state, $rootScope, $http, $modal, $state){
         $scope.search = function () {
             if($scope.searchText){
@@ -215,8 +211,7 @@ angular.module('innstal.controllers', [])
         }
         $rootScope.state = $state.current.name;
     })
-
-    .controller('warrantyregistercontroller', function($scope, $state, $http, $window) {
+    .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({
             method: 'GET',
             url: 'warranty/country-list',
@@ -254,22 +249,24 @@ angular.module('innstal.controllers', [])
             }
             formData.append("warranty_image", $('#file-1')[0].files[0])
             formData.append("product", "1")
-            $http({
-                    method: 'POST',
-                    url: 'warranty/register/',
-                    data: formData,
-                    headers: {'Authorization': 'Token '+$window.sessionStorage.token,
-                    'Content-Type': undefined}
-                }).then(function (response) {
 
-                        $scope.form = {};
-                        $scope.warrantyForm = {};
+
+
+            $http({
+                method: 'POST',
+                url: 'warranty/register/',
+                data: formData,
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token,
+                'Content-Type': undefined}
+            }).then(function (response) {
+
+                    $scope.form = {};
+                    $scope.warrantyForm = {};
 
                 }, function (response) {
                     console.log('i am in error');
             });
-        }
-        $rootScope.state = $state.current.name;
+        };
     })
     .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams) {
         $window.scrollTo(0, 0);

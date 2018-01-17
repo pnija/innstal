@@ -12,6 +12,7 @@ from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
+from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
 from rest_framework.viewsets import ModelViewSet
@@ -21,13 +22,13 @@ from rest_framework import viewsets
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
 from django.conf import settings
-from .models import Blog
+from .models import Blog, BusinessUserProfile, UserPlans
 from datetime import datetime
 from common.models import Newsletter, UserProfile
 
 from common.serializer import UserSerializer, NewsletterSerializer, \
     ChangePasswordSerializer, UpdatePasswordSerializer, \
-    UserProfileSerializer, ContactSerializer, BlogSerializer
+    UserProfileSerializer, ContactSerializer, BlogSerializer, BusinessAccountSerializer, UserPlanSerializer
 from innstal import settings
 
 
@@ -346,7 +347,78 @@ class GetUserProfile(APIView):
     permission_classes = (permissions.IsAuthenticated, )
 
     def get(self, queryset=None):
-
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
         return Response(serializer.data)
+
+
+class BusinessAccountRegistration(APIView):
+    def post(self, request):
+        response = {}
+        user = request.data.get('user')
+        email = user['email']
+        if any(domain in email for domain in ['gmail', 'yahoo','rediffmail','hotmail','outlook']):
+            response['status'] = 'failed'
+            response['message'] = 'This domain is not allowed'
+            return Response(response)
+        else:
+            serializer = BusinessAccountSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                url = {}
+                url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"#/activate"
+                user = serializer.data.pop('user')
+                email_id = None
+                for key in user:
+                    if key == 'email':
+                        email_id = dict(user)[key]
+                    if key == 'id':
+                        id = dict(user)[key]
+                        url['pk'] = id
+                if email_id != None:
+                    html = get_template('signup_confirmation_email.html')
+                    subject, from_email, to = 'Innstal Business Account Created', settings.DEFAULT_FROM_EMAIL, email_id
+                    html_content = html.render(url)
+                    msg = EmailMultiAlternatives(subject, '', from_email, [to])
+                    msg.attach_alternative(html_content, "text/html")
+                    msg.send()
+                    response['status'] = 'success'
+                    response['message'] = 'Business Account created successfully'
+                    return Response(response, status=status.HTTP_200_OK)
+                else:
+                    return Response({'message': 'Account not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+            else:
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'message':'Account not created'}, status=status.HTTP_408_REQUEST_TIMEOUT)
+
+
+class SelectPricingPlan(APIView):
+    def post(self, request, user_id, plan_id):
+        response = {}
+        pricing_plan = UserPlans.objects.create(user_id=user_id, pricing_plan_id=plan_id)
+        if pricing_plan:
+            response['status'] = 'success'
+            response['message'] = 'Selected Pricing plan for user'
+            return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Could  not select plan for user'
+            return Response(response)
+
+
+class UpdatePricingPlan(APIView):
+    def post(self, request, pk):
+        response = {}
+        pricing_plan = UserPlans.objects.get(pk=pk)
+        if pricing_plan:
+            pricing_plan.pricing_plan_id = request.data.get('plan_id')
+            pricing_plan.save()
+            response['status'] = 'success'
+            response['message'] = 'Updated pricing plan for user'
+            return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Could  not update plan for user'
+            return Response(response)
+
+

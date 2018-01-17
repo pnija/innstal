@@ -23,7 +23,6 @@ class WarrantApplicationViewSet(ModelViewSet):
     serializer_class = WarrantyApplicationSerializer
 
     def create(self, request, *args, **kwargs):
-        import pdb;pdb.set_trace()
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = request.user

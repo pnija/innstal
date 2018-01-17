@@ -10,7 +10,6 @@ admin.site.register(Blog)
 admin.site.register(Newsletter)
 admin.site.register(PricingPlan)
 
-
 class AddCity(resources.ModelResource):
     class Meta:
         model = City

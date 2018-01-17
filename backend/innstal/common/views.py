@@ -81,6 +81,7 @@ class Login(APIView):
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'
                 return Response(response, status=HTTP_401_UNAUTHORIZED)
+                
             if not registered_user:
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'

@@ -65,15 +65,9 @@
 
         <script>
             $(document).ready(function() {
-
-
-
-
               //stick in the fixed 100% height behind the navbar but don't wrap it
               $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-
               $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-
               // Enter your ids or classes
               var toggler = '.navbar-toggle';
               var pagewrapper = '#page-content';
@@ -82,62 +76,37 @@
               var slidewidth = '80%';
               var menuneg = '-100%';
               var slideneg = '-80%';
-
               function toggleSideBar(selected) {
-
                 $('#slidemenu').stop().animate({
                   left: selected ? menuneg : '0px'
                 });
-
                 $('#navbar-height-col').stop().animate({
                   left: selected ? slideneg : '0px'
                 });
-
                 $(pagewrapper).stop().animate({
                   left: selected ? '0px' : slidewidth
                 });
-
                 $(navigationwrapper).stop().animate({
                   left: selected ? '0px' : slidewidth
                 });
-
-
                 $(this).toggleClass('slide-active', !selected);
                 $('#slidemenu').toggleClass('slide-active');
-
-
                 $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
               }
-
               $("#slide-nav").on("click", toggler, function(e) {
-
                 var selected = false;
                 toggleSideBar(selected);
-
               });
-
               $("body").on("click", '.nav-close', function(e) {
                 var selected = true;
                 toggleSideBar(selected);
-
-
               });
-
               var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-
-
               $(window).on("resize", function() {
-
                 if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
                   $(selected).removeClass('slide-active');
                 }
-
-
               });
-
-
-
-
             });
         </script>
 

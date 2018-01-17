@@ -72,11 +72,9 @@ class WarrantyApplicationSerializer(ModelSerializer):
             return instance.user_profile.country.name
 
 class ClaimedWarrantySerializer(ModelSerializer):
-    # user_profile = UserProfileSerializer()
-    # warranty = WarrantyApplicationSerializer()
 
     class Meta:
         model = ClaimedWarranty
-        fields = ['user', 'warranty', 'status']
+        fields = '__all__'
 
 

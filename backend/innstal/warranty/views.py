@@ -77,15 +77,23 @@ class ClaimWarrantyViewSet(ModelViewSet):
     queryset = ClaimedWarranty.objects.all()
     serializer_class = ClaimedWarrantySerializer
     permission_classes = (permissions.IsAuthenticated,)
-    response = {}
 
     def create(self, request, *args, **kwargs):
+        response = {}
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
         request.data['user'] = user_profile.pk
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        if serializer.is_valid(raise_exception=True):
+            response['status'] = 'success'
+            response['message'] = 'Warranty claimed succesfully'
+            response['data'] = serializer.data
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Failed to claim warranty'
+            response['data'] = serializer.errors
+            return Response(response, status= status.HTTP_408_REQUEST_TIMEOUT)
 
 
 

@@ -211,6 +211,51 @@ angular.module('innstal.controllers', [])
         }
         $rootScope.state = $state.current.name;
     })
+    .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams) {
+        $window.scrollTo(0, 0);
+        if($stateParams){
+            var user_id = $stateParams.id;
+            var token = $stateParams.token;
+            $http({
+                method: 'GET',
+                url: 'user/token-check/'+user_id+'/'+token+'/',
+            }).then(function (response) {
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+        $scope.changepassword = function(changedata){
+
+            $http({
+                method: 'POST',
+                url: 'user/update-password/'+$stateParams.id+'/',
+                data: changedata
+            }).then(function (response) {
+                    if(response.data.status == 'success'){
+                        $state.go('login')
+                    }
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+        $rootScope.state = $state.current.name;
+    })
+    .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+        $window.scrollTo(0, 0);
+        $http({
+                method: 'POST',
+                url: 'user/profile/',
+            }).then(function (response) {
+                    if(response.data.status == 'success'){
+
+                    }
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        $rootScope.state = $state.current.name;
+    })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({
             method: 'GET',
@@ -267,49 +312,4 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         };
-    })
-    .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams) {
-        $window.scrollTo(0, 0);
-        if($stateParams){
-            var user_id = $stateParams.id;
-            var token = $stateParams.token;
-            $http({
-                method: 'GET',
-                url: 'user/token-check/'+user_id+'/'+token+'/',
-            }).then(function (response) {
-
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-
-        $scope.changepassword = function(changedata){
-
-            $http({
-                method: 'POST',
-                url: 'user/update-password/'+$stateParams.id+'/',
-                data: changedata
-            }).then(function (response) {
-                    if(response.data.status == 'success'){
-                        $state.go('login')
-                    }
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-        $rootScope.state = $state.current.name;
-    })
-    .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
-        $window.scrollTo(0, 0);
-        $http({
-                method: 'POST',
-                url: 'user/profile/',
-            }).then(function (response) {
-                    if(response.data.status == 'success'){
-
-                    }
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        $rootScope.state = $state.current.name;
     })

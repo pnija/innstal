@@ -77,6 +77,6 @@ class ClaimedWarrantySerializer(ModelSerializer):
 
     class Meta:
         model = ClaimedWarranty
-        fields = '__all__'
+        fields = ['user', 'warranty', 'status']
 
 

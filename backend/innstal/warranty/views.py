@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
@@ -81,12 +81,11 @@ class ClaimWarrantyViewSet(ModelViewSet):
     response = {}
 
     def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
-        warranty = Warranty.objects.get(id=request.data['warranty'])
-        serializer.save(user_profile=user_profile, warranty=warranty)
+        request.data['user'] = user_profile.pk
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 

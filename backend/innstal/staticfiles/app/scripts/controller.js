@@ -145,29 +145,9 @@ angular.module('innstal.controllers', [])
             url: 'user/blog/',
         }).then(function (response) {
                 $scope.blogdata = response.data;
-    }])
-    .controller('warrantyregistercontroller', function($scope,$http, $window) {
-        $http({
-            method: 'GET',
-            url: 'warranty/country-list',
-        }).then(function (response) {
-                $scope.countries = response.data.countries;
-                $scope.companies = response.data.companies;
-            }, function (response) {
-                console.log('i am in error');
         });
     })
-    .controller('warrantyregistercontroller', function($scope,$http, $window) {
-        $http({
-            method: 'GET',
-            url: 'warranty/users',
-        }).then(function (response) {
-                $scope.form = response.data[0];
-                console.log(response.data[0])
-            }, function (response) {
-                console.log('i am in error');
-        });
-    })
+
     .controller('blogdetailcontroller', function($scope, $http, $window, $stateParams) {
         $window.scrollTo(0, 0);
         if($stateParams){
@@ -181,4 +161,61 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
+    })
+    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+        $http({
+            method: 'GET',
+            url: 'warranty/country-list',
+        }).then(function (response) {
+                $scope.countries = response.data.countries;
+                $scope.companies = response.data.companies;
+                $scope.product_type = response.data.product_type;
+                $scope.user_profile_countries = response.data.user_profile_countries;
+                $scope.user_profile_state = response.data.user_profile_state;
+                $scope.user_profile_city = response.data.user_profile_city;
+                console.log(response.data.user_profile_countries, "aaaaaaaaaaa")
+            }, function (response) {
+                console.log('i am in error');
+        });
+
+        $http({
+            method: 'GET',
+            url: 'warranty/users',
+            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+
+        }).then(function (response) {
+                $scope.form = response.data[0];
+                console.log(response.data[0])
+            }, function (response) {
+                console.log('i am in error');
+        });
+
+        $scope.submit = function (form) {
+            $scope.form = form;
+            console.log(form)
+            var formData = new FormData();
+
+            for( key in form){
+             formData.append(key, form[key])
+            }
+            formData.append("warranty_image", $('#file-1')[0].files[0])
+            formData.append("product", "1")
+
+
+
+            $http({
+                method: 'POST',
+                url: 'warranty/register/',
+                data: formData,
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token,
+                'Content-Type': undefined}
+            }).then(function (response) {
+
+                    $scope.form = {};
+                    $scope.warrantyForm = {};
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
     })

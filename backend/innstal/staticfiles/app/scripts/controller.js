@@ -1,4 +1,3 @@
-
 angular.module('innstal.controllers', [])
     .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
         $scope.subscribe = function () {
@@ -166,21 +165,47 @@ angular.module('innstal.controllers', [])
     .controller('searchResultController', function($scope, $http, $modal, $state){
         
         $scope.Text = $state.params.searchText;
+        $scope.products = []
+        $scope.page = 0
 
-        $http({
+        $scope.get_result = function(){
+            $scope.page  = $scope.page + 1;
 
-            method: 'GET',
-            url: 'product/search/?search='+$scope.Text
+            $http({
 
-        }).then(function (response) {
-            
-            $scope.products = response.data;
-            console.log($scope.products)
-            
+                method: 'GET',
+                url: 'product/search/?search='+$scope.Text+'&page='+$scope.page
 
-        }, function (response) {
-            alert('error');
-        });
+            }).then(function (response) {
+                $scope.products = $scope.products.concat(response.data['results']);
+
+                if(response.data['next'] != null){
+                    $scope.next = 'true';
+                }else{
+                    $scope.next = null;
+                }
+
+            }, function (response) {
+                alert('error');
+            });
+        }
+
+        $scope.get_result();
+
+        $scope.logout=function(){
+            $http({
+                method: 'GET',
+                url: 'user/logout/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                $window.sessionStorage.clear();
+                $rootScope.user_id = '';
+                $state.go('home');
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
 
     })
     .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {

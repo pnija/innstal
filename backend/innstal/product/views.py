@@ -14,15 +14,18 @@ from .models import Product, ProductCategory
 
 class SearchProductManual(generics.ListAPIView):
     serializer_class = ProductManualSearchSerializer
+
     def get_queryset(self):
         search = self.request.query_params.get('search', None)
         if search:
             if self.request.user.is_authenticated():
-                product = Product.objects.filter(product_search_string__icontains=search)
-            else:
-                product = Product.objects.filter(product_search_string__icontains=search)[:3]
 
-            return product
+                products = Product.objects.filter(product_search_string__icontains=search).order_by('product_name')
+
+            else:
+                products = Product.objects.filter(product_search_string__icontains=search).order_by('product_name')[:3]
+
+            return products
 
         return Product.objects.none()
 

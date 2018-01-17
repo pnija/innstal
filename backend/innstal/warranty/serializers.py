@@ -58,7 +58,6 @@ class WarrantyApplicationSerializer(ModelSerializer):
 
     def get_city(self, instance):
         if instance.user_profile is not None:
-            import pdb;pdb.set_trace()
             return instance.user_profile.city.name
 
     def get_state(self, instance):

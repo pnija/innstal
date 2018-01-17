@@ -94,7 +94,7 @@
               <span class="help-block">{{errors.name[0]}}</span>
               <input type="text" class="form-control" placeholder="Your Name" ng-model="form.name"/>
             </div>
-
+            
             <div class="form-group {{errors.email[0]?'has-error':''}}">
               <span class="help-block">{{errors.email[0]}}</span>
               <input type="text" class="form-control" placeholder="Email Address" ng-model="form.email"/>
@@ -105,9 +105,9 @@
             </div>
             <div class="form-group {{errors.message[0]?'has-error':''}}">
               <span class="help-block">{{errors.message[0]}}</span>
-              <textarea rows="8" class="form-control" placeholder="Your Message" ng-model="form.message"></textarea>
+              <textarea rows="8"  style="resize: none;height:150px !important;" class="form-control" placeholder="Your Message" ng-model="form.message"></textarea>
             </div>
-
+            
             <button class="btn btn-submit" ng-click="submit()">Submit</button>
           </form>
         </div>

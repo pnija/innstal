@@ -193,21 +193,32 @@ angular.module('innstal.controllers', [])
     .controller('searchResultController', function($scope, $http, $modal, $state){
         
         $scope.Text = $state.params.searchText;
+        $scope.products = []
+        $scope.page = 0
 
-        $http({
+        $scope.get_result = function(){
+            $scope.page  = $scope.page + 1;
 
-            method: 'GET',
-            url: 'product/search/?search='+$scope.Text
+            $http({
 
-        }).then(function (response) {
-            
-            $scope.products = response.data;
-            console.log($scope.products)
-            
+                method: 'GET',
+                url: 'product/search/?search='+$scope.Text+'&page='+$scope.page
 
-        }, function (response) {
-            alert('error');
-        });
+            }).then(function (response) {
+                $scope.products = $scope.products.concat(response.data['results']);
+
+                if(response.data['next'] != null){
+                    $scope.next = 'true';
+                }else{
+                    $scope.next = null;
+                }
+
+            }, function (response) {
+                alert('error');
+            });
+        }
+
+        $scope.get_result();
 
         $scope.logout=function(){
             $http({
@@ -225,13 +236,14 @@ angular.module('innstal.controllers', [])
         }
 
     })
-    .controller('bloghomecontroller', function($scope, $http, $window) {
+    .controller('bloghomecontroller',function($scope, $http, $window) {
         $window.scrollTo(0, 0);
         $http({
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
                 $scope.blogdata = response.data;
+                
             }, function (response){
                 console.log('i am in error');
         });
@@ -291,6 +303,7 @@ angular.module('innstal.controllers', [])
     })
     .controller('blogdetailcontroller', function($scope, $http, $window, $stateParams) {
         $window.scrollTo(0, 0);
+        
         if($stateParams){
             var blog_id = $stateParams.id;
             $http({

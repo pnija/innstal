@@ -91,4 +91,11 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
                     console.log('i am in error');
             });
     };
+    if($window.sessionStorage.token){
+
+        $rootScope.user_id = $window.sessionStorage.token;
+    }
+    else{
+        $rootScope.user_id = null;
+    }
 })

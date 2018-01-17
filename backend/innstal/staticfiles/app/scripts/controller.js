@@ -1,6 +1,6 @@
 
 angular.module('innstal.controllers', [])
-    .controller('basecontroller', function($scope, $http, $state, $modal, $window) {
+    .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
         $scope.subscribe = function () {
             var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
@@ -16,8 +16,9 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         };
+        $rootScope.state = $state.current.name;
     })
-    .controller('logincontroller', function($scope, $http, $state, $window, $stateParams, $modal) {
+    .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
 
         if($stateParams.id){
             $http({
@@ -69,9 +70,9 @@ angular.module('innstal.controllers', [])
                 });
             }
         }
-
+        $rootScope.state = $state.current.name;
     })
-    .controller('joinincontroller', function($scope, $http, $window, $modal) {
+    .controller('joinincontroller', function($scope, $state, $rootScope, $http, $window, $modal) {
         $window.scrollTo(0, 0);
         $scope.submitted = false;
 
@@ -95,41 +96,30 @@ angular.module('innstal.controllers', [])
         function open(){
             alert('Mail has been sent to your account.');
         }
+
+        $rootScope.state = $state.current.name;
     })
     .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
-        $http({
-            method: 'GET',
-            url: 'user/profile/',
-            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-        }).then(function (response) {
-                $rootScope.user_id = response.data.user.id
-            }, function (response) {
-                console.log('i am in error');
-        });
-
-        $scope.logout=function(){
+        if($window.sessionStorage.token){
             $http({
                 method: 'GET',
-                url: 'user/logout/',
+                url: 'user/profile/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-                    $window.sessionStorage.clear();
-                    $rootScope.user_id = '';
-                    $state.go('home');
-
-
+                    $rootScope.user_id = response.data.user.id
                 }, function (response) {
                     console.log('i am in error');
             });
         }
-
+        $rootScope.state = $state.current.name;
 
     })
-    .controller('dashboardhomecontroller', function($scope, $rootScope, $window, $http, $window) {
+    .controller('dashboardhomecontroller', function($scope, $state, $rootScope, $window, $http, $window) {
         $window.scrollTo(0, 0);
+        $rootScope.state = $state.current.name;
     })
-    .controller('ContactController', function($scope, $http, $modal, $window, $timeout){
+    .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout){
     
         $window.scrollTo(0, 0);
 
@@ -162,33 +152,20 @@ angular.module('innstal.controllers', [])
 
             });
         };
+        $rootScope.state = $state.current.name;
+
     })
     .controller('warrantyregistercontroller', function($scope) {
             $scope.firstName= "John";
             $scope.lastName= "Doe";
     })
-    .controller('searchController', function($scope, $http, $modal, $state){
+    .controller('searchController', function($scope, $state, $rootScope, $http, $modal, $state){
         $scope.search = function () {
             if($scope.searchText){
                 $state.go("search-results",{searchText: $scope.searchText});
             }
         };
-
-        $scope.logout=function(){
-            $http({
-                method: 'GET',
-                url: 'user/logout/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                $window.sessionStorage.clear();
-                $rootScope.user_id = '';
-                $state.go('home');
-
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-
+        $rootScope.state = $state.current.name;
     })
     .controller('searchResultController', function($scope, $http, $modal, $state){
         
@@ -209,23 +186,8 @@ angular.module('innstal.controllers', [])
             alert('error');
         });
 
-        $scope.logout=function(){
-            $http({
-                method: 'GET',
-                url: 'user/logout/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                $window.sessionStorage.clear();
-                $rootScope.user_id = '';
-                $state.go('home');
-
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-
     })
-    .controller('bloghomecontroller', function($scope, $http, $window) {
+    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
         $http({
             method: 'GET',
@@ -235,39 +197,10 @@ angular.module('innstal.controllers', [])
             }, function (response){
                 console.log('i am in error');
         });
-
-        $scope.logout=function(){
-            $http({
-                method: 'GET',
-                url: 'user/logout/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                $window.sessionStorage.clear();
-                $rootScope.user_id = '';
-                $state.go('home');
-
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-        $scope.subscribe = function () {
-            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
-
-            $http({
-                method: 'POST',
-                url: 'user/subcribe/newsletter/',
-                data: params,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                    $scope.firstname = '';
-                    $scope.subscribe_email = '';
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        };
+        $rootScope.state = $state.current.name;
 
     })
-    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+    .controller('warrantyregistercontroller', function($scope, $state, $http, $window) {
         $http({
             method: 'GET',
             url: 'warranty/country-list',
@@ -277,8 +210,9 @@ angular.module('innstal.controllers', [])
             }, function (response) {
                 console.log('i am in error');
         });
+        $rootScope.state = $state.current.name;
     })
-    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+    .controller('warrantyregistercontroller', function($scope, $state, $http, $window) {
         $http({
             method: 'GET',
             url: 'warranty/users',
@@ -288,8 +222,9 @@ angular.module('innstal.controllers', [])
             }, function (response) {
                 console.log('i am in error');
         });
+        $rootScope.state = $state.current.name;
     })
-    .controller('blogdetailcontroller', function($scope, $http, $window, $stateParams) {
+    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var blog_id = $stateParams.id;
@@ -302,38 +237,9 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
-        $scope.subscribe = function () {
-            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
-
-            $http({
-                method: 'POST',
-                url: 'user/subcribe/newsletter/',
-                data: params,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                    $scope.firstname = '';
-                    $scope.subscribe_email = '';
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        };
-        $scope.logout=function(){
-            $http({
-                method: 'GET',
-                url: 'user/logout/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                $window.sessionStorage.clear();
-                $rootScope.user_id = '';
-                $state.go('home');
-
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        }
-
+        $rootScope.state = $state.current.name;
     })
-    .controller('changepasswordcontroller', function($scope, $http, $window, $state, $stateParams) {
+    .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var user_id = $stateParams.id;
@@ -362,4 +268,19 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         }
+        $rootScope.state = $state.current.name;
+    })
+    .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+        $window.scrollTo(0, 0);
+        $http({
+                method: 'POST',
+                url: 'user/profile/',
+            }).then(function (response) {
+                    if(response.data.status == 'success'){
+
+                    }
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        $rootScope.state = $state.current.name;
     })

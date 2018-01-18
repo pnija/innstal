@@ -75,6 +75,12 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/general_profile.html',
             controller: 'profileController'
         })
+        .state('login-next', {
+            url: '/login/?next',
+            templateUrl: '/static/app/views/signin.html',
+            controller: 'loginnextcontroller',
+            cache: false,
+        })
 })
 .run(function($rootScope, $http, $window, $state) {
     $rootScope.logout = function() {

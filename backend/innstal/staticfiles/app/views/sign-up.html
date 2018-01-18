@@ -182,17 +182,20 @@
                                                             </div>
                                                             <div class="col-sm-6 clearfix">
                                                                 <div class="form-group">
-                                                                    <input type="password" ng-model="user.password" name="password" class="form-control" placeholder="Password" required/>
+                                                                    <input type="password" ng-model="user.password" name="password" class="form-control" placeholder="Password" required password-error/>
                                                                     <span style="color:red" ng-show="regForm.password.$error">
                                                                     <span ng-show="submitted && regForm.password.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && passwordError">{{passwordError}}</span>
+                                                                    </span>
                                                                     </span>
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 clearfix">
                                                                 <div class="form-group">
-                                                                    <input type="password" name="confirm_password" ng-model="user.confirm_password" class="form-control" placeholder="Confirm password" required/>
+                                                                    <input type="password" name="confirm_password" ng-model="user.confirm_password" class="form-control" placeholder="Confirm password" required repeat-password-error/>
                                                                     <span style="color:red" ng-show="regForm.confirm_password.$error">
                                                                     <span ng-show="submitted && regForm.confirm_password.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
                                                                     </span>
                                                                 </div>
                                                             </div>

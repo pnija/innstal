@@ -4,8 +4,11 @@ from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django_countries.data import COUNTRIES
+from rest_framework.filters import SearchFilter
+from django_filters.rest_framework import DjangoFilterBackend
 from product.models import Product
 from product.serializers import ProductSerializer
+from warranty.filters import ClaimFilter
 from .models import COMPANY_CHOICES, ClaimedWarranty
 from .models import Warranty, UserProfile
 from .serializers import WarrantyApplicationSerializer, UserProfileSerializer, ClaimedWarrantySerializer
@@ -73,10 +76,21 @@ class UserProfileView(ModelViewSet):
     #     serializer.save(email=user_profile_data)
 
 
+# class Filter(FilterSet):
+#     class Meta:
+#         model = ClaimedWarranty
+#         fields = {
+#             'status'
+#         }
+
 class ClaimWarrantyViewSet(ModelViewSet):
     queryset = ClaimedWarranty.objects.all()
     serializer_class = ClaimedWarrantySerializer
     permission_classes = (permissions.IsAuthenticated,)
+    filter_class = ClaimFilter
+    filter_backends = (SearchFilter, DjangoFilterBackend)
+    ordering = ['-id']
+    search_fields = ['status']
 
     def create(self, request, *args, **kwargs):
         response = {}

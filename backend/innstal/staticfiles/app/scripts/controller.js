@@ -78,18 +78,19 @@ angular.module('innstal.controllers', [])
         $scope.submit = function (user) {
             $scope.user = user;
 
-            $http({
-                method: 'POST',
-                url: 'user/register/',
-                data: user,
-            }).then(function (response) {
-
-                    $scope.user = {};
-                    $scope.regForm = {};
-                    open();
-                }, function (response) {
-                    console.log('i am in error');
-            });
+            if(regForm.$valid){
+                $http({
+                    method: 'POST',
+                    url: 'user/register/',
+                    data: user,
+                }).then(function (response) {
+                        $scope.user = {};
+                        $scope.regForm = {};
+                        open();
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
         };
 
         function open(){
@@ -97,6 +98,68 @@ angular.module('innstal.controllers', [])
         }
 
         $rootScope.state = $state.current.name;
+    })
+    .directive('passwordError', function() {
+      return {
+        scope: false,
+        require: 'ngModel',
+        link: function(scope, element, attr, mCtrl) {
+
+          function myValidation(value) {
+
+                if(value.length > 0){
+                   if(value.length < 8 ){
+                        scope.passwordError = 'Minimum eight digit required'
+                        mCtrl.$setValidity('charE', false);
+                   }else{
+                        scope.passwordError = null;
+                        mCtrl.$setValidity('charE', true);
+                   }
+
+                }else{
+                    scope.passwordError = null;
+                }
+                return value;
+          }
+          mCtrl.$parsers.push(myValidation);
+        }
+      };
+    })
+    .directive('repeatPasswordError', function() {
+      return {
+        scope: false,
+        require: 'ngModel',
+        link: function(scope, element, attr, mCtrl) {
+
+          function myValidation(value) {
+                
+                var password = scope.user.password
+
+                if(value.length > 0){
+
+                    if(value.length < 8 ){
+
+                        scope.repeatPasswordError = 'Minimum eight digit required'
+                        mCtrl.$setValidity('charE', false);
+
+                    }else if(password != value){
+                        
+                        mCtrl.$setValidity('charE', false);
+                        scope.repeatPasswordError = 'Password Mismatch';
+
+                    }else{
+                        scope.repeatPasswordError = null;
+                        mCtrl.$setValidity('charE', true);
+                    }
+
+                }else{
+                    scope.repeatPasswordError = null;
+                }
+                return value;
+          }
+          mCtrl.$parsers.push(myValidation);
+        }
+      };
     })
     .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);

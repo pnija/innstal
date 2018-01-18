@@ -319,6 +319,8 @@ class ChangePassword(APIView):
                 return Response(response)
 
 class UpdateUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
     def put(self, request, pk):
         response = {}
         if User.objects.filter(pk=pk):
@@ -396,9 +398,10 @@ class BusinessAccountRegistration(APIView):
 
 
 class SelectPricingPlan(APIView):
-    def post(self, request, user_id, plan_id):
+    def get(self, request, plan_id):
         response = {}
-        pricing_plan = UserPlans.objects.create(user_id=user_id, pricing_plan_id=plan_id)
+        print(request.user.id)
+        pricing_plan = UserPlans.objects.create(user_id=request.user.id, pricing_plan_id=plan_id)
         if pricing_plan:
             response['status'] = 'success'
             response['message'] = 'Selected Pricing plan for user'
@@ -410,6 +413,7 @@ class SelectPricingPlan(APIView):
 
 
 class UpdatePricingPlan(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
     def post(self, request, pk):
         response = {}
         pricing_plan = UserPlans.objects.get(pk=pk)

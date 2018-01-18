@@ -11,7 +11,6 @@ COMPANY_CHOICES = (
     ('HTC', 'HTC'),
 )
 
-
 class Warranty(models.Model):
     user_profile = models.ForeignKey(UserProfile, null=True)
     product = models.ForeignKey(ProductType)
@@ -26,5 +25,14 @@ class Warranty(models.Model):
 
     def __str__(self):
         return self.product.type_name
+
+
+class ClaimedWarranty(models.Model):
+    user = models.ForeignKey(UserProfile, null=True)
+    warranty = models.ForeignKey(Warranty)
+    is_active = models.BooleanField
+    status = models.CharField(max_length=200)
+    claimed_date = models.DateField(auto_now_add=True)
+
 
 

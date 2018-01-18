@@ -1,5 +1,5 @@
 from django.conf.urls import url, include
-from warranty.views import WarrantApplicationViewSet, UserProfileView,ChoicesListViewSet
+from warranty.views import WarrantApplicationViewSet, UserProfileView, ChoicesListViewSet, ClaimWarrantyViewSet
 from rest_framework import routers
 
 
@@ -7,6 +7,8 @@ router = routers.DefaultRouter()
 # router.register(r'country-list', CountryListViewSet, base_name='countries')
 router.register(r'register', WarrantApplicationViewSet, base_name='register')
 router.register(r'users', UserProfileView, base_name='users')
+router.register(r'claim-warranty', ClaimWarrantyViewSet, base_name='users')
+
 
 
 urlpatterns = [

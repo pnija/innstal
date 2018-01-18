@@ -18,7 +18,7 @@ urlpatterns = [
     url(r'^login/$', Login.as_view()),
     url(r'^logout/$', Logout.as_view()),
     url(r'^account/activate/(?P<pk>\d+)/$', ActivateUserAccount.as_view()),
-    url(r'^select-plan/(\d+)/(\d+)/$', SelectPricingPlan.as_view()),
+    url(r'^select-plan/(\d+)/$', SelectPricingPlan.as_view()),
     url(r'^update-plan/(?P<pk>\d+)/$',UpdatePricingPlan.as_view()),
     url(r'^update/(?P<pk>\d+)/?$', UpdateUserProfile.as_view()),
     url(r'^forgot-password/', ForgotPassword.as_view()),

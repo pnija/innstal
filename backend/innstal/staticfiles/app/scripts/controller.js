@@ -314,8 +314,7 @@ angular.module('innstal.controllers', [])
             headers: {'Authorization': 'Token '+$window.sessionStorage.token}
 
         }).then(function (response) {
-                $scope.form = response.data[0];
-                console.log(response.data[0])
+                $scope.form = response.data.results[0];
             }, function (response) {
                 console.log('i am in error');
         });

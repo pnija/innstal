@@ -1,6 +1,8 @@
 import re
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from .models import Warranty, ClaimedWarranty
+from product.models import UserProfile
 from .models import Warranty
 from product.models import UserProfile, ProductType
 
@@ -68,5 +70,10 @@ class WarrantyApplicationSerializer(ModelSerializer):
     def get_country(self, instance):
         if instance.user_profile is not None:
             return instance.user_profile.country.name
+
+class ClaimedWarrantySerializer(ModelSerializer):
+    class Meta:
+        model = ClaimedWarranty
+        fields = ('id','user', 'warranty', 'status','claimed_date')
 
 

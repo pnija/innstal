@@ -1,9 +1,14 @@
 from collections import OrderedDict
-from rest_framework import status
+from rest_framework import status, permissions
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from django_countries.data import COUNTRIES
+from product.models import Product
+from product.serializers import ProductSerializer
+from .models import COMPANY_CHOICES, ClaimedWarranty
+from .models import Warranty, UserProfile
+from .serializers import WarrantyApplicationSerializer, UserProfileSerializer, ClaimedWarrantySerializer
 from .models import COMPANY_CHOICES
 from common.models import Country, City, State
 from .models import Warranty, UserProfile, ProductType
@@ -66,4 +71,30 @@ class UserProfileView(ModelViewSet):
     #     serializer = self.get_serializer(data=request.data)
     #     serializer.is_valid(raise_exception=True)
     #     serializer.save(email=user_profile_data)
+
+
+class ClaimWarrantyViewSet(ModelViewSet):
+    queryset = ClaimedWarranty.objects.all()
+    serializer_class = ClaimedWarrantySerializer
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def create(self, request, *args, **kwargs):
+        response = {}
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        request.data['user'] = user_profile.pk
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            self.perform_create(serializer)
+            response['status'] = 'success'
+            response['message'] = 'Warranty claimed succesfully'
+            response['data'] = serializer.data
+            return Response(response, status=status.HTTP_201_CREATED)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Failed to claim warranty'
+            response['data'] = serializer.errors
+            return Response(response, status= status.HTTP_408_REQUEST_TIMEOUT)
+
+
 

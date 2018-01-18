@@ -119,11 +119,10 @@ angular.module('innstal.controllers', [])
         $rootScope.state = $state.current.name;
     })
     .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout){
-    
+        
         $window.scrollTo(0, 0);
 
         $scope.submit = function () {
-
             $scope.errors = {}
             $scope.emailFailed = {}
             $scope.sucessMessage =''
@@ -131,7 +130,7 @@ angular.module('innstal.controllers', [])
             $http({
                 method: 'POST',
                 url: 'user/contact/',
-                data: $scope.form
+                data: $scope.form,
 
             }).then(function (response) {
 
@@ -140,9 +139,10 @@ angular.module('innstal.controllers', [])
                 $timeout(function() { $scope.sucessMessage = ''}, 2000);
 
             }, function (response) {
-
+                console.log( response.data)
                 if(response.status == 400){
                     $scope.errors = response.data
+                    console.log($scope.errors)
                 }
 
                 if(response.status == 503){
@@ -162,11 +162,17 @@ angular.module('innstal.controllers', [])
         };
         $rootScope.state = $state.current.name;
     })
-    .controller('searchResultController', function($scope, $http, $modal, $state){
+    .controller('searchResultController', function($scope, $http, $modal, $state, $window, $rootScope){
         
         $scope.Text = $state.params.searchText;
         $scope.products = []
         $scope.page = 0
+        if($window.sessionStorage.token){
+            var header = {'Authorization': 'Token '+$window.sessionStorage.token}
+        }else{
+           var header = {} 
+        }
+        console.log(header)
 
         $scope.get_result = function(){
             $scope.page  = $scope.page + 1;
@@ -174,7 +180,8 @@ angular.module('innstal.controllers', [])
             $http({
 
                 method: 'GET',
-                url: 'product/search/?search='+$scope.Text+'&page='+$scope.page
+                url: 'product/search/?search='+$scope.Text+'&page='+$scope.page,
+                headers: header
 
             }).then(function (response) {
                 $scope.products = $scope.products.concat(response.data['results']);
@@ -184,7 +191,6 @@ angular.module('innstal.controllers', [])
                 }else{
                     $scope.next = null;
                 }
-
             }, function (response) {
                 alert('error');
             });
@@ -200,11 +206,16 @@ angular.module('innstal.controllers', [])
             }).then(function (response) {
                 $window.sessionStorage.clear();
                 $rootScope.user_id = '';
-                $state.go('home');
+                $state.reload();
 
                 }, function (response) {
                     console.log('i am in error');
             });
+        }
+
+        $scope.login = function(){
+            var next = '/product/search-results/'+$scope.Text;
+            $state.go("login-next",{next:next});
         }
 
     })
@@ -337,4 +348,70 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         };
+    })
+    .controller('loginnextcontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal, $location) {
+
+        if($stateParams.id){
+            $http({
+                method: 'GET',
+                url: 'user/account/activate/'+$stateParams.id+'/',
+            }).then(function (response) {
+                    alert('Your account has been activated');
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+        $window.scrollTo(0, 0);
+        $scope.submitted = false;
+        $scope.submittedforgot = false;
+
+        $scope.login = function (logindata) {
+            console.log('logindata', logindata)
+            $scope.logindata = logindata;
+
+            $http({
+                method: 'POST',
+                url: 'user/login/',
+                data: logindata,
+            }).then(function (response) {
+
+                    $scope.logindata = {};
+                    $scope.loginForm = {};
+
+                    $window.sessionStorage.token = response.data.token;
+                    console.log(response.data)
+
+                    $http({
+                        method: 'GET',
+                        url: 'user/profile/',
+                        headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+                    }).then(function (response) {
+                            $rootScope.user_id = response.data.user.id
+                        }, function (response) {
+                            console.log('i am in error');
+                    });
+
+                    $location.url($state.params.next);
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
+
+        $scope.change_password = function(data){
+            if(data != null)
+            {
+                $http({
+                    method: 'POST',
+                    url: 'user/forgot-password/',
+                    data: data,
+                }).then(function (response) {
+                        $('.forget-password').modal('hide');
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
+        }
+        $rootScope.state = $state.current.name;
     })

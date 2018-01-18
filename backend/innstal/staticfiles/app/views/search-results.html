@@ -28,8 +28,8 @@
                 <div class="user-image pull-right hidden-xs dropdown ">
                     <img class="img-circle dropbtn" src="/static/app/images/user-pic.png">
                     <div class="dropdown-content">
-                        <a ng-click="logout()"> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
-                        <a href="#">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
+                        <a href=""> Profile <i class="fa fa-user" aria-hidden="true"></i> </a>
+                        <a href="" ng-click="logout()">Logout <i class="fa fa-sign-out" aria-hidden="true"></i></a>
                     </div>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
@@ -85,7 +85,7 @@
                     <li><a href="#">Business</a></li>
                     <ul class="pull-right login">
                         <li class="hidden-xs"><a ui-sref="register" class="li-divide"><i class="fa fa-user" aria-hidden="true"></i>  Join in</a></li>
-                        <li class="hidden-xs"><a ui-sref="login"> Log in</a></li>
+                        <li class="hidden-xs"><a ng-click="login()"> Log in</a></li>
                     </ul>
                     <div align="center">
                         <button class="btn xs-login visible-xs">
@@ -120,7 +120,7 @@
 </div>
 <div class="search-cat">
     <div class="container">
-        <form novalidate ng-controller="searchController">
+        <form novalidate ng-controller="searchController" ng-if="!user_id">
             <div class="input-group col-sm-6 col-sm-offset-3" style="margin-top: 4em;margin-bottom: 2em;">
                 <input type="text" class="form-control" placeholder="Search for Product Manuals..." name="search" style="border-right: 0px;height: 45px;" ng-model="searchText">
                 <div class="input-group-btn" style=" border-left: 0px;">
@@ -146,6 +146,7 @@
             <div class="clearfix"></div>
             <div align="center">
                 <button class="btn btn-viewmore" ng-if="next" ng-click="get_result()">View More</button>
+                <button class="btn btn-viewmore" ng-if="(!user_id) && products[0]" ng-click="login()">View More</button>
             </div>
         </div>
     </div>

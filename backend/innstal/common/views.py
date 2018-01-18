@@ -319,16 +319,16 @@ class ChangePassword(APIView):
                 return Response(response)
 
 class UpdateUserProfile(APIView):
-    def post(self, request, pk):
+    def put(self, request, pk):
         response = {}
         if User.objects.filter(pk=pk):
             print(request.data)
             profile = UserProfile.objects.get(user_id=pk)
-            day = request.data['day']
-            month = request.data['month']
-            year = request.data['year']
-            request.data['dob'] = datetime.strptime(day + '/' + month + '/' + year, "%d/%m/%Y").date()
-            serializer = UserProfileSerializer(instance=profile, data=request.data)
+            # day = request.data['day']
+            # month = request.data['month']
+            # year = request.data['year']
+            # request.data['dob'] = datetime.strptime(day + '/' + month + '/' + year, "%d/%m/%Y").date()
+            serializer = UserProfileSerializer(instance=profile, data=request.data, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
                 response['status'] = 'success'
@@ -338,7 +338,7 @@ class UpdateUserProfile(APIView):
                 response['status'] = 'failed'
                 response['message'] = 'Failed to update user profile'
                 response['error'] = serializer.errors
-                return Response(response)
+                return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
             response['status'] = 'failed'
             response['message'] = 'User does not exist'
@@ -351,13 +351,14 @@ class GetUserProfile(APIView):
     def get(self, queryset=None):
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
+        serializer.data['user'].pop('password')
         return Response(serializer.data)
 
 
 class BusinessAccountRegistration(APIView):
     def post(self, request):
         response = {}
-        user = request.data.get('user')
+        user = request.data.get ('user')
         email = user['email']
         if any(domain in email for domain in ['gmail', 'yahoo','rediffmail','hotmail','outlook']):
             response['status'] = 'failed'

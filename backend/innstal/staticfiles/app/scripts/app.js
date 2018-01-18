@@ -77,6 +77,7 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
         })
 })
 .run(function($rootScope, $http, $window, $state) {
+    console.log('runnnnnnnnnnnn')
     $rootScope.logout = function() {
         $http({
                 method: 'GET',
@@ -92,7 +93,6 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             });
     };
     if($window.sessionStorage.token){
-
         $rootScope.user_id = $window.sessionStorage.token;
     }
     else{

@@ -8,29 +8,34 @@ from rest_framework.validators import UniqueValidator
 from common.models import UserProfile, Newsletter, City, State, Country, Blog, BusinessUserProfile, UserPlans
 
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField(source='user.id', read_only = True)
-    first_name = serializers.CharField(source = 'user.first_name')
-    last_name = serializers.CharField(source = 'user.last_name')
-    email = serializers.CharField(source = 'user.email')
-
-    class Meta:
-        model = UserProfile
-        fields = ('user_id', 'first_name', 'last_name', 'email', 'phone', 'user_type', 'avatar')
-
+# class UserProfileSerializer(serializers.ModelSerializer):
+#     user_id = serializers.IntegerField(source='user.id', read_only = True)
+#     first_name = serializers.CharField(source = 'user.first_name')
+#     last_name = serializers.CharField(source = 'user.last_name')
+#     email = serializers.CharField(source = 'user.email')
+#
+#     class Meta:
+#         model = UserProfile
+#         fields = ('user_id', 'first_name', 'last_name', 'email', 'phone', 'user_type', 'avatar')
+#
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
-        validators=[UniqueValidator(queryset=User.objects.all())]
     )
-    username = serializers.CharField(
-        validators=[UniqueValidator(queryset=User.objects.all())]
-    )
-    password = serializers.CharField(min_length=8)
+
+    username = serializers.CharField()
+    password = serializers.CharField(min_length=8, required=False, allow_null=True)
     phone = serializers.CharField(source='userprofile.phone', required=False)
     dob = serializers.DateField(source='userprofile.dob', required=False)
-    avatar = serializers.ImageField(source='userprofile.avatar', required=False)
+    avatar = serializers.ImageField(source='userprofile.avatar', required=False, allow_null=True)
+
+    def validate_email(self, value):
+        request = self.context.get('request')
+        if User.objects.filter(email=value).exists():
+            if request.user.email != value:
+                raise serializers.ValidationError('Email needs to be unique')
+        return value
 
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'],
@@ -53,18 +58,18 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'dob', 'password', 'phone', 'avatar')
+        fields = ('id', 'username', 'email',  'password', 'phone', 'dob', 'avatar')
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all())
-    state = serializers.PrimaryKeyRelatedField(queryset=State.objects.all())
-    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all())
+    city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all(), required=False, allow_null=True)
+    state = serializers.PrimaryKeyRelatedField(queryset=State.objects.all(), required=False, allow_null=True)
+    country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=False, allow_null=True)
 
     class Meta:
         model = UserProfile
-        fields = ('phone','user_type','avatar','address','user','dob','city','country','state')
+        fields = ('id', 'phone', 'user_type', 'avatar', 'address', 'user', 'dob', 'city', 'country', 'state', 'zipcode')
 
     def update(self, instance, validated_data):
         user_id = instance.user_id
@@ -72,7 +77,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
         user = User.objects.get(pk=user_id)
         user.email = user_data['email']
         user.username = user_data['username']
-        user.set_password(user_data['password'])
+        try:
+            user.set_password(user_data['password'])
+        except:
+            pass
         user.save()
         instance.address = validated_data.get('address', instance.address)
         instance.phone = validated_data.get('phone', instance.phone)
@@ -81,6 +89,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.country = validated_data.get('country', instance.country)
         instance.avatar = validated_data.get('avatar', instance.avatar)
         instance.dob = validated_data.get('dob', instance.dob)
+        instance.zipcode = validated_data.get('zipcode', instance.zipcode)
         instance.save()
         return instance
 

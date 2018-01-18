@@ -8,11 +8,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/app/styles/css/main.css">
         <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">-->
         <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">-->
+
+
+        <link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
+        <link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
+        <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/slider/bjqs.css">
+        <!-- EXTERNAL STYLESHEET END -->
+
+        <!-- Cropper -->
+        <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/Cropper/croppie.css">
+
 
         <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
@@ -30,12 +39,11 @@
 
             <subscribe ng-hide="state == 'contact' || state == 'login' || state == 'register' || state=='profile' " ng-include="'/static/app/views/directives/subscribe.html'"></subscribe>
 
-
             <footer ng-hide="state == 'register' || state == 'login' || state=='profile'" ng-include="'/static/app/views/directives/footer.html'"></footer>
 
             <div ng-hide="state == 'register' || state == 'login' || state=='profile'" class="footer-bottom">
                 <div class="container-fluid">
-                    <p>© Copyright 2017 Innstal. All Rights Reserved</p>
+                    <p>© Copyright 2017 Innstal. All Rights Reserved{{request.path}}</p>
                     <div class="pull-right">
                         <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
                         <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
@@ -107,9 +115,13 @@
                   $(selected).removeClass('slide-active');
                 }
               });
-            });
-        </script>
 
+              setTimeout(function() { $("#container-01").pinto(); }, 200);
+            });
+
+
+
+        </script>
 
        </body>
 

@@ -667,7 +667,7 @@ h6{
 }
 .footer-copyrights{
     background-color: #464646;
-    background-image: url('../../images/bg_foot_gradint.png');
+    background-image: url('../img/bg_foot_gradint.png');
     background-position: top left;
     padding: 15px 0px;
     color: #ffffff;
@@ -867,7 +867,7 @@ h6{
     font-size: 13px;
 }
 .icon-qouts{
-    content: url('../../images/cmnt-icon.png');
+    content: url('../img/cmnt-icon.png');
     position: absolute;
     top: 35px;
     left: 40px;
@@ -1284,7 +1284,7 @@ select.input-form{
     -moz-appearance: none;
     appearance: none;
     background-color: #ffffff;
-    background-image: url('../../images/dropdown2.png');
+    background-image: url('../img/dropdown2.png');
     background-position: center right 7px;
     background-repeat: no-repeat;
     background-size: 10px;
@@ -1322,13 +1322,13 @@ select.input-form-chart{
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background-image: url('../../images/dropdown.png');
+    background-image: url('../img/dropdown.png');
     background-position: center right 7px;
     background-repeat: no-repeat;
     background-size: 10px;
 }
 .input-form-chart.calendar{
-    background-image: url('../../images/calendar.png');
+    background-image: url('../img/calendar.png');
     background-position: center right 7px;
     background-repeat: no-repeat;
     background-size: 20px;
@@ -1598,6 +1598,35 @@ select.input-form-chart{
 .croppie-container{
     text-align: center;
 }
+.password-eye{
+    position: relative;
+}
+.btn .password-eye::after{
+    height: 2px;
+    width: 18px;
+    content: '';
+    background-color: #a2a2a2;
+    position: absolute;
+    display: none;
+    top: 8px;
+    left: 0px;
+    transform: rotate(130deg);
+    -webkit-transform: rotate(130deg);
+    -moz-transform: rotate(130deg);
+}
+.btn.active .password-eye::after{
+    height: 2px;
+    width: 18px;
+    content: '';
+    display: block;
+    background-color: #a2a2a2;
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    transform: rotate(130deg);
+    -webkit-transform: rotate(130deg);
+    -moz-transform: rotate(130deg);
+}
 /* DASHBOARD END */
 
 /* MEDIA QUERY */
@@ -1790,7 +1819,7 @@ select.input-form-chart{
     }
     .footer-copyrights {
         background-color: #464646;
-        background-image: url(../../images/bg_foot_gradint.png);
+        background-image: url(../img/bg_foot_gradint.png);
         background-position: top left;
         padding: 15px 0px;
         color: #ffffff;

@@ -77,8 +77,8 @@ angular.module('innstal.controllers', [])
 
         $scope.submit = function (user) {
             $scope.user = user;
-
-            if(regForm.$valid){
+            console.log('validddddddddd', $scope.regForm.$valid);
+            if($scope.regForm.$valid){
                 $http({
                     method: 'POST',
                     url: 'user/register/',

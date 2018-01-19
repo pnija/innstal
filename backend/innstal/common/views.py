@@ -118,12 +118,12 @@ class ContactView(APIView):
 
             try:
                 send_mail('Innstal : New Contact Submission',
-                          '',
-                          settings.DEFAULT_FROM_EMAIL,
-                          ['innstaltest@gmail.com'],
-                          html_message = html_message,
-                          fail_silently=False
-                          )
+                    '',
+                    settings.DEFAULT_FROM_EMAIL,
+                    ['innstaltest@gmail.com'],
+                    html_message = html_message,
+                    fail_silently=False
+                )
             except:
                 return Response({'error': 'Email Not send'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 

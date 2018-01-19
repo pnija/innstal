@@ -3,6 +3,7 @@ from django.contrib import admin
 from rest_framework import routers
 from django.views.generic import TemplateView
 
+from common.linechat import LineChartJSONView
 from common.views import UserCreate, Logout, SubcribeNewsLetter, \
     UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet, \
     ContactView, UpdateUserProfile, ActivateUserAccount, ForgotPassword, \
@@ -31,4 +32,5 @@ urlpatterns = [
     url(r'contact/$', ContactView.as_view(), name='contact'),
     url(r'profile/$', GetUserProfile.as_view(), name='profile'),
     url(r'^', include(router.urls)),
+    url(r'^chart', LineChartJSONView.as_view()),
 ]

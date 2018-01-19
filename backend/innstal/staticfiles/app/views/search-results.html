@@ -24,15 +24,19 @@
             </div>
         </form>
         <div class="row">
-            <div class="col-sm-3" ng-repeat="product in products">
-                <div class="v-items">
-                    <div class="img-div">
-                        <img src="{{product.product_image1}}" width="100%">
-                    </div>
-                    <div class="v-title">
-                        <h4>{{product.product_name}}</h4>
-                    </div>
-                </div>
+
+            <div class="col-sm-3" ng-repeat="product in products"> 
+                <div class="v-items"> 
+                    <div class="hovereffect "> 
+                        <img src="{{product.product_image1}}" width="100%"> 
+                        <div class="overlay"> <a class="info" href="#"><i class="fa fa-eye" aria-hidden="true"></i></a> <a class="info" href="#"><i class="fa fa-download" aria-hidden="true"></i></a> 
+                        </div> 
+                    </div> 
+                    <div class="clearfix"></div> 
+                    <div class="v-title"> 
+                        <h4>{{product.product_name}}</h4> 
+                    </div> 
+                </div> 
             </div>
             <div ng-if="!products[0]">
                 <h3 class="text-center">Nothing Found.</h3>

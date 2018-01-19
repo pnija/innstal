@@ -117,7 +117,6 @@ angular.module('innstal.controllers', [])
         link: function(scope, element, attr, mCtrl) {
 
           function myValidation(value) {
-                console.log('vvvvvvvvvvvvvvvvvv', scope.user_data.user.password)
                 if(scope.user){
                     var password = scope.user.password;
                 }

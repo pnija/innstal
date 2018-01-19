@@ -1,571 +1,346 @@
-<!doctype html >
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="">
-    <![endif]-->
-    <!--[if IE 7]>
-    <html class="no-js lt-ie9 lt-ie8" lang="">
-        <![endif]-->
-        <!--[if IE 8]>
-        <html class="no-js lt-ie9" lang="">
-            <![endif]-->
-            <!--[if gt IE 8]><!-->
-            <html class="no-js" lang="">
-                <!--<![endif]-->
-                <head>
-                    <meta charset="utf-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-                    <title>innstal</title>
-                    <meta name="description" content="">
-                    <meta name="viewport" content="width=device-width, initial-scale=1">
-                    <link rel="apple-touch-icon" href="apple-touch-icon.png">
-                    <link rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
-                    <link rel="stylesheet" href="/static/app/styles/css/main1.css">
-                    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-                    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.min.css">-->
-                    <!-- Owl Stylesheets -->
-                    <!--<link rel="stylesheet" href="/static/app/styles/css/owl.carousel.min.css">-->
-                    <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-                </head>
-                <body>
-                    <div class="contact-us navbar navbar-inverse navbar-fixed-top" role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
-                        <div class="container-fluid">
-                            <div class="navbar-header">
-                                <a class="navbar-toggle">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                </a>
-                                <a class="navbar-brand" href="#"><img src="/static/app/images/logo-primary.png" /></a>
+<link rel="stylesheet" href="/static/app/styles/css/main1.css">
+<div ng-if="user_id">
+    <header ng-include="'/static/app/views/directives/header-after-login.html'"></header>
+</div>
+<div ng-if="!user_id">
+    <header ng-include="'/static/app/views/directives/header-before-login.html'"></header>
+</div>
+<div class="we-register">
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li><a data-toggle="tab" data-target="#Registered-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon1.png" /> Registered Warranties</a></li>
+            <li><a data-toggle="tab" data-target="#Claimed-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon2.png" /> Claimed Warranties</a></li>
+            <li class="active"><a data-toggle="tab" data-target="#Register-for-Warranty" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon3.png" /> Register for Warranty</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="Registered-Warranties" class="tab-pane fade ">
+                <div class="row" style="margin:0px" ng-if="registered_warranties.length!=0">
+                    <h3>Number of Warranties Registered : {{registered_warranties.length}}</h3>
+                    <div align="center" class="col-sm-3 flex-child " ng-repeat="registered in registered_warranties | limitTo: paginationLimit()">
+                        <div class="claim" >
+                            <!--<img src="/static/app/images/items.png" width="100%" />-->
+                            <div class="bgSizeContain" style="background-image: url({{ registered.warranty_image}});">
                             </div>
-                            <div class="col-sm-4 hidden-xs">
-                                <div class="inner-addon right-addon">
-                                    <span class="glyphicon glyphicon-search"></span>
-                                    <input type="text" placeholder="Search User Manual" class="form-control">
+                            <!--<img src="{{ registered.warranty_image}}" style="object-fit: cover;" height="300px" width="100%" />-->
+                            <h4>{{registered.product_name}}
+                            </h4>
+                            <h5>{{registered.product.type_name}}
+                                {{registered.company_name}}
+                            </h5>
+                            <h6>{{registered.product_serial_no}}</h6>
+                        </div>
+                        <button align="center" class="btn claim-btn">Claim Warranty</button>
+                    </div>
+                    <div class="clearfix"></div>
+                    <div align="center">
+                        <button class="btn btn-viewmore" ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">
+                        View More
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-12" ng-if="registered_warranties.length==0">
+                    <img src="/static/app/images/no-result-found.png" width="100%" />
+                </div>
+            </div>
+            <div id="Claimed-Warranties" class="tab-pane fade">
+                <div class="row" style="margin:0px">
+                    <div class="col-sm-12">
+                        <div class="row" style="margin:0px;    box-shadow: 0px 0px 5px 0px #cdcdce;
+                            margin-top: 3em;     margin-bottom: 3em;">
+                            <div class="claim-head">
+                                <h2>Claimed Warranties</h2>
+                                <div class="pull-right ">
+                                    <button class="btn btn-default"> Claim a New Warranty</button>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row" style="margin:0px">
+                                <div class="col-xs-9">
+                                    <div class="claim-left">
+                                        <h2>WARRANTIES</h2>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="claim-right">
+                                        <h2>STATUS</h2>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="slidemenu">
-                                <div class="user-image pull-right hidden-xs">
-                                    <img class="img-circle" src="/static/app/images/user-pic.png">
+                            <div  class="row Claim-list">
+                                <div class="col-xs-9">
+                                    <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
+                                    <ul>
+                                        <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
+                                        <li> <a href="#"> Product Type-Laptop </a> </li>
+                                        <li> <a href="#"> Company Name-Dell </a> </li>
+                                    </ul>
+                                    <h6>Claimed 3 days ago</h6>
                                 </div>
-                                <ul class="nav navbar-nav navbar-right">
-                                    <button style="
-                                        " class="btn visible-xs nav-close"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                    <div class="xs-user-img visible-xs">
-                                        <img class="img-circle" src="/static/app/images/user-pic.png">
-                                    </div>
-                                    <div style="    margin: 15px;" class=" visible-xs">
-                                        <div class="inner-addon right-addon">
-                                            <span class="glyphicon glyphicon-search"></span>
-                                            <input type="text" placeholder="Search User Manual" class="form-control">
-                                        </div>
-                                    </div>
-                                    <li ><a href="#">Warranties</a></li>
-                                    <li><a href="#">Manuals </a></li>
-                                    <li><a href="#">Message </a></li>
-                                    <li><a href="#">Blog </a></li>
-                                    <li><a href="#">Help</a></li>
-                                </ul>
+                                <div align="center" class="col-xs-3">
+                                    <h5>Open</h5>
+                                </div>
+                            </div>
+                            <div  class="row Claim-list">
+                                <div class="col-xs-9">
+                                    <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
+                                    <ul>
+                                        <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
+                                        <li> <a href="#"> Product Type-Laptop </a> </li>
+                                        <li> <a href="#"> Company Name-Dell </a> </li>
+                                    </ul>
+                                    <h6>Claimed 3 days ago</h6>
+                                </div>
+                                <div align="center" class="col-xs-3">
+                                    <h5>Open</h5>
+                                </div>
+                            </div>
+                            <div  class="row Claim-list">
+                                <div class="col-xs-9">
+                                    <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
+                                    <ul>
+                                        <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
+                                        <li> <a href="#"> Product Type-Laptop </a> </li>
+                                        <li> <a href="#"> Company Name-Dell </a> </li>
+                                    </ul>
+                                    <h6>Claimed 3 days ago</h6>
+                                </div>
+                                <div align="center" class="col-xs-3">
+                                    <h5>Open</h5>
+                                </div>
+                            </div>
+                            <div  class="row Claim-list">
+                                <div class="col-xs-9">
+                                    <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
+                                    <ul>
+                                        <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
+                                        <li> <a href="#"> Product Type-Laptop </a> </li>
+                                        <li> <a href="#"> Company Name-Dell </a> </li>
+                                    </ul>
+                                    <h6>Claimed 3 days ago</h6>
+                                </div>
+                                <div align="center" class="col-xs-3">
+                                    <h5>Open</h5>
+                                </div>
+                            </div>
+                            <div  class="row Claim-list">
+                                <div class="col-xs-9">
+                                    <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
+                                    <ul>
+                                        <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
+                                        <li> <a href="#"> Product Type-Laptop </a> </li>
+                                        <li> <a href="#"> Company Name-Dell </a> </li>
+                                    </ul>
+                                    <h6>Claimed 3 days ago</h6>
+                                </div>
+                                <div align="center" class="col-xs-3">
+                                    <h5>Open</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="we-register">
-                        <div class="container">
-                            <ul class="nav nav-tabs">
-                                <li><a data-toggle="tab" data-target="#Registered-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon1.png" /> Registered Warranties</a></li>
-                                <li><a data-toggle="tab" data-target="#Claimed-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon2.png" /> Claimed Warranties</a></li>
-                                <li class="active"><a data-toggle="tab" data-target="#Register-for-Warranty" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon3.png" /> Register for Warranty</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div id="Registered-Warranties" class="tab-pane fade ">
-                                    <div class="row" style="margin:0px" ng-if="registered_warranties.length!=0">
-                                        <h3>Number of Warranties Registered : {{registered_warranties.length}}</h3>
-                                        <div align="center" class="col-sm-3 flex-child " ng-repeat="registered in registered_warranties | limitTo: paginationLimit()">
-                                            <div class="claim" >
-                                                <!--<img src="/static/app/images/items.png" width="100%" />-->
-                                                <div class="bgSizeContain" style="background-image: url({{ registered.warranty_image}});">
-                                                </div>
-                                                <!--<img src="{{ registered.warranty_image}}" style="object-fit: cover;" height="300px" width="100%" />-->
-                                                <h4>{{registered.product_name}}
-
-                                                </h4>
-                                                <h5>{{registered.product.type_name}}
-                                                    {{registered.company_name}}
-                                                </h5>
-                                                <h6>{{registered.product_serial_no}}</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div align="center">
-                                            <button class="btn btn-viewmore" ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">
-                                            View More
-                                            </button>
+                </div>
+            </div>
+            <div id="Register-for-Warranty" class="tab-pane fade in active">
+                <h1 class="col-md-8">IF YOU HAVE ALREADY REGISTERED THE WARRANTY ,PLEASE VISIT THE “REGISTERED <br> WARRANTIES” TAB</h1>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="form-warranty">
+                            <form  name="warrantyForm" novalidate>
+                                <h2>Do it once but do it better</h2>
+                                <h4>Your Information</h4>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="user_name" placeholder="Enter Your Name" ng-model="form.username" required/>
+                                            <span style="color:red" ng-show="warrantyForm.user_name.$error">
+                                            <span  class="error-alert" ng-show="submitted && warrantyForm.user_name.$error.required">This field is required.</span>
+                                            </span>
                                         </div>
                                     </div>
-
-                                    <div class="col-sm-12" ng-if="registered_warranties.length==0">
-
-
-                                        <img src="/static/app/images/no-result-found.png" width="100%" />
-
-                                    </div>
-
-                                </div>
-                                <div id="Claimed-Warranties" class="tab-pane fade">
-                                    <div class="row" style="margin:0px">
-                                        <div class="col-sm-12">
-                                            <div class="row" style="margin:0px;    box-shadow: 0px 0px 5px 0px #cdcdce;
-                                                margin-top: 3em;     margin-bottom: 3em;">
-                                                <div class="claim-head">
-                                                    <h2>Claimed Warranties</h2>
-                                                    <div class="pull-right ">
-                                                        <button class="btn btn-default"> Claim a New Warranty</button>
-                                                    </div>
-                                                    <div class="clearfix"></div>
-                                                </div>
-                                                <div class="row" style="margin:0px">
-                                                    <div class="col-xs-9">
-                                                        <div class="claim-left">
-                                                            <h2>WARRANTIES</h2>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="claim-right">
-                                                            <h2>STATUS</h2>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div  class="row Claim-list">
-                                                    <div class="col-xs-9">
-                                                        <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
-                                                        <ul>
-                                                            <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
-                                                            <li> <a href="#"> Product Type-Laptop </a> </li>
-                                                            <li> <a href="#"> Company Name-Dell </a> </li>
-                                                        </ul>
-                                                        <h6>Claimed 3 days ago</h6>
-                                                    </div>
-                                                    <div align="center" class="col-xs-3">
-                                                        <h5>Open</h5>
-                                                    </div>
-                                                </div>
-                                                <div  class="row Claim-list">
-                                                    <div class="col-xs-9">
-                                                        <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
-                                                        <ul>
-                                                            <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
-                                                            <li> <a href="#"> Product Type-Laptop </a> </li>
-                                                            <li> <a href="#"> Company Name-Dell </a> </li>
-                                                        </ul>
-                                                        <h6>Claimed 3 days ago</h6>
-                                                    </div>
-                                                    <div align="center" class="col-xs-3">
-                                                        <h5>Open</h5>
-                                                    </div>
-                                                </div>
-                                                <div  class="row Claim-list">
-                                                    <div class="col-xs-9">
-                                                        <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
-                                                        <ul>
-                                                            <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
-                                                            <li> <a href="#"> Product Type-Laptop </a> </li>
-                                                            <li> <a href="#"> Company Name-Dell </a> </li>
-                                                        </ul>
-                                                        <h6>Claimed 3 days ago</h6>
-                                                    </div>
-                                                    <div align="center" class="col-xs-3">
-                                                        <h5>Open</h5>
-                                                    </div>
-                                                </div>
-                                                <div  class="row Claim-list">
-                                                    <div class="col-xs-9">
-                                                        <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
-                                                        <ul>
-                                                            <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
-                                                            <li> <a href="#"> Product Type-Laptop </a> </li>
-                                                            <li> <a href="#"> Company Name-Dell </a> </li>
-                                                        </ul>
-                                                        <h6>Claimed 3 days ago</h6>
-                                                    </div>
-                                                    <div align="center" class="col-xs-3">
-                                                        <h5>Open</h5>
-                                                    </div>
-                                                </div>
-                                                <div  class="row Claim-list">
-                                                    <div class="col-xs-9">
-                                                        <h4>This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean </h4>
-                                                        <ul>
-                                                            <li> <a href="#"> Product Name-Dell Inspiron 15-3567 </a> </li>
-                                                            <li> <a href="#"> Product Type-Laptop </a> </li>
-                                                            <li> <a href="#"> Company Name-Dell </a> </li>
-                                                        </ul>
-                                                        <h6>Claimed 3 days ago</h6>
-                                                    </div>
-                                                    <div align="center" class="col-xs-3">
-                                                        <h5>Open</h5>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="user_email"placeholder="Enter Your Email" ng-model="form.email" required/>
+                                            <span style="color:red" ng-show="warrantyForm.user_email.$error">
+                                            <span class="error-alert" ng-show="submitted && warrantyForm.user_email.$error.required">This field is required.</span>
+                                            </span>
                                         </div>
                                     </div>
-                                </div>
-                                <div id="Register-for-Warranty" class="tab-pane fade in active">
-                                    <h1 class="col-md-8">IF YOU HAVE ALREADY REGISTERED THE WARRANTY ,PLEASE VISIT THE “REGISTERED <br> WARRANTIES” TAB</h1>
-                                    <div class="row">
-                                        <div class="col-sm-8">
-                                            <div class="form-warranty">
-                                                  <form  name="warrantyForm" novalidate>
-                                        <h2>Do it once but do it better</h2>
-                                        <h4>Your Information</h4>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="phone_number" placeholder="Enter Your Phone Number" ng-model="form.phone" required/>
+                                            <span style="color:red" ng-show="warrantyForm.phone_number.$error">
+                                            <span class="error-alert"  ng-show="submitted && warrantyForm.phone_number.$error.required">This field is required.</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="hidden" value="{{form.id}}" name="user_profile" ng-model="form.id">
+                                            <input type="text" class="form-control" placeholder="Address" ng-model="form.address"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" name="user_name" placeholder="Enter Your Name" ng-model="form.username" required/>
-                                                    <span style="color:red" ng-show="warrantyForm.user_name.$error">
-                                                    <span  class="error-alert" ng-show="submitted && warrantyForm.user_name.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="user_email"placeholder="Enter Your Email" ng-model="form.email" required/>
-                                                    <span style="color:red" ng-show="warrantyForm.user_email.$error">
-                                                    <span class="error-alert" ng-show="submitted && warrantyForm.user_email.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="phone_number" placeholder="Enter Your Phone Number" ng-model="form.phone" required/>
-                                                    <span style="color:red" ng-show="warrantyForm.phone_number.$error">
-                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.phone_number.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="hidden" value="{{form.id}}" name="user_profile" ng-model="form.id">
-                                                    <input type="text" class="form-control" placeholder="Address" ng-model="form.address"/>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <div class="select">
-                                                            <select name="purchase_city"  ng-model="form.city">
+                                                    <div class="select">
+                                                        <select name="purchase_city"  ng-model="form.city">
                                                             <option value="{{city.id}}" ng-repeat="city in user_profile_city">{{city.name}}</option>
                                                         </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                           <div class="select">
-                                                            <select name="purchase_state" id="" ng-model="form.state">
-                                                                <option value="{{state.code}}" ng-repeat="state in user_profile_state">{{state.name}}</option>
-                                                            </select>
-                                                            </div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <div class="form-group">
-                                                            <div class="select">
-                                                                <select name="purchase_country" ng-model="form.country">
-                                                            <option value="{{country.code}}" ng-repeat="country in user_profile_countries">{{country.name}}</option>
-                                                            </select>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-6">
-                                                        <input type="text" class="form-control" placeholder="Zipcode/Postalcode" ng-model="form.zipcode"/>
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select name="purchase_state" id="" ng-model="form.state">
+                                                            <option value="{{state.code}}" ng-repeat="state in user_profile_state">{{state.name}}</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4>Product Information</h4>
+                                    </div>
+                                    <div class="col-sm-6">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <div class="select form-group">
-                                                    <select name="slct" id="slct2" ng-model="form.company_name">
-                                                            <option value="{{company.code}}" ng-repeat="company in companies">{{company.label}}</option>
-                                                        </select>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="product_name" placeholder="Product Name" ng-model="form.product_name" required/>
-                                                    <span class="error-alert"  style="color:red ; position: absolute;" ng-show="warrantyForm.product_name.$error">
-                                                    <span  ng-show="submitted && warrantyForm.product_name.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="product" id="slct2">
-                                                        <option  ng-model="form.product" value="{{product_type.id}}" ng-repeat="product in product_type">{{product.type_name}}</option>
-                                                    </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="product_serial_no" placeholder="Product Serial Number" ng-model="form.product_serial_no" required/>
-                                                    <span style="color:red" ng-show="warrantyForm.product_serial_no.$error">
-                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.product_serial_no.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" name="product_color" placeholder="Product Color" ng-model="form.product_color" required/>
-                                                    <span style="color:red" ng-show="warrantyForm.product_color.$error">
-                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.product_color.$error.required">This field is required.</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <div class="select">
-                                                        <select name="purchase_country" id="slct3" ng-model="form.purchase_country">
-                                                            <option value="{{country.code}}" ng-repeat="country in countries">{{country.label}}</option>
+                                                        <select name="purchase_country" ng-model="form.country">
+                                                            <option value="{{country.code}}" ng-repeat="country in user_profile_countries">{{country.name}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <textarea rows="5" class="form-control" placeholder="Additional Info" ng-model="form.additional_info"></textarea>
-                                                </div>
-                                            </div>
-                                            <div class="clearfix"></div>
-                                            <div class="col-sm-6" style="padding:0px;">
-                                                <div class="col-sm-7">
-                                                    <input type="file" name="warranty_image" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                    <label for="file-1">
-                                                        <spa>
-                                                        <i class="fa fa-upload" aria-hidden="true"></i>  Upload Image</span>
-                                                    </label>
-                                                </div>
-                                                <div align="center" class="col-sm-5">
-                                                    <img src="/static/app/images/upload-img.png" width="100%" />
-                                                </div>
+                                                <input type="text" class="form-control" placeholder="Zipcode/Postalcode" ng-model="form.zipcode"/>
                                             </div>
                                         </div>
-                                        <label class="container1"> I accept all <a href="#">Terms & Conditions </a>
-                                        <input type="checkbox" >
-                                        <span class="checkmark"></span>
-                                        </label>
-                                        <div align="center">
-                                            <button  type="button" class="btn btn-Register" ng-click="submitted=true;submit(form)">Register Warranty Card</button>
-                                        </div>
-                                    </form>
-
                                     </div>
                                 </div>
-
-                                        <div class="col-sm-4">
-                                            <div class="form-warranty">
-                                                <h4>Don`t want to fill all the info, Feeling lazy?</h4>
-                                                <p>Just upload the photo and fill the details later</p>
-                                                <img src="/static/app/images/dummy.png" width="100%" />
-                                                <div align="center">
-                                                    <input  type="file" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
-                                                    <label for="file-1">
-                                                        <spa>
-                                                        <i class="fa fa-upload" aria-hidden="true"></i>  Upload Image</span>
-                                                    </label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" disabled placeholder="Company Name" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" disabled placeholder="Product Name" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <div class="select">
-                                                        <select name="slct" id="slct" disabled>
-                                                            <option>Product Type</option>
-                                                            <option value="1">Pure CSS</option>
-                                                            <option value="2">No JS</option>
-                                                            <option value="3">Nice!</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div align="center" class="checkbox ">
-                                                    <label>
-                                                    <input type="checkbox" value="" disabled>
-                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                    I accept all <a href="#">Terms &amp; Conditions</a>
-                                                    </label>
-                                                </div>
-                                                <div align="center">
-                                                    <button  class="btn btn-Register">Register Warranty Card</button>
-                                                </div>
+                                <h4>Product Information</h4>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <div class="select form-group">
+                                            <select name="slct" id="slct2" ng-model="form.company_name">
+                                                <option value="{{company.code}}" ng-repeat="company in companies">{{company.label}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="product_name" placeholder="Product Name" ng-model="form.product_name" required/>
+                                            <span class="error-alert"  style="color:red ; position: absolute;" ng-show="warrantyForm.product_name.$error">
+                                            <span  ng-show="submitted && warrantyForm.product_name.$error.required">This field is required.</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="select">
+                                                <select name="product" id="slct2">
+                                                    <option  ng-model="form.product" value="{{product_type.id}}" ng-repeat="product in product_type">{{product.type_name}}</option>
+                                                </select>
                                             </div>
                                         </div>
-
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="product_serial_no" placeholder="Product Serial Number" ng-model="form.product_serial_no" required/>
+                                            <span style="color:red" ng-show="warrantyForm.product_serial_no.$error">
+                                            <span class="error-alert"  ng-show="submitted && warrantyForm.product_serial_no.$error.required">This field is required.</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" name="product_color" placeholder="Product Color" ng-model="form.product_color" required/>
+                                            <span style="color:red" ng-show="warrantyForm.product_color.$error">
+                                            <span class="error-alert"  ng-show="submitted && warrantyForm.product_color.$error.required">This field is required.</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <div class="select">
+                                                <select name="purchase_country" id="slct3" ng-model="form.purchase_country">
+                                                    <option value="{{country.code}}" ng-repeat="country in countries">{{country.label}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <textarea rows="5" class="form-control" placeholder="Additional Info" ng-model="form.additional_info"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-6" style="padding:0px;">
+                                        <div class="col-sm-7">
+                                            <input type="file" name="warranty_image" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                            <label for="file-1">
+                                            <span>
+                                            <i class="fa fa-upload" aria-hidden="true"></i>  Upload Image</span>
+                                            </label>
+                                        </div>
+                                        <div align="center" class="col-sm-5">
+                                            <img src="/static/app/images/upload-img.png" width="100%" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="container1"> I accept all <a href="#">Terms & Conditions </a>
+                                <input type="checkbox" >
+                                <span class="checkmark"></span>
+                                </label>
+                                <div align="center">
+                                    <button  type="button" class="btn btn-Register" ng-click="submitted=true;submit(form)">Register Warranty Card</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-warranty">
+                            <h4>Don`t want to fill all the info, Feeling lazy?</h4>
+                            <p>Just upload the photo and fill the details later</p>
+                            <img src="/static/app/images/dummy.png" width="100%" />
+                            <div align="center">
+                                <input  type="file" name="file-1[]" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} files selected" multiple="">
+                                <label for="file-1">
+                                <span>
+                                <i class="fa fa-upload" aria-hidden="true"></i>  Upload Image</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" disabled placeholder="Company Name" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" disabled placeholder="Product Name" />
+                            </div>
+                            <div class="form-group">
+                                <div class="select">
+                                    <select name="slct" id="slct" disabled>
+                                        <option>Product Type</option>
+                                        <option value="1">Pure CSS</option>
+                                        <option value="2">No JS</option>
+                                        <option value="3">Nice!</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div align="center" class="checkbox ">
+                                <label>
+                                <input type="checkbox" value="" disabled>
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                I accept all <a href="#">Terms &amp; Conditions</a>
+                                </label>
+                            </div>
+                            <div align="center">
+                                <button  class="btn btn-Register">Register Warranty Card</button>
                             </div>
                         </div>
                     </div>
-
-                    <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
-                    <script>
-                        window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
-                    </script>
-                    <script src="/static/app/scripts/js/vendor/bootstrap.min.js"></script>
-                    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-                    <script src="/static/app/scripts/js/main.js"></script>
-                    <script type="text/javascript" src="/static/app/scripts/js/jquery.pinto.js"></script>
-                    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>-->
-                    <!--<script src="/static/app/scripts/js/owl.carousel.js"></script>-->
-                    <!--<script>-->
-                        <!--$('.datepicker').datepicker({-->
-                        <!--});-->
-
-                    <!--</script>-->
-                    <script>
-                        AOS.init({
-                          offset: 200,
-                          duration: 600,
-                          easing: 'ease-in-sine',
-                          delay: 150,
-                        });
-                    </script>
-                    <script>
-                        $(document).ready(function() {
-
-
-                          //stick in the fixed 100% height behind the navbar but don't wrap it
-                          $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-
-                          $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-
-                          // Enter your ids or classes
-                          var toggler = '.navbar-toggle';
-                          var pagewrapper = '#page-content';
-                          var navigationwrapper = '.navbar-header';
-                          var menuwidth = '100%'; // the menu inside the slide menu itself
-                          var slidewidth = '80%';
-                          var menuneg = '-100%';
-                          var slideneg = '-80%';
-
-                          function toggleSideBar(selected) {
-
-                            $('#slidemenu').stop().animate({
-                              left: selected ? menuneg : '0px'
-                            });
-
-                            $('#navbar-height-col').stop().animate({
-                              left: selected ? slideneg : '0px'
-                            });
-
-                            $(pagewrapper).stop().animate({
-                              left: selected ? '0px' : slidewidth
-                            });
-
-                            $(navigationwrapper).stop().animate({
-                              left: selected ? '0px' : slidewidth
-                            });
-
-
-                            $(this).toggleClass('slide-active', !selected);
-                            $('#slidemenu').toggleClass('slide-active');
-
-
-                            $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
-                          }
-
-                          $("#slide-nav").on("click", toggler, function(e) {
-
-                            var selected = false;
-                            toggleSideBar(selected);
-
-                          });
-
-                          $("body").on("click", '.nav-close', function(e) {
-                            var selected = true;
-                            toggleSideBar(selected);
-
-
-                          });
-
-                          var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-
-
-                          $(window).on("resize", function() {
-
-                            if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                              $(selected).removeClass('slide-active');
-                            }
-
-
-                          });
-
-
-
-
-                        });
-                    </script>
-                    <!--<script>-->
-                        <!--$(document).ready(function($) {-->
-                          <!--"use strict";-->
-
-                          <!--var container_01 = $("#container-01"),-->
-                            <!--container_02 = $("#container-02");-->
-
-                          <!--container_01.imagesLoaded(function() {-->
-                            <!--container_01.pinto({-->
-                              <!--itemWidth: 200,-->
-                              <!--gapX: 30,-->
-                              <!--gapY: 30,-->
-                            <!--});-->
-                          <!--});-->
-
-
-
-                          <!--$("#init").click(function() {-->
-                            <!--container_01.pinto();-->
-
-                          <!--});-->
-
-                          <!--$("#destroy").click(function() {-->
-                            <!--container_01.pinto("destroy");-->
-
-                          <!--});-->
-                        <!--});-->
-                    <!--</script>-->
-                    <!--<script>-->
-                        <!--$('.owl-carousel').owlCarousel({-->
-                          <!--loop: true,-->
-                          <!--margin: 10,-->
-                          <!--responsiveClass: true,-->
-                          <!--responsive: {-->
-                            <!--0: {-->
-                              <!--items: 1,-->
-                              <!--nav: true-->
-                            <!--},-->
-                            <!--600: {-->
-                              <!--items: 1,-->
-                              <!--nav: false-->
-                            <!--},-->
-                            <!--1000: {-->
-                              <!--items: 1,-->
-                              <!--nav: true,-->
-                              <!--loop: false-->
-                            <!--}-->
-                          <!--}-->
-                        <!--})-->
-                    <!--</script>-->
-                </body>
-            </html>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

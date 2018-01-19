@@ -1,20 +1,6 @@
 angular.module('innstal.controllers', [])
     .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
-        $scope.subscribe = function () {
-            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
-            $http({
-                method: 'POST',
-                url: 'user/subcribe/newsletter/',
-                data: params,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                    $scope.firstname = '';
-                    $scope.subscribe_email = '';
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        };
         $rootScope.state = $state.current.name;
     })
     .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
@@ -375,31 +361,36 @@ angular.module('innstal.controllers', [])
         }
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
-        $http({
-            method: 'GET',
-            url: 'warranty/country-list',
-        }).then(function (response) {
-                $scope.countries = response.data.countries;
-                $scope.companies = response.data.companies;
-                $scope.product_type = response.data.product_type;
-                $scope.user_profile_countries = response.data.user_profile_countries;
-                $scope.user_profile_state = response.data.user_profile_state;
-                $scope.user_profile_city = response.data.user_profile_city;
-                console.log(response.data.user_profile_countries, "aaaaaaaaaaa")
-            }, function (response) {
-                console.log('i am in error');
-        });
 
-        $http({
-            method: 'GET',
-            url: 'warranty/users',
-            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+        $scope.submitted = false;
+        loadData();
 
-        }).then(function (response) {
-                $scope.form = response.data.results[0];
-            }, function (response) {
-                console.log('i am in error');
-        });
+        function loadData(){
+            $http({
+                method: 'GET',
+                url: 'warranty/country-list',
+            }).then(function (response) {
+                    $scope.countries = response.data.countries;
+                    $scope.companies = response.data.companies;
+                    $scope.product_type = response.data.product_type;
+                    $scope.user_profile_countries = response.data.user_profile_countries;
+                    $scope.user_profile_state = response.data.user_profile_state;
+                    $scope.user_profile_city = response.data.user_profile_city;
+                }, function (response) {
+                    console.log('i am in error');
+            });
+
+            $http({
+                method: 'GET',
+                url: 'warranty/users',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+
+            }).then(function (response) {
+                    $scope.form = response.data[0];
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
 
         $scope.submit = function (form) {
             $scope.form = form;
@@ -429,6 +420,42 @@ angular.module('innstal.controllers', [])
                     console.log('i am in error');
             });
         };
+
+        loadRegistered();
+
+        function loadRegistered(){
+            $http({
+                method: 'GET',
+                url: 'warranty/register/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                    $scope.registered_warranties = response.data;
+                    var pagesShown = 1;
+
+                    var pageSize = 4;
+
+                    $scope.paginationLimit = function(data) {
+                     return pageSize * pagesShown;
+                    };
+
+                    $scope.hasMoreItemsToShow = function() {
+                     return pagesShown < ($scope.registered_warranties.length / pageSize);
+                    };
+
+                    $scope.showMoreItems = function() {
+                     pagesShown = pagesShown + 1;
+                    };
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+
+
+        $scope.loadRegisteredData = function(){
+            loadData();
+            loadRegistered();
+        }
+
     })
     .controller('loginnextcontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal, $location) {
         console.log('accessed');
@@ -495,4 +522,18 @@ angular.module('innstal.controllers', [])
             }
         }
         $rootScope.state = $state.current.name;
+    })
+    .controller('subscribeController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+        $scope.subscribe = function (subs) {
+            console.log('paramsssssssssssssss', subs);
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: subs,
+            }).then(function (response) {
+                    $scope.subs = {};
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
     })

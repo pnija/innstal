@@ -8,16 +8,6 @@ from rest_framework.validators import UniqueValidator
 from common.models import UserProfile, Newsletter, City, State, Country, Blog, BusinessUserProfile, UserPlans
 
 
-# class UserProfileSerializer(serializers.ModelSerializer):
-#     user_id = serializers.IntegerField(source='user.id', read_only = True)
-#     first_name = serializers.CharField(source = 'user.first_name')
-#     last_name = serializers.CharField(source = 'user.last_name')
-#     email = serializers.CharField(source = 'user.email')
-#
-#     class Meta:
-#         model = UserProfile
-#         fields = ('user_id', 'first_name', 'last_name', 'email', 'phone', 'user_type', 'avatar')
-#
 
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
@@ -25,16 +15,17 @@ class UserSerializer(serializers.ModelSerializer):
     )
 
     username = serializers.CharField()
-    password = serializers.CharField(min_length=8, required=False, allow_null=True)
+    password = serializers.CharField(min_length=8,allow_null=True ,required=False)
     phone = serializers.CharField(source='userprofile.phone', required=False)
     dob = serializers.DateField(source='userprofile.dob', required=False)
     avatar = serializers.ImageField(source='userprofile.avatar', required=False, allow_null=True)
 
-    def validate_email(self, value):
-        request = self.context.get('request')
-        if User.objects.filter(email=value).exists():
-            raise serializers.ValidationError('Email needs to be unique')
-        return value
+    # def validate_email(self, value):
+    #     request = self.context.get('request')
+    #     if User.objects.filter(email=value).exists():
+    #         if request.user.email != value:
+    #             raise serializers.ValidationError('Email needs to be unique')
+    #     return value
 
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'],

@@ -4,7 +4,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import Warranty, ClaimedWarranty
 from product.models import UserProfile
 from .models import Warranty
-from product.models import UserProfile, ProductType
+from product.models import UserProfile
 
 
 class UserProfileSerializer(ModelSerializer):
@@ -24,7 +24,6 @@ class UserProfileSerializer(ModelSerializer):
 
 
 class WarrantyApplicationSerializer(ModelSerializer):
-    # user = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     username = serializers.SerializerMethodField()
     phone = serializers.SerializerMethodField()
@@ -60,7 +59,6 @@ class WarrantyApplicationSerializer(ModelSerializer):
 
     def get_city(self, instance):
         if instance.user_profile is not None:
-            import pdb;pdb.set_trace()
             return instance.user_profile.city.name
 
     def get_state(self, instance):
@@ -75,5 +73,7 @@ class ClaimedWarrantySerializer(ModelSerializer):
     class Meta:
         model = ClaimedWarranty
         fields = ('id','user', 'warranty', 'status','claimed_date')
+
+
 
 

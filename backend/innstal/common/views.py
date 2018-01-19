@@ -145,15 +145,18 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
-        request_data._mutable = True
+        # request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
+            url = {}
+            url['url_value'] = request.scheme + "://" + request.META['HTTP_HOST'] + "#/unsubcribe/newsletter"
+            url['pk'] = serializer.data.pop('id')
             email_id = serializer.data.pop('email')
             html = get_template('subscription_email.html')
             subject, from_email, to = 'Innstal Subscription Activated',settings.DEFAULT_FROM_EMAIL , email_id
-            html_content = html.render()
+            html_content = html.render(url)
             msg = EmailMultiAlternatives(subject, '', from_email, [to])
             msg.attach_alternative(html_content, "text/html")
             msg.send()
@@ -166,6 +169,25 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'Subcription failed'
             response['error'] = serializer.errors
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+class Unsubscribe(APIView):
+    def get(self,request, pk):
+        response = {}
+        if Newsletter.objects.filter(pk=pk):
+            request_data = Newsletter.objects.get(pk=pk)
+            if request_data.is_subscribed == True:
+                request_data.is_subscribed = False
+            serializer = NewsletterSerializer(request_data, data=request.data, partial=True)
+            if serializer.is_valid():
+                serializer.save()
+                response['status'] = 'success'
+                response['message'] = 'Unsubscribed Newsletter services'
+                return Response(response)
+            else:
+                response['status'] = 'failed'
+                response['error'] = serializer.errors
+                response['message'] = 'Failed to unsubscribe newsletter services'
+                return Response(response)
 
 
 class UpdateNewsLetterSubscription(APIView):

@@ -7,7 +7,7 @@ from common.views import UserCreate, Logout, SubcribeNewsLetter, \
     UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet, \
     ContactView, UpdateUserProfile, ActivateUserAccount, ForgotPassword, \
     ChangePassword, ResetPasswordCheck, GetUserProfile, BusinessAccountRegistration, SelectPricingPlan, \
-    UpdatePricingPlan
+    UpdatePricingPlan, Unsubscribe
 
 router = routers.DefaultRouter()
 router.register(r'blog', BlogListingViewSet)
@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^update-password/(?P<pk>\d+)?/$', ChangePassword.as_view()),
     url(r'^reset-password/$', UpdatePassword.as_view()),
     url(r'^subcribe/newsletter/$', SubcribeNewsLetter.as_view()),
+    url(r'^unsubcribe/newsletter/(?P<pk>\d+)/?$', Unsubscribe.as_view()),
     url(r'^update/newsletter-subscription/$', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
     url(r'contact/$', ContactView.as_view(), name='contact'),
     url(r'profile/$', GetUserProfile.as_view(), name='profile'),

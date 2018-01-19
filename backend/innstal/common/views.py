@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.db import IntegrityError
 from django.template import Context, exceptions
 from django.template.loader import get_template
 from django.utils.encoding import force_bytes
@@ -40,8 +41,14 @@ class UserCreate(APIView):
         request.data['dob'] = datetime.strptime(str(day)+'/'+str(month)+'/'+year, "%d/%m/%Y").date()
         response = {}
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        if serializer.is_valid(raise_exception=True):
+            try:
+                serializer.save()
+            except IntegrityError:
+                response['status'] = 'failed'
+                response['message'] = 'User Account not created'
+                response['error'] = ['username is not unique']
+                return Response(response, status=status.HTTP_408_REQUEST_TIMEOUT)
             id = serializer.data.pop('id')
             url = {}
             url['url_value'] = request.scheme+"://"+request.META['HTTP_HOST']+"#/activate"

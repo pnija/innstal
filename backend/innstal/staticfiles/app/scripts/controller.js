@@ -63,7 +63,6 @@ angular.module('innstal.controllers', [])
 
         $scope.submit = function (user) {
             $scope.user = user;
-            console.log('validddddddddd', $scope.regForm.$valid);
             if($scope.regForm.$valid){
                 $http({
                     method: 'POST',
@@ -118,8 +117,13 @@ angular.module('innstal.controllers', [])
         link: function(scope, element, attr, mCtrl) {
 
           function myValidation(value) {
-                
-                var password = scope.user.password
+                console.log('vvvvvvvvvvvvvvvvvv', scope.user_data.user.password)
+                if(scope.user){
+                    var password = scope.user.password;
+                }
+                else{
+                    var password = scope.user_data.user.password;
+                }
 
                 if(value.length > 0){
 
@@ -329,34 +333,59 @@ angular.module('innstal.controllers', [])
         $rootScope.state = $state.current.name;
     })
     .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+        $scope.submitted = false;
         $window.scrollTo(0, 0);
         $http({
                 method: 'GET',
                 url: 'user/profile/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-
-                    console.log('profile dataaaaaaaaaaaa', response.data);
-
-                    $scope.user_data = response.data;
-                    $scope.userdata_id = response.data.user.id;
+                   $scope.user_data = response.data;
+                   $scope.userdata_id = response.data.user.id;
+                   $scope.email_user = response.data.user.email;
                 }, function (response) {
                     console.log('i am in error');
             });
         $rootScope.state = $state.current.name;
 
-        $scope.saveProfile = function(userdata){
-            $http({
-                method: 'PUT',
-                url: 'user/update/'+$scope.userdata_id+'/',
-                data: userdata,
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
+        $http({
+            method: 'GET',
+            url: 'warranty/country-list',
+        }).then(function (response) {
 
-                }, function (response) {
-                    console.log('i am in error');
-            });
+                console.log('ressssssssss', response)
+                $scope.countries = response.data.user_profile_countries;
+                $scope.states = response.data.user_profile_state;
+                $scope.cities = response.data.user_profile_city;
+            }, function (response) {
+                console.log('i am in error');
+        });
+
+        $scope.saveProfile = function(userdata){
+            console.log('userdataaaaaaaaaaaaaaaa', userdata);
+
+            $scope.errorEmail = '';
+            if($scope.myForm.$valid){
+                $http({
+                    method: 'PUT',
+                    url: 'user/update/'+$scope.userdata_id+'/',
+                    data: userdata,
+                    headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+                }).then(function (response) {
+                        $scope.email_user = userdata.user.email;
+                    }, function (response) {
+                        if(response.data.error.user.email == 'Email needs to be unique'){
+                            $scope.errorEmail = 'Email needs to be unique';
+                        }
+                        console.log('i am in error');
+                });
+            }
         }
+
+        $scope.clearEmail = function(){
+            $scope.errorEmail = '';
+        }
+
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({

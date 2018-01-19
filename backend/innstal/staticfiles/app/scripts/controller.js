@@ -1,20 +1,6 @@
 angular.module('innstal.controllers', [])
     .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
-        $scope.subscribe = function () {
-            var params = $.param({firstname: $scope.firstname, email: $scope.subscribe_email});
 
-            $http({
-                method: 'POST',
-                url: 'user/subcribe/newsletter/',
-                data: params,
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            }).then(function (response) {
-                    $scope.firstname = '';
-                    $scope.subscribe_email = '';
-                }, function (response) {
-                    console.log('i am in error');
-            });
-        };
         $rootScope.state = $state.current.name;
     })
     .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
@@ -493,4 +479,18 @@ angular.module('innstal.controllers', [])
             }
         }
         $rootScope.state = $state.current.name;
+    })
+    .controller('subscribeController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+        $scope.subscribe = function (subs) {
+            console.log('paramsssssssssssssss', subs);
+            $http({
+                method: 'POST',
+                url: 'user/subcribe/newsletter/',
+                data: subs,
+            }).then(function (response) {
+                    $scope.subs = {};
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        };
     })

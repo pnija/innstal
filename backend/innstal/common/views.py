@@ -81,7 +81,7 @@ class Login(APIView):
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'
                 return Response(response, status=HTTP_401_UNAUTHORIZED)
-                
+
             if not registered_user:
                 response['status'] = 'failed'
                 response['message'] = 'Login failed'
@@ -118,12 +118,12 @@ class ContactView(APIView):
 
             try:
                 send_mail('Innstal : New Contact Submission',
-                    '',
-                    settings.DEFAULT_FROM_EMAIL,
-                    ['innstaltest@gmail.com'],
-                    html_message = html_message,
-                    fail_silently=False
-                )
+                          '',
+                          settings.DEFAULT_FROM_EMAIL,
+                          ['innstaltest@gmail.com'],
+                          html_message = html_message,
+                          fail_silently=False
+                          )
             except:
                 return Response({'error': 'Email Not send'}, status=status.HTTP_503_SERVICE_UNAVAILABLE)
 
@@ -145,7 +145,6 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
-        # request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():

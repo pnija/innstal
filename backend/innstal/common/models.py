@@ -53,7 +53,7 @@ class State(models.Model):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='get_user_profile')
     phone = models.CharField('mobile number', max_length=15, blank=True, null=True)
     user_type = models.CharField(choices=USER_TYPE, max_length=1, default=1)
     address = models.TextField(null=True, blank=True)

@@ -73,120 +73,33 @@
                     <div class="we-register">
                         <div class="container">
                             <ul class="nav nav-tabs">
-                                <li ><a data-toggle="tab" data-target="#Registered-Warranties"><img src="/static/app/images/tab-icon1.png" /> Registered Warranties</a></li>
-                                <li><a data-toggle="tab" data-target="#Claimed-Warranties"><img src="/static/app/images/tab-icon2.png" /> Claimed Warranties</a></li>
-                                <li class="active"><a data-toggle="tab" data-target="#Register-for-Warranty"><img src="/static/app/images/tab-icon3.png" /> Register for Warranty</a></li>
+                                <li><a data-toggle="tab" data-target="#Registered-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon1.png" /> Registered Warranties</a></li>
+                                <li><a data-toggle="tab" data-target="#Claimed-Warranties" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon2.png" /> Claimed Warranties</a></li>
+                                <li class="active"><a data-toggle="tab" data-target="#Register-for-Warranty" ng-click="loadRegisteredData()"><img src="/static/app/images/tab-icon3.png" /> Register for Warranty</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="Registered-Warranties" class="tab-pane fade ">
                                     <div class="row" style="margin:0px">
-                                        <h3>Number of Warranties Registered : 70</h3>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
+                                        <h3>Number of Warranties Registered : {{registered_warranties.length}}</h3>
+                                        <div align="center" class="col-sm-3 flex-child " ng-repeat="registered in registered_warranties | limitTo: paginationLimit()">
+                                            <div class="claim" >
+                                                <!--<img src="/static/app/images/items.png" width="100%" />-->
+                                                <div class="bgSizeContain" style="background-image: url({{ registered.warranty_image}});">
+                                                </div>
+                                                <!--<img src="{{ registered.warranty_image}}" style="object-fit: cover;" height="300px" width="100%" />-->
+                                                <h4>{{registered.product_name}}
+
                                                 </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
+                                                <h5>{{registered.product.type_name}}
+                                                    {{registered.company_name}}
                                                 </h5>
-                                                <h6>1528629757-abc</h6>
+                                                <h6>{{registered.product_serial_no}}</h6>
                                             </div>
                                             <button align="center" class="btn claim-btn">Claim Warranty</button>
                                         </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
-                                        <div align="center" class="col-sm-3">
-                                            <div class="claim">
-                                                <img src="/static/app/images/items.png" width="100%" />
-                                                <h4>Dell Inspiron<br>
-                                                    15-3567
-                                                </h4>
-                                                <h5>Laptop<br>
-                                                    Dell
-                                                </h5>
-                                                <h6>1528629757-abc</h6>
-                                            </div>
-                                            <button align="center" class="btn claim-btn">Claim Warranty</button>
-                                        </div>
+                                        <div class="clearfix"></div>
                                         <div align="center">
-                                            <button class="btn btn-viewmore">
+                                            <button class="btn btn-viewmore" ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">
                                             View More
                                             </button>
                                         </div>
@@ -204,7 +117,7 @@
                                                     </div>
                                                     <div class="clearfix"></div>
                                                 </div>
-                                                <div class="row" style="margin:0px     ">
+                                                <div class="row" style="margin:0px">
                                                     <div class="col-xs-9">
                                                         <div class="claim-left">
                                                             <h2>WARRANTIES</h2>
@@ -301,17 +214,26 @@
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Enter Your Name" ng-model="form.username"/>
+                                                    <input type="text" class="form-control" name="user_name" placeholder="Enter Your Name" ng-model="form.username" required/>
+                                                    <span style="color:red" ng-show="warrantyForm.user_name.$error">
+                                                    <span  class="error-alert" ng-show="submitted && warrantyForm.user_name.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Enter Your Email" ng-model="form.email"/>
+                                                    <input type="text" class="form-control" name="user_email"placeholder="Enter Your Email" ng-model="form.email" required/>
+                                                    <span style="color:red" ng-show="warrantyForm.user_email.$error">
+                                                    <span class="error-alert" ng-show="submitted && warrantyForm.user_email.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Enter Your Phone Number" ng-model="form.phone"/>
+                                                    <input type="text" class="form-control" name="phone_number" placeholder="Enter Your Phone Number" ng-model="form.phone" required/>
+                                                    <span style="color:red" ng-show="warrantyForm.phone_number.$error">
+                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.phone_number.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -325,7 +247,7 @@
                                                     <div class="col-sm-6">
                                                         <div class="form-group">
                                                             <div class="select">
-                                                            <select name="purchase_city" id="" ng-model="form.city">
+                                                            <select name="purchase_city"  ng-model="form.city">
                                                             <option value="{{city.id}}" ng-repeat="city in user_profile_city">{{city.name}}</option>
                                                         </select>
                                                             </div>
@@ -371,7 +293,10 @@
                                             <div class="clearfix"></div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Product Name" ng-model="form.product_name"/>
+                                                    <input type="text" class="form-control" name="product_name" placeholder="Product Name" ng-model="form.product_name" required/>
+                                                    <span class="error-alert"  style="color:red ; position: absolute;" ng-show="warrantyForm.product_name.$error">
+                                                    <span  ng-show="submitted && warrantyForm.product_name.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -385,12 +310,18 @@
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Product Serial Number" ng-model="form.product_serial_no"/>
+                                                    <input type="text" class="form-control" name="product_serial_no" placeholder="Product Serial Number" ng-model="form.product_serial_no" required/>
+                                                    <span style="color:red" ng-show="warrantyForm.product_serial_no.$error">
+                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.product_serial_no.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Product Color" ng-model="form.product_color"/>
+                                                    <input type="text" class="form-control" name="product_color" placeholder="Product Color" ng-model="form.product_color" required/>
+                                                    <span style="color:red" ng-show="warrantyForm.product_color.$error">
+                                                    <span class="error-alert"  ng-show="submitted && warrantyForm.product_color.$error.required">This field is required.</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -428,7 +359,7 @@
                                         <span class="checkmark"></span>
                                         </label>
                                         <div align="center">
-                                            <button  type="button" class="btn btn-Register" ng-click="submit(form)">Register Warranty Card</button>
+                                            <button  type="button" class="btn btn-Register" ng-click="submitted=true;submit(form)">Register Warranty Card</button>
                                         </div>
                                     </form>
 
@@ -448,14 +379,14 @@
                                                     </label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Company Name" />
+                                                    <input type="text" class="form-control" disabled placeholder="Company Name" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Product Name" />
+                                                    <input type="text" class="form-control" disabled placeholder="Product Name" />
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="slct" id="slct">
+                                                        <select name="slct" id="slct" disabled>
                                                             <option>Product Type</option>
                                                             <option value="1">Pure CSS</option>
                                                             <option value="2">No JS</option>
@@ -465,7 +396,7 @@
                                                 </div>
                                                 <div align="center" class="checkbox ">
                                                     <label>
-                                                    <input type="checkbox" value="">
+                                                    <input type="checkbox" value="" disabled>
                                                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                     I accept all <a href="#">Terms &amp; Conditions</a>
                                                     </label>
@@ -479,76 +410,7 @@
                             </div>
                         </div>
                     </div>
-                    <footer>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <h2>
-                                        Instruction Manual
-                                        <hr align="left" />
-                                    </h2>
-                                    <a href="#" class="col-sm-6">Acer</a>
-                                    <a href="#" class="col-sm-6">Epson</a>
-                                    <a href="#" class="col-sm-6">AEG</a>
-                                    <a href="#" class="col-sm-6">Frigidaire</a>
-                                    <a href="#" class="col-sm-6">Asus</a>
-                                    <a href="#" class="col-sm-6">Fujitsu</a>
-                                    <a href="#" class="col-sm-6">Black & Decker</a>
-                                    <a href="#" class="col-sm-6">GE</a>
-                                    <a href="#" class="col-sm-6">Bosch</a>
-                                    <a href="#" class="col-sm-6">Haier</a>
-                                    <a href="#" class="col-sm-6">Brother</a>
-                                    <a href="#" class="col-sm-6">Hitachi</a>
-                                    <a href="#" class="col-sm-6">Canon</a>
-                                    <a href="#" class="col-sm-6">Honda</a>
-                                    <a href="#" class="col-sm-6">Casio</a>
-                                    <a href="#" class="col-sm-6">More</a>
-                                </div>
-                                <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                                    <h2>
-                                        Company
-                                        <hr align="left" />
-                                    </h2>
-                                    <a href="#">How It Works </a>
-                                    <a href="#"> Business </a>
-                                    <a href="#"> Blog </a>
-                                    <a href="#"> Contact Us </a>
-                                    <a href="#"> Privacy Policy </a>
-                                    <a href="#"> Disclaimer </a>
-                                    <a href="#"> Terms and Conditions </a>
-                                </div>
-                                <div class="col-sm-6" data-aos="fade-up" data-aos-once="true">
-                                    <h2>
-                                        Contact Details
-                                        <hr align="left" />
-                                    </h2>
-                                    <p> <i class="fa fa-envelope" aria-hidden="true"></i> Info@innstal.com</p>
-                                    <p> <i class="fa fa-map-marker" aria-hidden="true"></i> Studio 103, The Business Centre, 61 Wellfield Road,<br> Roath, Cardiff CF24 3DG
-                                    </p>
-                                    <h4>Subscribe</h4>
-                                    <h5>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h5>
-                                    <div class="inner-addon right-addon">
-                                        <p style="    position: absolute;
-                                            margin: 0px;
-                                            right: 10px;
-                                            color: #ff9837;
-                                            top: 15px;"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Subscribe </p>
-                                        <input placeholder="Enter Your Email Address" type="text" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </footer>
-                    <div class="footer-bottom">
-                        <div class="container-fluid">
-                            <p>© Copyright 2017 Innstal. All Rights Reserved</p>
-                            <div class="pull-right">
-                                <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
-                                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
-                                <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
-                            </div>
-                        </div>
-                    </div>
+
                     <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
                     <script>
                         window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')

@@ -18,7 +18,7 @@
                     <li><a href="#">How it works</a></li>
                     <li><a ui-sref="blog" ui-sref-opts="{reload: true}">Blog</a></li>
                     <li><a href="#">Business</a></li>
-                    <ul class="pull-right login">
+                    <ul class="pull-right login" ng-if="!user_id">
                         <li class="hidden-xs"><a ui-sref="register" ui-sref-opts="{reload: true}" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
                         <li class="hidden-xs"><a ui-sref="login" ui-sref-opts="{reload: true}"> Log in</a></li>
                     </ul>

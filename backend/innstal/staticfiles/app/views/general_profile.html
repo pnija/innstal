@@ -41,7 +41,7 @@
                     <div class="dash-userimage">
                         <img src="/static/app/images/user01.png" class="dash-userimg" alt="userImage" />
                         <p class="dash-user-name" style="margin-bottom: 5px; padding-right: 0px;">{{user_data.user.username}}</p>
-                        <p class="dash-user-email">{{user_data.user.email}}</p>
+                        <p class="dash-user-email">{{email_user}}</p>
                     </div>
 
                 </div>
@@ -50,7 +50,7 @@
                 <!-- MENU -->
                 <ul class="dash-menubx" id="sidemenu">
                     <li class="active">
-                        <a href="#">
+                        <a ui-sref="home">
                             <i class="icon-home icon-menubar"></i> Home</a>
                     </li>
 
@@ -88,7 +88,7 @@
                             <form name="myForm" novalidate>
                             <!-- Profile image crop -->
                             <div class="col-md-4 col-sm-5 split-col-md">
-                                <img width="100%" src="/static/app/images/slider-image.jpg" id="upload-demo" />
+                                <img width="100%" style="padding-bottom: 15px;" src="/static/app/images/slider-image.jpg" id="upload-demo" />
 
                             </div>
                             <!-- Profile image crop END -->
@@ -123,24 +123,16 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control">
-                                                            <option>Country</option>
-                                                            <option>India</option>
-                                                            <option>USA</option>
-                                                            <option>Japan</option>
-                                                            <option>China</option>
+                                                        <select class="form-control" name="country" ng-model="user_data.country" ng-options="country as country.name for country in countries track by country.code">
+                                                            <option value="" selected>Select Country</option>
                                                         </select>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control">
-                                                            <option>City</option>
-                                                            <option>Kazhakootam</option>
-                                                            <option>Mumbai</option>
-                                                            <option>Bangalore</option>
-                                                            <option>Chennai</option>
+                                                        <select class="form-control" name="state" ng-model="user_data.state" ng-options="state as state.name for state in states track by state.code">
+                                                            <option value="" selected>Select State</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -156,12 +148,8 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control">
-                                                            <option>State</option>
-                                                            <option>Kerala</option>
-                                                            <option>Tamilnadu</option>
-                                                            <option>Goa</option>
-                                                            <option>Andhrapradesh</option>
+                                                        <select class="form-control" name="city" ng-model="user_data.city" ng-options="city as city.name for city in cities track by city.code">
+                                                            <option value="" selected>Select City</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -184,7 +172,12 @@
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="form-group">
-                                                <input type="email" ng-model="user_data.user.email" class="form-control" placeholder="Enter Your Email" />
+                                                <input type="email" name="email" ng-model="user_data.user.email" class="form-control" placeholder="Enter Your Email" ng-change="clearEmail()" required/>
+                                                <span style="color:red" ng-show="myForm.email.$error">
+                                                <span ng-show="submitted && myForm.email.$error.required">This field is required.</span>
+                                                <span ng-show="submitted && myForm.email.$error.email">Invalid email address.</span>
+                                                <span>{{errorEmail}}</span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -198,32 +191,38 @@
                                         <div class="col-sm-7">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input type="password" class="form-control" placeholder="Password" data-label="password1" />
+                                                    <input type="password" name="password" class="form-control" ng-model="user_data.user.password" placeholder="Password" data-label="password1" password-error/>
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-attach" data-toggle="password" data-for="password1">
                                                             <i class="icon-eye"></i>
                                                         </button>
                                                     </div>
                                                 </div>
+                                                <span style="color:red" ng-show="myForm.password.$error">
+                                                <span ng-show="submitted && passwordError">{{passwordError}}</span>
+                                                </span>
                                             </div>
                                         </div>
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input type="password" class="form-control" placeholder="Enter Your Password Again" data-label="password2" />
+                                                    <input type="password" name="confirm_password" class="form-control" ng-model="user_data.user.confirm_password" placeholder="Enter Your Password Again" data-label="password2" repeat-password-error/>
                                                     <div class="input-group-btn">
                                                         <button class="btn btn-attach" data-toggle="password" data-for="password2">
                                                             <i class="icon-eye"></i>
                                                         </button>
                                                     </div>
                                                 </div>
+                                                <span style="color:red" ng-show="myForm.confirm_password.$error">
+                                                    <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
+                                                    </span>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- row End -->
 
                                     <div class="col-sm-12 text-center">
-                                        <button class="btn btn-theme btn-sm-wl" ng-click="saveProfile(user_data)">Save</button>
+                                        <button class="btn btn-theme btn-sm-wl" ng-click="submitted=true;saveProfile(user_data)">Save</button>
                                         <button class="btn btn-outline-theme btn-sm-wl">Cancel</button>
                                     </div>
 

@@ -184,8 +184,8 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="purchase_city"  ng-model="form.city">
-                                                            <option value="{{city.id}}" ng-repeat="city in user_profile_city">{{city.name}}</option>
+                                                        <select name="purchase_city"  ng-model="form.city" ng-options="city as city.name for city in user_profile_city track by city.code">
+                                                            <option value="" selected>Select City</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -193,8 +193,8 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="purchase_state" id="" ng-model="form.state">
-                                                            <option value="{{state.code}}" ng-repeat="state in user_profile_state">{{state.name}}</option>
+                                                        <select name="purchase_state" id="" ng-model="form.state" ng-options="state as state.name for state in user_profile_state track by state.code">
+                                                            <option value="" selected>Select State</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -206,8 +206,8 @@
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <div class="select">
-                                                        <select name="purchase_country" ng-model="form.country">
-                                                            <option value="{{country.code}}" ng-repeat="country in user_profile_countries">{{country.name}}</option>
+                                                        <select name="purchase_country" ng-model="form.country" ng-options="country as country.name for country in user_profile_countries track by country.code">
+                                                            <option value="" selected>Select Country</option>
                                                         </select>
                                                     </div>
                                                 </div>

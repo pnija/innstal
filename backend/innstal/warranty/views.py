@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django_countries.data import COUNTRIES
 from .models import COMPANY_CHOICES
 from common.models import Country, City, State
@@ -16,6 +17,7 @@ class WarrantApplicationViewSet(ModelViewSet):
     # parser_classes = (FileUploadParser,)
     queryset = Warranty.objects.all()
     serializer_class = WarrantyApplicationSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -34,6 +36,10 @@ class WarrantApplicationViewSet(ModelViewSet):
             user_profile_data.save()
             serializer.save(user_profile=user_profile_data)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def get_queryset(self):
+        user_profile = self.request.user.get_user_profile
+        return user_profile.get_user_warranty.all()
 
 
 class ChoicesListViewSet(APIView):
@@ -61,9 +67,4 @@ class UserProfileView(ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
-
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save(email=user_profile_data)
 

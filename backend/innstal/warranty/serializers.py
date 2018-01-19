@@ -2,7 +2,7 @@ import re
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from .models import Warranty
-from product.models import UserProfile, ProductType
+from product.models import UserProfile
 
 
 class UserProfileSerializer(ModelSerializer):
@@ -22,7 +22,6 @@ class UserProfileSerializer(ModelSerializer):
 
 
 class WarrantyApplicationSerializer(ModelSerializer):
-    # user = serializers.SerializerMethodField()
     email = serializers.SerializerMethodField()
     username = serializers.SerializerMethodField()
     phone = serializers.SerializerMethodField()
@@ -67,5 +66,7 @@ class WarrantyApplicationSerializer(ModelSerializer):
     def get_country(self, instance):
         if instance.user_profile is not None:
             return instance.user_profile.country.name
+
+
 
 

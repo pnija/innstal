@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/static/app/styles/css/main1.css">
 <div ng-if="user_id">
     <header ng-include="'/static/app/views/directives/header-after-login.html'"></header>
 </div>
@@ -35,29 +36,11 @@
 </div>
 <script>
     $(document).ready(function($) {
-      "use strict";
-    
-      var container_01 = $("#container-01"),
-        container_02 = $("#container-02");
-    
-      container_01.imagesLoaded(function() {
-        container_01.pinto({
-          itemWidth: 200,
-          gapX: 30,
-          gapY: 30,
-        });
-      });
-    
-    
-    
-      $("#init").click(function() {
+        "use strict";
+
+        var container_01 = $("#container-01"),
+
         container_01.pinto();
-    
-      });
-    
-      $("#destroy").click(function() {
-        container_01.pinto("destroy");
-    
-      });
+
     });
 </script>

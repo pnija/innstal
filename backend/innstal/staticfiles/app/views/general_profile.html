@@ -40,8 +40,8 @@
 
                     <div class="dash-userimage">
                         <img src="/static/app/images/user01.png" class="dash-userimg" alt="userImage" />
-                        <p class="dash-user-name" style="margin-bottom: 5px; padding-right: 0px;">Melissa Johnston</p>
-                        <p class="dash-user-email">melissa@gmail.com</p>
+                        <p class="dash-user-name" style="margin-bottom: 5px; padding-right: 0px;">{{user_data.user.username}}</p>
+                        <p class="dash-user-email">{{user_data.user.email}}</p>
                     </div>
 
                 </div>
@@ -58,7 +58,7 @@
 
                 <ul class="dash-menubx absolute-fix">
                     <li>
-                        <a href="#">
+                        <a href="#" ng-click="logout()">
                             <i class="icon-logout icon-menubar"></i> Logout</a>
                     </li>
                 </ul>
@@ -74,7 +74,7 @@
             <main class="content-section dash-content">
                 <div class="top-navbx">
                     <span class="user-info-bx">
-                        <span>Hello, Melissa Johnston</span>
+                        <span>Hello, {{user_data.user.username}}</span>
                         </br>
                     </span>
                 </div>
@@ -85,147 +85,150 @@
                         <h3>Edit Profile</h3>
                         <!-- Edit Profile -->
                         <div class="widger-sector col-sm-12">
+                            <form name="myForm" novalidate>
                             <!-- Profile image crop -->
                             <div class="col-md-4 col-sm-5 split-col-md">
-                                <img src="/static/app/images/slider-image.jpg" id="upload-demo" />
+                                <img width="100%" src="/static/app/images/slider-image.jpg" id="upload-demo" />
 
                             </div>
                             <!-- Profile image crop END -->
 
                             <div class="col-md-8 col-sm-7 split-col-md">
-                                <!-- row -->
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Name" />
-                                        </div>
-                                    </div>
 
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Enter Your Phone Number" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- row End -->
-
-                                <!-- row -->
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Address" />
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-5">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>Country</option>
-                                                        <option>India</option>
-                                                        <option>USA</option>
-                                                        <option>Japan</option>
-                                                        <option>China</option>
-                                                    </select>
-                                                </div>
+                                    <!-- row -->
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="user_data.user.username" class="form-control" placeholder="Enter Your Name" />
                                             </div>
-
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>City</option>
-                                                        <option>Kazhakootam</option>
-                                                        <option>Mumbai</option>
-                                                        <option>Bangalore</option>
-                                                        <option>Chennai</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- row End -->
 
-                                <!-- row -->
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <select class="form-control">
-                                                        <option>State</option>
-                                                        <option>Kerala</option>
-                                                        <option>Tamilnadu</option>
-                                                        <option>Goa</option>
-                                                        <option>Andhrapradesh</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <input type="text" class="form-control" placeholder="Zipcode/PostalCode" />
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- row End -->
-
-                                <!-- row -->
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4 class="text-theme">Change Email</h4>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <input type="email" class="form-control" placeholder="Enter Your Email" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- row End -->
-
-                                <!-- row -->
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <h4 class="text-theme">Change Password</h4>
-                                    </div>
-                                    <div class="col-sm-7">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input type="password" class="form-control" placeholder="Password" data-label="password1" />
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-attach" data-toggle="password" data-for="password1">
-                                                        <i class="icon-eye"></i>
-                                                    </button>
-                                                </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="user_data.user.phone" class="form-control" placeholder="Enter Your Phone Number" />
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-5">
-                                        <div class="form-group">
-                                            <div class="input-group">
-                                                <input type="password" class="form-control" placeholder="Enter Your Password Again" data-label="password2" />
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-attach" data-toggle="password" data-for="password2">
-                                                        <i class="icon-eye"></i>
-                                                    </button>
+                                    <!-- row End -->
+
+                                    <!-- row -->
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <input type="text" ng-model="user_data.address" class="form-control" placeholder="Address" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-5">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>Country</option>
+                                                            <option>India</option>
+                                                            <option>USA</option>
+                                                            <option>Japan</option>
+                                                            <option>China</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>City</option>
+                                                            <option>Kazhakootam</option>
+                                                            <option>Mumbai</option>
+                                                            <option>Bangalore</option>
+                                                            <option>Chennai</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row End -->
+
+                                    <!-- row -->
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <select class="form-control">
+                                                            <option>State</option>
+                                                            <option>Kerala</option>
+                                                            <option>Tamilnadu</option>
+                                                            <option>Goa</option>
+                                                            <option>Andhrapradesh</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <input type="text" ng-model="user_data.zipcode" class="form-control" placeholder="Zipcode/PostalCode" />
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row End -->
+
+                                    <!-- row -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4 class="text-theme">Change Email</h4>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <input type="email" ng-model="user_data.user.email" class="form-control" placeholder="Enter Your Email" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- row End -->
+
+                                    <!-- row -->
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <h4 class="text-theme">Change Password</h4>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" placeholder="Password" data-label="password1" />
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-attach" data-toggle="password" data-for="password1">
+                                                            <i class="icon-eye"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <input type="password" class="form-control" placeholder="Enter Your Password Again" data-label="password2" />
+                                                    <div class="input-group-btn">
+                                                        <button class="btn btn-attach" data-toggle="password" data-for="password2">
+                                                            <i class="icon-eye"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- row End -->
+                                    <!-- row End -->
 
-                                <div class="col-sm-12 text-center">
-                                    <button class="btn btn-theme btn-sm-wl">Save</button>
-                                    <button class="btn btn-outline-theme btn-sm-wl">Cancel</button>
-                                </div>
+                                    <div class="col-sm-12 text-center">
+                                        <button class="btn btn-theme btn-sm-wl" ng-click="saveProfile(user_data)">Save</button>
+                                        <button class="btn btn-outline-theme btn-sm-wl">Cancel</button>
+                                    </div>
 
-                            </div>
+                                </div>
+                            </form>
                         </div>
                         <!-- Edit Profile END -->
                     </div>

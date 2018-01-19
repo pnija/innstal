@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/static/app/styles/css/main.css">
 <div class="banner">
     <div class="navbar navbar-inverse navbar-fixed-top"  role="navigation" id="slide-nav" data-spy="affix" data-offset-top="30">
         <div class="container-fluid">
@@ -17,7 +18,7 @@
                     <li><a href="#">How it works</a></li>
                     <li><a ui-sref="blog" ui-sref-opts="{reload: true}">Blog</a></li>
                     <li><a href="#">Business</a></li>
-                    <ul ng-if="!user_id" class="pull-right login">
+                    <ul class="pull-right login">
                         <li class="hidden-xs"><a ui-sref="register" ui-sref-opts="{reload: true}" class="li-divide"><img src="/static/app/images/user.png"/> Join in</a></li>
                         <li class="hidden-xs"><a ui-sref="login" ui-sref-opts="{reload: true}"> Log in</a></li>
                     </ul>

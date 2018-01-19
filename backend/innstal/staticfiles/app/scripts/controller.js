@@ -77,8 +77,8 @@ angular.module('innstal.controllers', [])
 
         $scope.submit = function (user) {
             $scope.user = user;
-
-            if(regForm.$valid){
+            console.log('validddddddddd', $scope.regForm.$valid);
+            if($scope.regForm.$valid){
                 $http({
                     method: 'POST',
                     url: 'user/register/',
@@ -284,11 +284,12 @@ angular.module('innstal.controllers', [])
     })
     .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {
         $window.scrollTo(0, 0);
+
         $http({
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-                $scope.blogdata = response.data;
+                $scope.blogdata = response.data.results;
             }, function (response){
                 console.log('i am in error');
         });
@@ -344,16 +345,32 @@ angular.module('innstal.controllers', [])
     .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
         $window.scrollTo(0, 0);
         $http({
-                method: 'POST',
+                method: 'GET',
                 url: 'user/profile/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-                    if(response.data.status == 'success'){
 
-                    }
+                    console.log('profile dataaaaaaaaaaaa', response.data);
+
+                    $scope.user_data = response.data;
+                    $scope.userdata_id = response.data.user.id;
                 }, function (response) {
                     console.log('i am in error');
             });
         $rootScope.state = $state.current.name;
+
+        $scope.saveProfile = function(userdata){
+            $http({
+                method: 'PUT',
+                url: 'user/update/'+$scope.userdata_id+'/',
+                data: userdata,
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
         $http({

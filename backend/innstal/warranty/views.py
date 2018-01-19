@@ -57,10 +57,9 @@ class ChoicesListViewSet(APIView):
         country_list = [{'code': key, 'label': value} for key, value in OrderedDict(COUNTRIES).items()]
         company_choices = [{'code': key, 'label': value}for key, value in OrderedDict(COMPANY_CHOICES).items()]
         product_type = ProductType.objects.values('id', 'type_name')
-        user_profile_countries = Country.objects.values('name', 'id')
-        user_profile_state = State.objects.values('name', 'id')
-        user_profile_city = City.objects.values('name', 'id')
-        # user_profile_city = City.objects.all()[:20].values('id', 'name')
+        user_profile_countries = Country.objects.values('name', 'code')
+        user_profile_state = State.objects.values('name', 'code')
+        user_profile_city = City.objects.all()[:20].values('name', 'id')
         choice_dict = {'countries': country_list, 'companies': company_choices, 'product_type': product_type,
                        'user_profile_countries': user_profile_countries, 'user_profile_state': user_profile_state,
                        'user_profile_city': user_profile_city}
@@ -76,6 +75,7 @@ class UserProfileView(ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
+
 
 class ClaimWarrantyViewSet(ModelViewSet):
     queryset = ClaimedWarranty.objects.all()

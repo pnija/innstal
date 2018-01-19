@@ -334,6 +334,7 @@ angular.module('innstal.controllers', [])
     })
     .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
         $scope.submitted = false;
+        $scope.changed_pwd = false;
         $window.scrollTo(0, 0);
         $http({
                 method: 'GET',
@@ -362,11 +363,11 @@ angular.module('innstal.controllers', [])
         });
 
         $scope.saveProfile = function(userdata){
-            console.log('userdataaaaaaaaaaaaaaaa', userdata);
-
+            $scope.userdata = userdata
             $scope.errorEmail = '';
             if($scope.myForm.$valid){
-                $http({
+
+               $http({
                     method: 'PUT',
                     url: 'user/update/'+$scope.userdata_id+'/',
                     data: userdata,
@@ -385,6 +386,11 @@ angular.module('innstal.controllers', [])
         $scope.clearEmail = function(){
             $scope.errorEmail = '';
         }
+
+        $scope.changepass = function(){
+            $scope.changed_pwd = true;
+        }
+
 
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {

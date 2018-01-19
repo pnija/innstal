@@ -44,23 +44,27 @@
           <h2>Get In Touch</h2>
           <p class="has-error"><b class="help-block">{{emailFailed.error}}</b></p>
           <p class="has-success"><b class="help-block">{{sucessMessage}}</b></p>
-          <form novalidate>
-            <div class="form-group {{errors.name[0]?'has-error':''}}">
-              <span class="help-block">{{errors.name[0]}}</span>
-              <input type="text" class="form-control" placeholder="Your Name" ng-model="form.name"/>
+          <form name="form" novalidate>
+            <div class="form-group ">
+              <input type="text" name="yourname" class="form-control" ng-change="errors.name=null;" placeholder="Your Name" ng-model="form.name" required/>
+              <span ng-show="errors.name[0]" style="color:red;" class="help-block">{{errors.name[0]}}</span>
+              <span style="color:red;" ng-show="(!errors.name) && form.$submitted && form.yourname.$error.required">This Field is required.</span>
             </div>
             
-            <div class="form-group {{errors.email[0]?'has-error':''}}">
-              <span class="help-block">{{errors.email[0]}}</span>
-              <input type="text" class="form-control" placeholder="Email Address" ng-model="form.email"/>
+            <div class="form-group">
+              <input type="text" name="myemail" class="form-control" ng-change="errors.email=null;" placeholder="Email Address" ng-model="form.email" required/>
+              <span ng-show="errors.email[0]" style="color:red;">{{errors.email[0]}}</span>
+              <span style="color:red;" ng-show="(!errors.email) && form.$submitted && form.myemail.$error.required">This Field is required.</span>
             </div>
-            <div class="form-group {{errors.phone[0]?'has-error':''}}">
-              <span class="help-block">{{errors.phone[0]}}</span>
-              <input type="text" class="form-control" placeholder="Phone" ng-model="form.phone"/>
+            <div class="form-group">
+              <input type="text" name="myphone" class="form-control" ng-change="errors.phone=null;" placeholder="Phone" ng-model="form.phone" required/>
+              <span ng-show="errors.phone[0]" style="color:red;">{{errors.phone[0]}}</span>
+              <span style="color:red;" ng-show="(!errors.phone) && form.$submitted && form.myphone.$error.required">This Field is required.</span>
             </div>
-            <div class="form-group {{errors.message[0]?'has-error':''}}">
-              <span class="help-block">{{errors.message[0]}}</span>
-              <textarea rows="8"  style="resize: none;height:150px !important;" class="form-control" placeholder="Your Message" ng-model="form.message"></textarea>
+            <div class="form-group">
+              <textarea rows="8"  name="mymessage" style="resize: none;height:150px !important;" class="form-control" ng-change="errors.message=null;" placeholder="Your Message" ng-model="form.message" required></textarea>
+              <span ng-show="errors.message[0]" style="color:red;">{{errors.message[0]}}</span>
+               <span style="color:red;" ng-show="(!errors.message) && form.$submitted && form.mymessage.$error.required">This Field is required.</span>
             </div>
             
             <button class="btn btn-submit" ng-click="submit()">Submit</button>

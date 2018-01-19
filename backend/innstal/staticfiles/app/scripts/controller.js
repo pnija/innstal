@@ -456,7 +456,8 @@ angular.module('innstal.controllers', [])
                 url: 'warranty/register/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-                    $scope.registered_warranties = response.data;
+
+                    $scope.registered_warranties = response.data.results;
                     var pagesShown = 1;
 
                     var pageSize = 4;

@@ -419,7 +419,7 @@ angular.module('innstal.controllers', [])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
 
             }).then(function (response) {
-                    $scope.form = response.data[0];
+                    $scope.form = response.data.results[0];
                 }, function (response) {
                     console.log('i am in error');
             });
@@ -465,9 +465,7 @@ angular.module('innstal.controllers', [])
 
                     $scope.registered_warranties = response.data.results;
                     var pagesShown = 1;
-
                     var pageSize = 4;
-
                     $scope.paginationLimit = function(data) {
                      return pageSize * pagesShown;
                     };
@@ -559,7 +557,6 @@ angular.module('innstal.controllers', [])
     })
     .controller('subscribeController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
         $scope.subscribe = function (subs) {
-            console.log('paramsssssssssssssss', subs);
             $http({
                 method: 'POST',
                 url: 'user/subcribe/newsletter/',

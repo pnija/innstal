@@ -79,7 +79,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div id="Registered-Warranties" class="tab-pane fade ">
-                                    <div class="row" style="margin:0px">
+                                    <div class="row" style="margin:0px" ng-if="registered_warranties.length!=0">
                                         <h3>Number of Warranties Registered : {{registered_warranties.length}}</h3>
                                         <div align="center" class="col-sm-3 flex-child " ng-repeat="registered in registered_warranties | limitTo: paginationLimit()">
                                             <div class="claim" >
@@ -104,6 +104,14 @@
                                             </button>
                                         </div>
                                     </div>
+
+                                    <div class="col-sm-12" ng-if="registered_warranties.length==0">
+
+
+                                        <img src="/static/app/images/no-result-found.png" width="100%" />
+
+                                    </div>
+
                                 </div>
                                 <div id="Claimed-Warranties" class="tab-pane fade">
                                     <div class="row" style="margin:0px">

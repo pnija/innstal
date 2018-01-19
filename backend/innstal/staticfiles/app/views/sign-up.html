@@ -128,6 +128,8 @@
                                                                     <input type="text" ng-model="user.username" name="username" class="form-control" placeholder="Enter Your Name" required/>
                                                                     <span style="color:red" ng-show="regForm.username.$error">
                                                                     <span ng-show="submitted && regForm.username.$error.required">This field is required.</span>
+                                                                    <span ng-if="error.name[0]">{{error.name[0]}}</span>
+                                                                    </span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -137,6 +139,7 @@
                                                                     <span style="color:red" ng-show="regForm.email.$error">
                                                                     <span ng-show="submitted && regForm.email.$error.required">This field is required.</span>
                                                                     <span ng-show="submitted && regForm.email.$error.email">Invalid email address.</span>
+                                                                    <span ng-if="error.email[0]">{{error.email[0]}}</span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -146,6 +149,8 @@
                                                                     <span style="color:red" ng-show="regForm.phonenumber.$error">
                                                                     <span ng-show="submitted && regForm.phonenumber.$error.required">This field is required.</span>
                                                                     <span ng-show="submitted && regForm.phonenumber.$error.pattern">Enter a valid phonenumber.</span>
+                                                                    <span ng-if="error.phone[0]">{{error.phone[0]}}</span>
+                                                                    </span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -188,6 +193,8 @@
                                                                     <span ng-show="submitted && regForm.password.$error.required">This field is required.</span>
                                                                     <span ng-show="submitted && passwordError">{{passwordError}}</span>
                                                                     </span>
+                                                                    <span ng-if="error.password[0]">{{error.password[0]}}</span>
+                                                                    </span>
                                                                     </span>
                                                                 </div>
                                                             </div>
@@ -203,10 +210,14 @@
                                                             <div class="col-sm-12 clearfix">
                                                                 <div class="checkbox pull-left">
                                                                     <label>
-                                                                        <input type="checkbox" value="">
+                                                                        <input ng-model="user.accept" type="checkbox"  name="accept" required>
                                                                         <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                                                         I accept all <a href="#">Terms &amp; Conditions</a>
                                                                     </label>
+                                                                    <br/>
+                                                                    <span style="color:red" ng-show="regForm.accept.$error">
+                                                                        <span ng-show="submitted && regForm.accept.$error.required">&nbsp;&nbsp;&nbsp;&nbsp;This field is required.</span>
+                                                                    </span>
                                                                 </div>
                                                                 <div class="clearfix"></div>
                                                                 <div align="center">

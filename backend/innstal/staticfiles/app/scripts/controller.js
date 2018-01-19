@@ -77,6 +77,7 @@ angular.module('innstal.controllers', [])
 
         $scope.submit = function (user) {
             $scope.user = user;
+            $scope.emailError = null;
             console.log('validddddddddd', $scope.regForm.$valid);
             if($scope.regForm.$valid){
                 $http({
@@ -88,7 +89,8 @@ angular.module('innstal.controllers', [])
                         $scope.regForm = {};
                         open();
                     }, function (response) {
-                        console.log('i am in error');
+                            $scope.error = response.data;
+                            console.log($scope.error)
                 });
             }
         };
@@ -189,7 +191,7 @@ angular.module('innstal.controllers', [])
             $scope.errors = {}
             $scope.emailFailed = {}
             $scope.sucessMessage =''
-
+            console.log($scope.form)
             $http({
                 method: 'POST',
                 url: 'user/contact/',
@@ -429,7 +431,7 @@ angular.module('innstal.controllers', [])
         };
     })
     .controller('loginnextcontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal, $location) {
-
+        console.log('accessed');
         if($stateParams.id){
             $http({
                 method: 'GET',

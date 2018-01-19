@@ -33,8 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
     def validate_email(self, value):
         request = self.context.get('request')
         if User.objects.filter(email=value).exists():
-            if request.user.email != value:
-                raise serializers.ValidationError('Email needs to be unique')
+            raise serializers.ValidationError('Email needs to be unique')
         return value
 
     def create(self, validated_data):

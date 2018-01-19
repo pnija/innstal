@@ -50,7 +50,7 @@ class State(models.Model):
     class Meta:
         verbose_name = 'State'
         verbose_name_plural = 'States'
-
+        
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

@@ -381,7 +381,7 @@ class GetUserProfile(APIView):
     def get(self, queryset=None):
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
-        serializer.data['user'].pop('password')
+        # serializer.data['user'].pop('password')
         return Response(serializer.data)
 
 

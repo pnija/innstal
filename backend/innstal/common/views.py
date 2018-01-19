@@ -145,7 +145,6 @@ class SubcribeNewsLetter(APIView):
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
         request_data = request.data
-        request_data._mutable = True
         request_data['is_subscribed'] = True
         serializer = NewsletterSerializer(data=request_data)
         if serializer.is_valid():

@@ -1,17 +1,19 @@
-<div class="subscribe">
+<div class="subscribe" ng-controller="subscribeController">
     <div class="container">
         <h2>Join over 2 million people already subscribed to Innstal. Subscribe Now</h2>
-        <div class="row" >
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <input ng-model="firstname" type="text" class="form-control" placeholder="First Name" />
+        <form name="subscribeForm">
+            <div class="row" >
+                <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                    <input ng-model="subs.firstname" type="text" class="form-control" placeholder="First Name" />
+                </div>
+                <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+                    <input ng-model="subs.email" type="text" class="form-control" placeholder="Email" />
+                </div>
+                <div class="col-sm-3 col-sm-offset-3" data-aos="fade-up" data-aos-once="true">
+                    <button class="btn" ng-click='subscribe(subs)'>Subscribe Now</button>
+                </div>
             </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <input ng-model="subscribe_email" type="text" class="form-control" placeholder="Email" />
-            </div>
-            <div class="col-sm-3 col-sm-offset-3" data-aos="fade-up" data-aos-once="true">
-                <button class="btn" ng-click='subscribe()'>Subscribe Now</button>
-            </div>
-        </div>
+        </form>
         <span id="messageSpan" style="float:right"></span>
         <p>By clicking "Subscribe Now" I agree to Innstal's <a href="#">Terms and Conditions.</a></p>
     </div>

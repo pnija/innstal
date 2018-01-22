@@ -147,7 +147,7 @@ class BlogListingViewSet(ModelViewSet):
 class SubcribeNewsLetter(APIView):
     def post(self, request):
         response = {}
-        if Newsletter.objects.filter(email=request.data.get('email')):
+        if Newsletter.objects.filter(email=request.data.get('email'), is_subscribed=True):
             response['status'] = 'failed'
             response['message'] = 'This email is already subscribed'
             return Response(response, status=status.HTTP_200_OK)
@@ -176,24 +176,26 @@ class SubcribeNewsLetter(APIView):
             response['error'] = serializer.errors
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
+
 class Unsubscribe(APIView):
-    def get(self,request, pk):
+    def post(self,request, pk):
         response = {}
         if Newsletter.objects.filter(pk=pk):
-            request_data = Newsletter.objects.get(pk=pk)
-            if request_data.is_subscribed == True:
-                request_data.is_subscribed = False
-            serializer = NewsletterSerializer(request_data, data=request.data, partial=True)
-            if serializer.is_valid():
-                serializer.save()
-                response['status'] = 'success'
-                response['message'] = 'Unsubscribed Newsletter services'
-                return Response(response)
-            else:
-                response['status'] = 'failed'
-                response['error'] = serializer.errors
-                response['message'] = 'Failed to unsubscribe newsletter services'
-                return Response(response)
+            if Newsletter.objects.filter(pk=pk):
+                request_data = Newsletter.objects.get(pk=pk)
+                if request_data.is_subscribed == True:
+                    request_data.is_subscribed = False
+                serializer = NewsletterSerializer(request_data, data=request.data, partial=True)
+                if serializer.is_valid():
+                    serializer.save()
+                    response['status'] = 'success'
+                    response['message'] = 'Unsubscribed Newsletter services'
+                    return Response(response)
+                else:
+                    response['status'] = 'failed'
+                    response['error'] = serializer.errors
+                    response['message'] = 'Failed to unsubscribe newsletter services'
+                    return Response(response)
 
 
 class UpdateNewsLetterSubscription(APIView):
@@ -382,7 +384,19 @@ class GetUserProfile(APIView):
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
         serializer.data['user'].pop('password')
-        return Response(serializer.data)
+
+        response = {}
+        response['user_data'] = serializer.data
+        try:
+            newsletter_obj = Newsletter.objects.get(email=user_profile.user.email, is_subscribed=True)
+            newsletter = True
+            newsletter_pk = newsletter_obj.pk
+        except:
+            newsletter = None
+            newsletter_pk = None
+        response['subscribed'] = newsletter
+        response['newsletter_pk'] = newsletter_pk
+        return Response(response)
 
 
 class BusinessAccountRegistration(APIView):

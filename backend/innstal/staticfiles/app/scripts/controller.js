@@ -274,21 +274,23 @@ angular.module('innstal.controllers', [])
         }
 
     })
-    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {
+    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window, $sce) {
         $window.scrollTo(0, 0);
 
         $http({
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-                $scope.blogdata = response.data.results;
+                $scope.blogdata =  response.data.results;
+                var htmlString = $sce.trustAsHtml($scope.blogdata[0].blog_content);
+                $scope.blogdata[0].blog_content = htmlString;
             }, function (response){
                 console.log('i am in error');
         });
         $rootScope.state = $state.current.name;
 
     })
-    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams, $sce) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var blog_id = $stateParams.id;
@@ -297,6 +299,8 @@ angular.module('innstal.controllers', [])
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
                     $scope.blogdetail = response.data;
+                    var htmlString = $sce.trustAsHtml($scope.blogdetail.blog_content);
+                    $scope.blogdetail.blog_content = htmlString;
                 }, function (response) {
                     console.log('i am in error');
             });

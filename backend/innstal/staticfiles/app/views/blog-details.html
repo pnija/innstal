@@ -27,12 +27,12 @@
                                 <img src="/static/app/images/blog-down-arrow.png" />
                             </h5>
                         </div>
-                        <p>{{blogdetail.blog_content}}</p>
+                        <p ng-bind-html="blogdetail.blog_content"></p>
                         <div class="col-sm-8 col-sm-offset-2">
                             <img width="100%" ng-src="{{blogdetail.blog_image}}" class="margin-bottom-40" />
                         </div>
                         <div class="clearfix"></div>
-                        <p><span>{{blogdetail.blog_content}}</span></p>
+                        <p><span ng-bind-html="blogdetail.blog_content"></span></p>
                         <div class="pull-left">
                             <p>- By <span>{{blogdetail.username}}</span></p>
                         </div>

@@ -69,6 +69,7 @@ class WarrantyApplicationSerializer(ModelSerializer):
         if instance.user_profile is not None:
             return instance.user_profile.country.name
 
+
 class ClaimedWarrantySerializer(ModelSerializer):
     class Meta:
         model = ClaimedWarranty

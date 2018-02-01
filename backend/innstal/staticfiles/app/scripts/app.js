@@ -1,5 +1,5 @@
 
-angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap'])
+angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap','ui-notification'])
 .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.hashPrefix('');
     $urlRouterProvider.otherwise('/');

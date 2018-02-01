@@ -16,7 +16,6 @@ from .serializers import WarrantyApplicationSerializer, UserProfileSerializer, C
 from .models import COMPANY_CHOICES
 from common.models import Country, City, State
 from .models import Warranty, UserProfile, ProductType
-from .serializers import WarrantyApplicationSerializer, UserProfileSerializer
 
 # Create your views here.
 

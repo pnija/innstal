@@ -383,6 +383,7 @@ angular.module('innstal.controllers', [])
 
         $scope.saveProfile = function(userdata){
             $scope.userdata = userdata
+
             $scope.errorEmail = '';
             if($scope.myForm.$valid){
 
@@ -435,11 +436,10 @@ angular.module('innstal.controllers', [])
             }
         }
     })
-    .controller('warrantyregistercontroller', function($scope,$http, $window) {
+    .controller('warrantyregistercontroller', function($scope,$http, $window, Notification) {
 
         $scope.submitted = false;
         loadData();
-
         function loadData(){
             $http({
                 method: 'GET',
@@ -490,8 +490,9 @@ angular.module('innstal.controllers', [])
 
                     $scope.form = {};
                     $scope.warrantyForm = {};
-
+                    Notification.success('Form SuccessFully Saved');
                 }, function (response) {
+                    Notification.error('Please fill the fields');
                     console.log('i am in error');
             });
         };

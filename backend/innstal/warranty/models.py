@@ -16,6 +16,7 @@ COMPANY_CHOICES = (
     ('HTC', 'HTC'),
 )
 
+
 class Warranty(models.Model):
     user_profile = models.ForeignKey(UserProfile, null=True, related_name='get_user_warranty')
     product = models.ForeignKey(ProductType)

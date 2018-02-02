@@ -19,108 +19,133 @@
                                             </ul>
                                             <div class="tab-content">
                                                 <h2>Sign Up For Innstal</h2>
-                                                <div id="home_tab" class="tab-pane fade">
-                                                    <div class="row no-margin">
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Company Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Enter Your Company Email">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Enter Your Phone Number">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Person to Contact">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="password" class="form-control" placeholder="Password">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="password" class="form-control" placeholder="Enter Your Password Again">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Address">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-sm-6 clearfix">
-                                                            <div class="form-group">
-                                                                <input type="text" class="form-control" placeholder="Fax Number">
-                                                            </div>
-                                                        </div>
+                                                <div id="home_tab" class="tab-pane fade in active">
+                                                    <form name="businessRegForm" novalidate>
                                                         <div class="row no-margin">
-                                                            <div class="col-sm-3">
+                                                            <div class="col-sm-6 clearfix">
                                                                 <div class="form-group">
-                                                                    <div class="select">
-                                                                        <select name="slct" id="slct">
-                                                                            <option>City</option>
-                                                                            <option value="1">Pure CSS</option>
-                                                                            <option value="2">No JS</option>
-                                                                            <option value="3">Nice!</option>
-                                                                        </select>
+                                                                    <input type="text" ng-model="businessuser.user.username" name="username" class="form-control" placeholder="Company Name" required>
+                                                                    <span style="color:red" ng-show="businessRegForm.username.$error">
+                                                                    <span ng-show="submitted && businessRegForm.username.$error.required">This field is required.</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="text" ng-model="businessuser.user.email" name="email" class="form-control" placeholder="Enter Your Company Email" required>
+                                                                    <span style="color:red" ng-show="submitted && wrong_domain">{{ wrong_domain }}</span>
+                                                                    <span style="color:red" ng-show="businessRegForm.email.$error">
+                                                                    <span ng-show="submitted && businessRegForm.email.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && businessRegForm.email.$error.email">Invalid email address.</span>
+                                                                    <span ng-if="error.email[0]">{{error.email[0]}}</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="text" ng-model="businessuser.phonenumber" name="phonenumber" class="form-control" placeholder="Enter Your Phone Number" required>
+                                                                    <span style="color:red" ng-show="businessRegForm.phonenumber.$error">
+                                                                    <span ng-show="submitted && businessRegForm.phonenumber.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && businessRegForm.phonenumber.$error.pattern">Enter a valid phonenumber.</span>
+                                                                    <span ng-if="error.phone[0]">{{error.phone[0]}}</span>
+                                                                    </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" name="person_to_contact" placeholder="Person to Contact" required>
+                                                                    <span style="color:red" ng-show="businessRegForm.person_to_contact.$error">
+                                                                    <span ng-show="submitted && businessRegForm.person_to_contact.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && businessRegForm.person_to_contact.$error.pattern">Enter a valid phonenumber.</span>
+                                                                    <span ng-if="error.phone[0]">{{error.phone[0]}}</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="password" ng-model="businessuser.user.password" name="password" class="form-control" placeholder="Password" required>
+                                                                    <span style="color:red" ng-show="businessRegForm.password.$error">
+                                                                    <span ng-show="submitted && businessRegForm.password.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && passwordError">{{passwordError}}</span>
+                                                                    </span>
+                                                                    <span ng-if="error.password[0]">{{error.password[0]}}</span>
+                                                                    </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="password" ng-model="businessuser.confirmpassword" name="confirm_password" class="form-control" placeholder="Enter Your Password Again" required>
+                                                                    <span style="color:red" ng-show="businessRegForm.confirm_password.$error">
+                                                                    <span ng-show="submitted && businessRegForm.confirm_password.$error.required">This field is required.</span>
+                                                                    <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" name="address" ng-model="businessuser.address"  placeholder="Address" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-6 clearfix">
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control" name="fax_number" placeholder="Fax Number" required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row no-margin">
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <div class="select">
+                                                                            <select name="business_city"  ng-model="businessuser.city" ng-options="city as city.name for city in user_profile_city track by city.id">
+                                                                                <option value="" selected>Select City</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <div class="form-group">
-                                                                    <div class="select">
-                                                                        <select name="slct" id="slct">
-                                                                            <option>State</option>
-                                                                            <option value="1">Pure CSS</option>
-                                                                            <option value="2">No JS</option>
-                                                                            <option value="3">Nice!</option>
-                                                                        </select>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <div class="select">
+                                                                            <select name="business_state" id="" ng-model="businessuser.state" ng-options="state as state.name for state in user_profile_state track by state.id">
+                                                                                <option value="" selected>Select State</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <div class="form-group">
-                                                                    <div class="select">
-                                                                        <select name="slct" id="slct">
-                                                                            <option>Country</option>
-                                                                            <option value="1">Pure CSS</option>
-                                                                            <option value="2">No JS</option>
-                                                                            <option value="3">Nice!</option>
-                                                                        </select>
+                                                                <div class="col-sm-3">
+                                                                    <div class="form-group">
+                                                                        <div class="select">
+                                                                            <select name="business_country" ng-model="businessuser.country" ng-options="country as country.name for country in user_profile_countries track by country.id">
+                                                                                <option value="" selected>Select Country</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="col-sm-3 clearfix">
-                                                                <div class="form-group">
-                                                                    <input type="text" class="form-control" placeholder="Zipcode/Postalcode">
+                                                                <div class="col-sm-3 clearfix">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control" placeholder="Zipcode/Postalcode" required>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="checkbox pull-left">
-                                                                <label>
-                                                                    <input type="checkbox" value="">
-                                                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                                                    I accept all <a href="#">Terms &amp; Conditions</a>
-                                                                </label>
-                                                            </div>
-                                                            <div class="clearfix"></div>
-                                                            <div align="center">
-                                                                <button class="btn btn-Register width40  ">Sign Up</button>
-                                                            </div>
-                                                            <div align="center " class="marginBottom-m">
-                                                                <a ui-sref="login">Already have Account Login Now</a>
+                                                                <div class="checkbox pull-left">
+                                                                    <label>
+                                                                        <input type="checkbox" value="">
+                                                                        <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                                                        I accept all <a href="#">Terms &amp; Conditions</a>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="clearfix"></div>
+                                                                <div align="center">
+                                                                    <button class="btn btn-Register width40" ng-click="submitted=true;submitBusiness(businessuser)">Sign Up</button>
+                                                                </div>
+                                                                <div align="center " class="marginBottom-m">
+                                                                    <a ui-sref="login">Already have Account Login Now</a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
                                                 </div>
-                                                <div id="menu1" class="tab-pane fade in active">
+
+                                                <div id="menu1" class="tab-pane fade`">
                                                     <form name="regForm" novalidate>
                                                         <div class="row no-margin">
                                                             <div class="col-sm-6 clearfix">
@@ -177,7 +202,7 @@
                                                                             <span ng-show="submitted && regForm.month.$error.max">Enter a valid month.</span>
                                                                             </span>
                                                                         </div>
-                                                                        <div class="col-xs-4 clearfix" style="padding-left:5px;padding-right:5px;">
+                                                                        <div class="col-xs-4 clearfix" style="padding-left:5px;padding-right:5px;">confirm_password
                                                                             <input type="text" ng-model="user.year" ng-pattern="/^[0-9]{4}$/" name="year" class="form-control" placeholder="YYYY" required>
                                                                             <span style="color:red" ng-show="regForm.year.$error">
                                                                             <span ng-show="submitted && regForm.year.$error.required">This field is required.</span>

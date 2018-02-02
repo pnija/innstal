@@ -7,5 +7,5 @@ class ClaimFilter(FilterSet):
     class Meta:
         model = ClaimedWarranty
         fields = {
-            'status'
+            'is_claimed'
         }

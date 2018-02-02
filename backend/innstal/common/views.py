@@ -388,8 +388,18 @@ class GetUserProfile(APIView):
 class BusinessAccountRegistration(APIView):
     def post(self, request):
         response = {}
-        user = request.data.get ('user')
+        user = request.data.get('user')
         email = user['email']
+        city = request.data.get('city')['id']
+        state = request.data.get('state')['id']
+        country = request.data.get('country')['id']
+        request.data.pop('city')
+        request.data.pop('state')
+        request.data.pop('country')
+        request.data['city'] = city
+        request.data['state'] = state
+        request.data['country'] = country
+        print(request.data)
         if any(domain in email for domain in ['gmail', 'yahoo','rediffmail','hotmail','outlook']):
             response['status'] = 'failed'
             response['message'] = 'This domain is not allowed'

@@ -25,7 +25,7 @@
                                 <a ui-sref="blog-detail({id:x.id})">
                                     <h2>{{x.blog_subtitle}}</h2>
                                 </a>
-                                <p>{{x.blog_content}}</p>
+                                <p ng-bind-html="x.blog_content"></p>
                             </div>
                         </div>
                     </div>

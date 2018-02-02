@@ -209,9 +209,10 @@ angular.module('innstal.controllers', [])
                 url: 'user/profile/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-                $rootScope.user_id = response.data.user.id
-            }, function (response) {
-                console.log('i am in error');
+
+                    $rootScope.user_id = response.data.user_data.user.id
+                }, function (response) {
+                    console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
@@ -322,21 +323,23 @@ angular.module('innstal.controllers', [])
         }
 
     })
-    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {
+    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window, $sce) {
         $window.scrollTo(0, 0);
 
         $http({
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-            $scope.blogdata = response.data.results;
-        }, function (response){
-            console.log('i am in error');
+                $scope.blogdata =  response.data.results;
+                var htmlString = $sce.trustAsHtml($scope.blogdata[0].blog_content);
+                $scope.blogdata[0].blog_content = htmlString;
+            }, function (response){
+                console.log('i am in error');
         });
         $rootScope.state = $state.current.name;
 
     })
-    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams, $sce) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var blog_id = $stateParams.id;
@@ -344,9 +347,11 @@ angular.module('innstal.controllers', [])
                 method: 'GET',
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
-                $scope.blogdetail = response.data;
-            }, function (response) {
-                console.log('i am in error');
+                    $scope.blogdetail = response.data;
+                    var htmlString = $sce.trustAsHtml($scope.blogdetail.blog_content);
+                    $scope.blogdetail.blog_content = htmlString;
+                }, function (response) {
+                    console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
@@ -385,31 +390,44 @@ angular.module('innstal.controllers', [])
     .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
         $scope.submitted = false;
         $scope.changed_pwd = false;
+
+        $scope.notify = {};
+        $scope.notify.subscribe = false;
+        $scope.notify.message = false;
+        $scope.notify.warranty = false;
+
         $window.scrollTo(0, 0);
         $http({
-            method: 'GET',
-            url: 'user/profile/',
-            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-        }).then(function (response) {
-            $scope.user_data = response.data;
-            $scope.userdata_id = response.data.user.id;
-            $scope.email_user = response.data.user.email;
-        }, function (response) {
-            console.log('i am in error');
-        });
+                method: 'GET',
+                url: 'user/profile/',
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                    $scope.user_data = response.data.user_data;
+                    $scope.userdata_id = response.data.user_data.user.id;
+                    $rootScope.email_user = response.data.user_data.user.email;
+
+                    if(response.data.subscribed == true){
+                        $scope.subscribed = true;
+                        $rootScope.newsletter_pk = response.data.newsletter_pk;
+                    }
+                    else{
+                        $scope.subscribed = false;
+                    }
+
+                }, function (response) {
+                    console.log('i am in error');
+            });
         $rootScope.state = $state.current.name;
 
         $http({
             method: 'GET',
             url: 'warranty/country-list',
         }).then(function (response) {
-
-            console.log('ressssssssss', response)
-            $scope.countries = response.data.user_profile_countries;
-            $scope.states = response.data.user_profile_state;
-            $scope.cities = response.data.user_profile_city;
-        }, function (response) {
-            console.log('i am in error');
+                $scope.countries = response.data.user_profile_countries;
+                $scope.states = response.data.user_profile_state;
+                $scope.cities = response.data.user_profile_city;
+            }, function (response) {
+                console.log('i am in error');
         });
 
         $scope.saveProfile = function(userdata){
@@ -441,7 +459,30 @@ angular.module('innstal.controllers', [])
             $scope.changed_pwd = true;
         }
 
+        $scope.saveNotification = function(notify){
+            if(notify.subscribe == true){
+                $http({
+                    method: 'POST',
+                    url: 'user/subcribe/newsletter/',
+                    data: {'email': $rootScope.email_user},
+                }).then(function (response) {
 
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
+            else{
+                $http({
+                    method: 'POST',
+                    url: 'user/unsubcribe/newsletter/'+$rootScope.newsletter_pk,
+                    data: {'email': $rootScope.email_user},
+                }).then(function (response) {
+
+                    }, function (response) {
+                        console.log('i am in error');
+                });
+            }
+        }
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
 

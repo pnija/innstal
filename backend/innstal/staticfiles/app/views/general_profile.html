@@ -105,7 +105,7 @@
 
                                         <div class="col-sm-5">
                                             <div class="form-group">
-                                                <input type="text" ng-model="user_data.user.phone" class="form-control" placeholder="Enter Your Phone Number" />
+                                                <input type="text" ng-model="user_data.phone" class="form-control" placeholder="Enter Your Phone Number" />
                                             </div>
                                         </div>
                                     </div>
@@ -237,46 +237,46 @@
                         <h3>Email Notifcation</h3>
                         <!-- Edit Profile -->
                         <div class="widger-sector col-sm-12">
+                            <form name="notificationForm">
+                                <div class="col-md-11 col-md-offset-1">
+                                    <div class="checkbox">
+                                        <div class="cs-checkbox">
+                                            <input type="checkbox" ng-checked="subscribed" ng-model="notify.subscribe" class="cs-input" id="newsletter" />
+                                            <label for="newsletter">
+                                                <span class="cs-checkbox-input"></span>
+                                                Subscribe to Newsletters
+                                            </label>
+                                        </div>
+                                    </div>
 
-                            <div class="col-md-11 col-md-offset-1">
-                                <div class="checkbox">
-                                    <div class="cs-checkbox">
-                                        <input type="checkbox" class="cs-input" id="newsletter" />
-                                        <label for="newsletter">
-                                            <span class="cs-checkbox-input"></span>
-                                            Subscribe to Newsletters
-                                        </label>
+                                    <div class="checkbox">
+                                        <div class="cs-checkbox">
+                                            <input type="checkbox" ng-model="notify.message" class="cs-input" id="emailcheck" />
+
+                                            <label for="emailcheck">
+                                                <span class="cs-checkbox-input"></span>
+                                                Email Notification to Messages
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="checkbox">
+                                        <div class="cs-checkbox">
+                                            <input type="checkbox" ng-model="notify.warranty" class="cs-input" id="warranty" />
+                                            <label for="warranty">
+                                                <span class="cs-checkbox-input"></span>
+                                                Email Notification for Warranty Resolution
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-8 col-sm-6">
+                                    <div class="col-sm-12 text-right">
+                                        <button ng-click="saveNotification(notify)" class="btn btn-theme btn-sm-wl">Save</button>
                                     </div>
                                 </div>
-
-                                <div class="checkbox">
-                                    <div class="cs-checkbox">
-                                        <input type="checkbox" class="cs-input" id="emailcheck" />
-
-                                        <label for="emailcheck">
-                                            <span class="cs-checkbox-input"></span>
-                                            Email Notification to Messages
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="checkbox">
-                                    <div class="cs-checkbox">
-                                        <input type="checkbox" class="cs-input" id="warranty" />
-                                        <label for="warranty">
-                                            <span class="cs-checkbox-input"></span>
-                                            Email Notification for Warranty Resolution
-                                        </label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="col-md-8 col-sm-6">
-                                <div class="col-sm-12 text-right">
-                                    <button class="btn btn-theme btn-sm-wl">Save</button>
-                                </div>
-                            </div>
-
+                            </form>
                         </div>
                         <!-- Email Notifcation END -->
                     </div>

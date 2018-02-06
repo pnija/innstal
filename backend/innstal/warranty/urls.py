@@ -10,7 +10,6 @@ router.register(r'users', UserProfileView, base_name='users')
 router.register(r'claim-warranty', ClaimWarrantyViewSet, base_name='users')
 
 
-
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'country-list', ChoicesListViewSet.as_view(), name='countries'),

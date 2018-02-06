@@ -474,7 +474,9 @@ angular.module('innstal.controllers', [])
 
             for( key in form){
              formData.append(key, form[key])
+             console.log(key, "ggggg")
             }
+            console.log(formData, "Fordarta")
             formData.append("warranty_image", $('#file-1')[0].files[0])
             formData.append("product", "1")
 
@@ -529,6 +531,42 @@ angular.module('innstal.controllers', [])
         $scope.loadRegisteredData = function(){
             loadData();
             loadRegistered();
+            claimListRegister();
+
+        }
+
+        $scope.loadModal = function(data){
+            $('#myModal').modal('show');
+            $scope.claim_data = data;
+
+        }
+
+        $scope.claimRegister = function () {
+            $http({
+                method: 'POST',
+                url: 'warranty/claim-warranty/',
+                data: {'warranty': $scope.claim_data.id, 'status':'open'},
+                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+            }).then(function (response) {
+                    $('#myModal').modal('hide');
+                    loadData();
+                    loadRegistered();
+                }, function (response) {
+                    console.log('i am in error');
+            });
+        }
+        function claimListRegister(){
+
+            $http({
+                    method: 'GET',
+                    url: 'warranty/register/?is_claimed=true',
+                    headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+
+            }).then(function (response) {
+                    $scope.claimed_warranty = response.data.results;
+                }, function (response) {
+                    console.log('i am in error');
+            });
         }
 
     })

@@ -1,3 +1,4 @@
+from datetime import datetime
 from collections import OrderedDict
 from rest_framework import status, permissions
 from rest_framework.views import APIView
@@ -37,8 +38,8 @@ class WarrantApplicationViewSet(ModelViewSet):
             user_profile_data.address = request.POST.get('address')
             user_profile_data.zipcode = request.POST.get('zipcode')
             user_profile_data.city = City.objects.get(id=request.POST.get('city'))
-            user_profile_data.state = State.objects.get(code=request.POST.get('state'))
-            user_profile_data.country = Country.objects.get(code=request.POST.get('country'))
+            user_profile_data.state = State.objects.get(id=request.POST.get('state'))
+            user_profile_data.country = Country.objects.get(id=request.POST.get('country'))
             user_profile_data.user.save()
             user_profile_data.save()
             serializer.save(user_profile=user_profile_data)
@@ -46,6 +47,8 @@ class WarrantApplicationViewSet(ModelViewSet):
 
     def get_queryset(self):
         user_profile = self.request.user.get_user_profile
+        if self.request.GET.get('is_claimed'):
+            return user_profile.get_user_warranty.filter(is_claimed=True)
         return user_profile.get_user_warranty.all()
 
 
@@ -56,8 +59,8 @@ class ChoicesListViewSet(APIView):
         country_list = [{'code': key, 'label': value} for key, value in OrderedDict(COUNTRIES).items()]
         company_choices = [{'code': key, 'label': value}for key, value in OrderedDict(COMPANY_CHOICES).items()]
         product_type = ProductType.objects.values('id', 'type_name')
-        user_profile_countries = Country.objects.values('name', 'code')
-        user_profile_state = State.objects.values('name', 'code')
+        user_profile_countries = Country.objects.values('name', 'id')
+        user_profile_state = State.objects.values('name', 'id')
         user_profile_city = City.objects.all()[:20].values('name', 'id')
         choice_dict = {'countries': country_list, 'companies': company_choices, 'product_type': product_type,
                        'user_profile_countries': user_profile_countries, 'user_profile_state': user_profile_state,
@@ -96,12 +99,21 @@ class ClaimWarrantyViewSet(ModelViewSet):
             response['status'] = 'success'
             response['message'] = 'Warranty claimed succesfully'
             response['data'] = serializer.data
+            warranty = Warranty.objects.get(id=request.data['warranty'])
+            warranty.is_claimed = True
+            warranty.claimed_date = datetime.now()
+            warranty.save()
             return Response(response, status=status.HTTP_201_CREATED)
         else:
             response['status'] = 'failed'
             response['message'] = 'Failed to claim warranty'
             response['data'] = serializer.errors
-            return Response(response, status= status.HTTP_408_REQUEST_TIMEOUT)
+            return Response(response, status=status.HTTP_408_REQUEST_TIMEOUT)
+
+
+
+
+
 
 
 

@@ -71,9 +71,10 @@ class WarrantyApplicationSerializer(ModelSerializer):
 
 
 class ClaimedWarrantySerializer(ModelSerializer):
+
     class Meta:
         model = ClaimedWarranty
-        fields = ('id','user', 'warranty', 'status','claimed_date')
+        fields = ('id', 'user', 'warranty', 'status','claimed_date')
 
 
 

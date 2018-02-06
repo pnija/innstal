@@ -28,6 +28,8 @@ class Warranty(models.Model):
     purchase_date = models.DateField(auto_now_add=True)
     additional_info = models.CharField(max_length=2000, null=True, blank=True)
     warranty_image = models.ImageField(upload_to='warranty_images/')
+    is_claimed = models.BooleanField(default=False)
+    claimed_date = models.DateTimeField(null=True, blank=True)
 
     def save(self, force_insert=False, force_update=False, using=None):
 
@@ -52,11 +54,14 @@ class Warranty(models.Model):
 
 
 class ClaimedWarranty(models.Model):
-    user = models.ForeignKey(UserProfile, null=True)
+    user = models.ForeignKey(UserProfile, null=True, related_name='get_claimed_warranty')
     warranty = models.ForeignKey(Warranty)
     is_active = models.BooleanField
     status = models.CharField(max_length=200)
     claimed_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return self.warranty.product_name
 
 
 

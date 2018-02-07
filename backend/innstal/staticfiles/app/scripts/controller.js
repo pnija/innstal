@@ -1,6 +1,17 @@
 angular.module('innstal.controllers', [])
-    .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
 
+    .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
+        function loadCategories(){
+            $http({
+                method: 'GET',
+                url: '/product/category/list/',
+            }).then(function (response) {
+                $scope.categories = response.data.categories;
+            }, function (response) {
+                console.log('i am in error');
+            })
+        }
+        loadCategories()
         $rootScope.state = $state.current.name;
     })
     .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
@@ -204,6 +215,7 @@ angular.module('innstal.controllers', [])
         };
     })
     .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
+
         $window.scrollTo(0, 0);
         if($window.sessionStorage.token){
             $http({
@@ -225,16 +237,23 @@ angular.module('innstal.controllers', [])
                 url: '/product/category/list/',
             }).then(function (response) {
                 $scope.categories = response.data.categories;
+                var pagesShown = 1;
+                var pageSize = 4;
+                $scope.paginationLimit = function(data) {
+                    return pageSize * pagesShown;
+                };
+
+                $scope.hasMoreItemsToShow = function() {
+                    return pagesShown < ($scope.categories.length / pageSize);
+                };
+
+                $scope.showMoreItems = function() {
+                    pagesShown = pagesShown + 1;
+                };
             }, function (response) {
                 console.log('i am in error');
             })
         }
-
-
-        })
-    .controller('dashboardhomecontroller', function($scope, $state, $rootScope, $window, $http, $window) {
-        $window.scrollTo(0, 0);
-        $rootScope.state = $state.current.name;
     })
     .controller('businesscontroller', function($scope, $state, $rootScope, $window, $http, $window) {
         $window.scrollTo(0, 0);
@@ -449,6 +468,7 @@ angular.module('innstal.controllers', [])
         });
 
         $scope.saveProfile = function(userdata){
+            console.log('UserDetails', userdata)
             $scope.userdata = userdata
             $scope.errorEmail = '';
             if($scope.myForm.$valid){

@@ -23,7 +23,7 @@
     <section class="section">
         <div class="container-cs content-box">
             <ul class="grid-cntent">
-                <li ng-repeat="category in categories">
+                <li ng-repeat="category in categories | limitTo: paginationLimit()" >
                     <a href="#">
                     <img src={{category.category_image}} class="img-grid" alt="img-grid"/>
                     <span class="grid-text bottom">{{ category.name }}</span>
@@ -31,7 +31,8 @@
                 </li>
             </ul>
             <div class="form-group text-center">
-                <button class="btn btn-outline-secondary btn-round">Load More</button>
+                <button class="btn btn-outline-secondary btn-round"
+                 ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">Load More</button>
             </div>
         </div>
     </section>

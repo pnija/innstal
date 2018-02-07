@@ -99,6 +99,10 @@ class Login(APIView):
                 token, _ = Token.objects.get_or_create(user=registered_user)
                 response['token'] = token.key
                 return Response(response)
+        else:
+            response['status'] = 'failed'
+            response['message'] = 'Login failed'
+            return Response(response, status=HTTP_401_UNAUTHORIZED)
 
 
 class Logout(APIView):
@@ -399,6 +403,27 @@ class GetUserProfile(APIView):
         return Response(response)
 
 
+class GetBusinessUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated, )
+
+    def get(self, queryset=None):
+        user_profile = BusinessUserProfile.objects.get(user=self.request.user)
+        serializer = BusinessAccountSerializer(user_profile)
+        serializer.data['user'].pop('password')
+
+        response = {}
+        response['user_data'] = serializer.data
+        try:
+            newsletter_obj = Newsletter.objects.get(email=user_profile.user.email, is_subscribed=True)
+            newsletter = True
+            newsletter_pk = newsletter_obj.pk
+        except:
+            newsletter = None
+            newsletter_pk = None
+        response['subscribed'] = newsletter
+        response['newsletter_pk'] = newsletter_pk
+        return Response(response)
+
 class BusinessAccountRegistration(APIView):
     def post(self, request):
         response = {}
@@ -479,5 +504,9 @@ class UpdatePricingPlan(APIView):
             response['status'] = 'failed'
             response['message'] = 'Could  not update plan for user'
             return Response(response)
+
+
+
+
 
 

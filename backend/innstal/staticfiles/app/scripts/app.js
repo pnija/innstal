@@ -26,6 +26,11 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             templateUrl: '/static/app/views/dashboard.html',
             controller: 'dashboardcontroller',
         })
+        .state('business', {
+            url: '/business',
+            templateUrl: '/static/app/views/business.html',
+            controller: 'businesscontroller',
+        })
         .state('dashboard_home', {
             url: '/dashboard',
             templateUrl: '/static/app/views/dashboard.html',

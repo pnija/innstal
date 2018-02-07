@@ -106,7 +106,7 @@ angular.module('innstal.controllers', [])
             $scope.businessuser = businessuser;
             $scope.emailError = null;
             if($scope.businessRegForm.$valid) {
-              $http({
+                $http({
                     method: 'POST',
                     url: 'user/register/business-account',
                     data: businessuser,
@@ -115,7 +115,8 @@ angular.module('innstal.controllers', [])
                         $scope.wrong_domain = response.data['message']
                     }
                     if(response.data['status'] == 'success') {
-                        $state.go('dashboard')
+                        open()
+                        $state.go('business')
                     }
                     else {
                         $scope.businessuser = {};
@@ -136,6 +137,7 @@ angular.module('innstal.controllers', [])
         $rootScope.state = $state.current.name;
     })
     .directive('passwordError', function() {
+        console.log('errrrorrrrrrrrr')
         return {
             scope: false,
             require: 'ngModel',
@@ -209,18 +211,34 @@ angular.module('innstal.controllers', [])
                 url: 'user/profile/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-
-                    $rootScope.user_id = response.data.user_data.user.id
-                }, function (response) {
-                    console.log('i am in error');
+                loadCategories()
+                $rootScope.user_id = response.data.user_data.user.id
+            }, function (response) {
+                console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
 
-    })
+        function loadCategories(){
+            $http({
+                method: 'GET',
+                url: '/product/category/list/',
+            }).then(function (response) {
+                $scope.categories = response.data.categories;
+            }, function (response) {
+                console.log('i am in error');
+            })
+        }
+
+
+        })
     .controller('dashboardhomecontroller', function($scope, $state, $rootScope, $window, $http, $window) {
         $window.scrollTo(0, 0);
         $rootScope.state = $state.current.name;
+    })
+    .controller('businesscontroller', function($scope, $state, $rootScope, $window, $http, $window) {
+        $window.scrollTo(0, 0);
+        // $rootScope.state = $state.current.name;
     })
     .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout){
 
@@ -330,11 +348,11 @@ angular.module('innstal.controllers', [])
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-                $scope.blogdata =  response.data.results;
-                var htmlString = $sce.trustAsHtml($scope.blogdata[0].blog_content);
-                $scope.blogdata[0].blog_content = htmlString;
-            }, function (response){
-                console.log('i am in error');
+            $scope.blogdata =  response.data.results;
+            var htmlString = $sce.trustAsHtml($scope.blogdata[0].blog_content);
+            $scope.blogdata[0].blog_content = htmlString;
+        }, function (response){
+            console.log('i am in error');
         });
         $rootScope.state = $state.current.name;
 
@@ -347,11 +365,11 @@ angular.module('innstal.controllers', [])
                 method: 'GET',
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
-                    $scope.blogdetail = response.data;
-                    var htmlString = $sce.trustAsHtml($scope.blogdetail.blog_content);
-                    $scope.blogdetail.blog_content = htmlString;
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.blogdetail = response.data;
+                var htmlString = $sce.trustAsHtml($scope.blogdetail.blog_content);
+                $scope.blogdetail.blog_content = htmlString;
+            }, function (response) {
+                console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
@@ -398,36 +416,36 @@ angular.module('innstal.controllers', [])
 
         $window.scrollTo(0, 0);
         $http({
-                method: 'GET',
-                url: 'user/profile/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                    $scope.user_data = response.data.user_data;
-                    $scope.userdata_id = response.data.user_data.user.id;
-                    $rootScope.email_user = response.data.user_data.user.email;
+            method: 'GET',
+            url: 'user/profile/',
+            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+        }).then(function (response) {
+            $scope.user_data = response.data.user_data;
+            $scope.userdata_id = response.data.user_data.user.id;
+            $rootScope.email_user = response.data.user_data.user.email;
 
-                    if(response.data.subscribed == true){
-                        $scope.subscribed = true;
-                        $rootScope.newsletter_pk = response.data.newsletter_pk;
-                    }
-                    else{
-                        $scope.subscribed = false;
-                    }
+            if(response.data.subscribed == true){
+                $scope.subscribed = true;
+                $rootScope.newsletter_pk = response.data.newsletter_pk;
+            }
+            else{
+                $scope.subscribed = false;
+            }
 
-                }, function (response) {
-                    console.log('i am in error');
-            });
+        }, function (response) {
+            console.log('i am in error');
+        });
         $rootScope.state = $state.current.name;
 
         $http({
             method: 'GET',
             url: 'warranty/country-list',
         }).then(function (response) {
-                $scope.countries = response.data.user_profile_countries;
-                $scope.states = response.data.user_profile_state;
-                $scope.cities = response.data.user_profile_city;
-            }, function (response) {
-                console.log('i am in error');
+            $scope.countries = response.data.user_profile_countries;
+            $scope.states = response.data.user_profile_state;
+            $scope.cities = response.data.user_profile_city;
+        }, function (response) {
+            console.log('i am in error');
         });
 
         $scope.saveProfile = function(userdata){
@@ -467,8 +485,8 @@ angular.module('innstal.controllers', [])
                     data: {'email': $rootScope.email_user},
                 }).then(function (response) {
 
-                    }, function (response) {
-                        console.log('i am in error');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
             else{
@@ -478,8 +496,8 @@ angular.module('innstal.controllers', [])
                     data: {'email': $rootScope.email_user},
                 }).then(function (response) {
 
-                    }, function (response) {
-                        console.log('i am in error');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
         }

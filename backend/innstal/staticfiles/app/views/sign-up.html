@@ -76,11 +76,13 @@
                                                             </div>
                                                             <div class="col-sm-6 clearfix">
                                                                 <div class="form-group">
-                                                                    <input type="password" ng-model="businessuser.confirmpassword" name="confirm_password" class="form-control" placeholder="Enter Your Password Again" required>
+                                                                    <input type="password" ng-model="businessuser.user.confirmpassword" name="confirm_password" class="form-control" placeholder="Enter Your Password Again" required repeat-password-error/>
                                                                     <span style="color:red" ng-show="businessRegForm.confirm_password.$error">
                                                                     <span ng-show="submitted && businessRegForm.confirm_password.$error.required">This field is required.</span>
-                                                                    <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
                                                                     </span>
+                                                                                                                                        <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
+                                                                    <span ng-show="submitted && repeatPasswordError">{{repeatPasswordError}}</span>
+
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-6 clearfix">

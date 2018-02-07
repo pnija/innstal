@@ -57,8 +57,8 @@ class ChoicesListViewSet(APIView):
         country_list = [{'code': key, 'label': value} for key, value in OrderedDict(COUNTRIES).items()]
         company_choices = [{'code': key, 'label': value}for key, value in OrderedDict(COMPANY_CHOICES).items()]
         product_type = ProductType.objects.values('id', 'type_name')
-        user_profile_countries = Country.objects.values('name', 'code')
-        user_profile_state = State.objects.values('name', 'code')
+        user_profile_countries = Country.objects.values('name', 'id')
+        user_profile_state = State.objects.values('name', 'id')
         user_profile_city = City.objects.all()[:20].values('name', 'id')
         choice_dict = {'countries': country_list, 'companies': company_choices, 'product_type': product_type,
                        'user_profile_countries': user_profile_countries, 'user_profile_state': user_profile_state,
@@ -84,7 +84,7 @@ class ClaimWarrantyViewSet(ModelViewSet):
     filter_class = ClaimFilter
     filter_backends = (SearchFilter, DjangoFilterBackend)
     ordering = ['-id']
-    search_fields = ['status']
+    search_fields = ['claimed_status']
 
     def create(self, request, *args, **kwargs):
         response = {}
@@ -103,6 +103,10 @@ class ClaimWarrantyViewSet(ModelViewSet):
             response['message'] = 'Failed to claim warranty'
             response['data'] = serializer.errors
             return Response(response, status= status.HTTP_408_REQUEST_TIMEOUT)
+
+
+    def update(self, request, *args, **kwargs):
+        response = {}
 
 
 

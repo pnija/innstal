@@ -104,7 +104,7 @@ class BusinessAccountSerializer(serializers.ModelSerializer):
         user_data.save()
         profile = BusinessUserProfile(user=user_data)
         profile.address = validated_data['address']
-        profile.company_name = validated_data['company_name']
+        profile.company_name = user_data.username
         profile.city = validated_data['city']
         profile.state = validated_data['state']
         profile.country = validated_data['country']

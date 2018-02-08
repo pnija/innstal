@@ -18,6 +18,7 @@
     <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/slider/bjqs.css">
     <!-- EXTERNAL STYLESHEET END -->
 
+
     <!-- Cropper -->
     <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/Cropper/croppie.css">
     <!-- Cropper END -->
@@ -88,8 +89,11 @@
                             <form name="myForm" novalidate>
                             <!-- Profile image crop -->
                             <div class="col-md-4 col-sm-5 split-col-md">
-                                <img width="100%" style="padding-bottom: 15px;" src="/static/app/images/slider-image.jpg" id="upload-demo" />
-
+                                <!--<img width="100%" style="padding-bottom: 15px;" src="/static/app/images/slider-image.jpg" id="upload-demo" />-->
+                                <div class="cropArea">
+                                    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+                                </div>
+                                <div>Upload a different picture<input type="file" id="fileInput"/></div>
                             </div>
                             <!-- Profile image crop END -->
 

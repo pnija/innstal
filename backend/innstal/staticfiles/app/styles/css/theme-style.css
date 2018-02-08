@@ -1627,6 +1627,14 @@ select.input-form-chart{
     -webkit-transform: rotate(130deg);
     -moz-transform: rotate(130deg);
 }
+
+.cropArea {
+  background: #E4E4E4;
+  overflow: hidden;
+  height:350px;
+}
+
+
 /* DASHBOARD END */
 
 /* MEDIA QUERY */

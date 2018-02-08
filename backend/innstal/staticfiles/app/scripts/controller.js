@@ -439,10 +439,14 @@ angular.module('innstal.controllers', [])
             url: 'user/profile/',
             headers: {'Authorization': 'Token '+$window.sessionStorage.token}
         }).then(function (response) {
+            console.log(response.data.user_data.country)
             $scope.user_data = response.data.user_data;
             $scope.userdata_id = response.data.user_data.user.id;
+            $scope.userdata_countries = response.data.user_data.country;
+            $scope.userdata_state = response.data.user_data.state;
+            $scope.userdata_city = response.data.user_data.city;
+            $scope.userdata_address = response.data.user_data.address;
             $rootScope.email_user = response.data.user_data.user.email;
-
             if(response.data.subscribed == true){
                 $scope.subscribed = true;
                 $rootScope.newsletter_pk = response.data.newsletter_pk;

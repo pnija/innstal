@@ -59,7 +59,8 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'phone', 'user_type', 'avatar', 'address', 'user', 'dob', 'city', 'country', 'state', 'zipcode')
+        fields = ('id', 'phone', 'user_type', 'avatar',
+                  'address', 'user', 'dob', 'city', 'country', 'state', 'zipcode')
 
     def update(self, instance, validated_data):
         user_id = instance.user_id

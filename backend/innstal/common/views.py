@@ -374,6 +374,7 @@ class UpdateUserProfile(APIView):
                 response['status'] = 'failed'
                 response['message'] = 'Failed to update user profile'
                 response['error'] = serializer.errors
+                print(serializer.errors)
                 return Response(response, status=status.HTTP_400_BAD_REQUEST)
         else:
             response['status'] = 'failed'

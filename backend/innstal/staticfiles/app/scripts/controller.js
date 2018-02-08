@@ -1,4 +1,4 @@
-angular.module('innstal.controllers', [])
+angular.module('innstal.controllers', ['ngImgCrop'])
     .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
 
         $rootScope.state = $state.current.name;
@@ -430,6 +430,26 @@ angular.module('innstal.controllers', [])
                 });
             }
         }
+
+
+        $scope.myImage='';
+        $scope.myCroppedImage='';
+
+        var handleFileSelect=function(evt) {
+            var file=evt.currentTarget.files[0];
+            var reader = new FileReader();
+            reader.onload = function (evt) {
+                console.log('everrrrrrrrrrrrr', evt);
+                $scope.$apply(function($scope){
+                    $scope.myImage=evt.target.result;
+                });
+            };
+            reader.readAsDataURL(file);
+        };
+        angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
+
+
+
     })
     .controller('warrantyregistercontroller', function($scope,$http, $window) {
 

@@ -53,9 +53,11 @@ class Warranty(models.Model):
 class ClaimedWarranty(models.Model):
     user = models.ForeignKey(UserProfile, null=True)
     warranty = models.ForeignKey(Warranty)
-    is_active = models.BooleanField
-    status = models.CharField(max_length=200)
+    is_claimed = models.BooleanField(default=False)
+    claimed_status = models.BooleanField(default=False)
     claimed_date = models.DateField(auto_now_add=True)
+
+
 
 
 

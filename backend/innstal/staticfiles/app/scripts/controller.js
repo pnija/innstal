@@ -1,6 +1,16 @@
 angular.module('innstal.controllers', ['ngImgCrop'])
     .controller('basecontroller', function($scope, $rootScope, $http, $state, $modal, $window) {
-
+        function loadCategories(){
+            $http({
+                method: 'GET',
+                url: '/product/category/list/',
+            }).then(function (response) {
+                $scope.categories = response.data.categories;
+            }, function (response) {
+                console.log('i am in error');
+            })
+        }
+        loadCategories()
         $rootScope.state = $state.current.name;
     })
     .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
@@ -10,9 +20,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 method: 'GET',
                 url: 'user/account/activate/'+$stateParams.id+'/',
             }).then(function (response) {
-                    alert('Your account has been activated');
-                }, function (response) {
-                    console.log('i am in error');
+                alert('Your account has been activated');
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -30,14 +40,14 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 data: logindata,
             }).then(function (response) {
 
-                    $scope.logindata = {};
-                    $scope.loginForm = {};
+                $scope.logindata = {};
+                $scope.loginForm = {};
 
-                    $window.sessionStorage.token = response.data.token;
+                $window.sessionStorage.token = response.data.token;
 
-                    $state.go('dashboard')
-                }, function (response) {
-                    console.log('i am in error');
+                $state.go('dashboard')
+            }, function (response) {
+                console.log('i am in error');
             });
         };
 
@@ -49,9 +59,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     url: 'user/forgot-password/',
                     data: data,
                 }).then(function (response) {
-                        $('.forget-password').modal('hide');
-                    }, function (response) {
-                        console.log('i am in error');
+                    $('.forget-password').modal('hide');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
         }
@@ -60,6 +70,8 @@ angular.module('innstal.controllers', ['ngImgCrop'])
     .controller('joinincontroller', function($scope, $state, $rootScope, $http, $window, $modal) {
         $window.scrollTo(0, 0);
         $scope.submitted = false;
+        loadData();
+
 
         $scope.submit = function (user) {
             $scope.user = user;
@@ -70,15 +82,62 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     method: 'POST',
                     url: 'user/register/',
                     data: user,
+
                 }).then(function (response) {
-                        $scope.user = {};
-                        $scope.regForm = {};
-                        open();
-                    }, function (response) {
-                            $scope.error = response.data;
-                            console.log($scope.error)
+                    $scope.user = {};
+                    $scope.regForm = {};
+                    open();
+                }, function (response) {
+                    $scope.error = response.data;
+                    console.log($scope.error)
                 });
             }
+        };
+
+        function loadData(){
+            $http({
+                method: 'GET',
+                url: 'warranty/country-list',
+            }).then(function (response) {
+                $scope.countries = response.data.countries;
+                $scope.user_profile_countries = response.data.user_profile_countries;
+                $scope.user_profile_state = response.data.user_profile_state;
+                $scope.user_profile_city = response.data.user_profile_city;
+            }, function (response) {
+                console.log('i am in error');
+
+            })
+        }
+
+
+        $scope.submitBusiness = function (businessuser) {
+            console.log('busiiiiiiiiiiiiiiiiiii',businessuser)
+            console.log('req', businessuser)
+            $scope.businessuser = businessuser;
+            $scope.emailError = null;
+            if($scope.businessRegForm.$valid) {
+                $http({
+                    method: 'POST',
+                    url: 'user/register/business-account',
+                    data: businessuser,
+                }).then(function (response) {
+                    if(response.data['message'] == 'This domain is not allowed'){
+                        $scope.wrong_domain = response.data['message']
+                    }
+                    if(response.data['status'] == 'success') {
+                        open()
+                        $state.go('business')
+                    }
+                    else {
+                        $scope.businessuser = {};
+                        $scope.businessRegForm = {};
+                    }
+                }, function (response) {
+                    $scope.error = response.data;
+                    console.log($scope.error)
+                });
+            }
+
         };
 
         function open(){
@@ -88,72 +147,74 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         $rootScope.state = $state.current.name;
     })
     .directive('passwordError', function() {
-      return {
-        scope: false,
-        require: 'ngModel',
-        link: function(scope, element, attr, mCtrl) {
+        console.log('errrrorrrrrrrrr')
+        return {
+            scope: false,
+            require: 'ngModel',
+            link: function(scope, element, attr, mCtrl) {
 
-          function myValidation(value) {
+                function myValidation(value) {
 
-                if(value.length > 0){
-                   if(value.length < 8 ){
-                        scope.passwordError = 'Minimum eight digit required'
-                        mCtrl.$setValidity('charE', false);
-                   }else{
+                    if(value.length > 0){
+                        if(value.length < 8 ){
+                            scope.passwordError = 'Minimum eight digit required'
+                            mCtrl.$setValidity('charE', false);
+                        }else{
+                            scope.passwordError = null;
+                            mCtrl.$setValidity('charE', true);
+                        }
+
+                    }else{
                         scope.passwordError = null;
-                        mCtrl.$setValidity('charE', true);
-                   }
-
-                }else{
-                    scope.passwordError = null;
+                    }
+                    return value;
                 }
-                return value;
-          }
-          mCtrl.$parsers.push(myValidation);
-        }
-      };
+                mCtrl.$parsers.push(myValidation);
+            }
+        };
     })
     .directive('repeatPasswordError', function() {
-      return {
-        scope: false,
-        require: 'ngModel',
-        link: function(scope, element, attr, mCtrl) {
+        return {
+            scope: false,
+            require: 'ngModel',
+            link: function(scope, element, attr, mCtrl) {
 
-          function myValidation(value) {
-                if(scope.user){
-                    var password = scope.user.password;
-                }
-                else{
-                    var password = scope.user_data.user.password;
-                }
+                function myValidation(value) {
+                    if(scope.user){
+                        var password = scope.user.password;
+                    }
+                    else{
+                        var password = scope.user_data.user.password;
+                    }
 
-                if(value.length > 0){
+                    if(value.length > 0){
 
-                    if(value.length < 8 ){
+                        if(value.length < 8 ){
 
-                        scope.repeatPasswordError = 'Minimum eight digit required'
-                        mCtrl.$setValidity('charE', false);
+                            scope.repeatPasswordError = 'Minimum eight digit required'
+                            mCtrl.$setValidity('charE', false);
 
-                    }else if(password != value){
-                        
-                        mCtrl.$setValidity('charE', false);
-                        scope.repeatPasswordError = 'Password Mismatch';
+                        }else if(password != value){
+
+                            mCtrl.$setValidity('charE', false);
+                            scope.repeatPasswordError = 'Password Mismatch';
+
+                        }else{
+                            scope.repeatPasswordError = null;
+                            mCtrl.$setValidity('charE', true);
+                        }
 
                     }else{
                         scope.repeatPasswordError = null;
-                        mCtrl.$setValidity('charE', true);
                     }
-
-                }else{
-                    scope.repeatPasswordError = null;
+                    return value;
                 }
-                return value;
-          }
-          mCtrl.$parsers.push(myValidation);
-        }
-      };
+                mCtrl.$parsers.push(myValidation);
+            }
+        };
     })
     .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
+
         $window.scrollTo(0, 0);
         if($window.sessionStorage.token){
             $http({
@@ -161,20 +222,44 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 url: 'user/profile/',
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
-                    $rootScope.user_id = response.data.user_data.user.id
-                }, function (response) {
-                    console.log('i am in error');
+                loadCategories()
+                $rootScope.user_id = response.data.user_data.user.id
+            }, function (response) {
+                console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
 
+        function loadCategories(){
+            $http({
+                method: 'GET',
+                url: '/product/category/list/',
+            }).then(function (response) {
+                $scope.categories = response.data.categories;
+                var pagesShown = 1;
+                var pageSize = 4;
+                $scope.paginationLimit = function(data) {
+                    return pageSize * pagesShown;
+                };
+
+                $scope.hasMoreItemsToShow = function() {
+                    return pagesShown < ($scope.categories.length / pageSize);
+                };
+
+                $scope.showMoreItems = function() {
+                    pagesShown = pagesShown + 1;
+                };
+            }, function (response) {
+                console.log('i am in error');
+            })
+        }
     })
-    .controller('dashboardhomecontroller', function($scope, $state, $rootScope, $window, $http, $window) {
+    .controller('businesscontroller', function($scope, $state, $rootScope, $window, $http, $window) {
         $window.scrollTo(0, 0);
-        $rootScope.state = $state.current.name;
+        // $rootScope.state = $state.current.name;
     })
     .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout){
-        
+
         $window.scrollTo(0, 0);
 
         $scope.submit = function () {
@@ -218,14 +303,14 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         $rootScope.state = $state.current.name;
     })
     .controller('searchResultController', function($scope, $http, $modal, $state, $window, $rootScope){
-        
+
         $scope.Text = $state.params.searchText;
         $scope.products = []
         $scope.page = 0
         if($window.sessionStorage.token){
             var header = {'Authorization': 'Token '+$window.sessionStorage.token}
         }else{
-           var header = {} 
+            var header = {}
         }
         console.log(header)
 
@@ -263,8 +348,8 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 $rootScope.user_id = '';
                 $state.reload();
 
-                }, function (response) {
-                    console.log('i am in error');
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -274,21 +359,23 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         }
 
     })
-    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window) {
+    .controller('bloghomecontroller', function($scope, $state, $rootScope, $http, $window, $sce) {
         $window.scrollTo(0, 0);
 
         $http({
             method: 'GET',
             url: 'user/blog/',
         }).then(function (response) {
-                $scope.blogdata = response.data.results;
-            }, function (response){
-                console.log('i am in error');
+            $scope.blogdata =  response.data.results;
+            var htmlString = $sce.trustAsHtml($scope.blogdata[0].blog_content);
+            $scope.blogdata[0].blog_content = htmlString;
+        }, function (response){
+            console.log('i am in error');
         });
         $rootScope.state = $state.current.name;
 
     })
-    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+    .controller('blogdetailcontroller', function($scope, $state, $rootScope, $http, $window, $stateParams, $sce) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var blog_id = $stateParams.id;
@@ -296,9 +383,11 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 method: 'GET',
                 url: 'user/blog/'+blog_id,
             }).then(function (response) {
-                    $scope.blogdetail = response.data;
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.blogdetail = response.data;
+                var htmlString = $sce.trustAsHtml($scope.blogdetail.blog_content);
+                $scope.blogdetail.blog_content = htmlString;
+            }, function (response) {
+                console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
@@ -313,8 +402,8 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 url: 'user/token-check/'+user_id+'/'+token+'/',
             }).then(function (response) {
 
-                }, function (response) {
-                    console.log('i am in error');
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -325,11 +414,11 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 url: 'user/update-password/'+$stateParams.id+'/',
                 data: changedata
             }).then(function (response) {
-                    if(response.data.status == 'success'){
-                        $state.go('login')
-                    }
-                }, function (response) {
-                    console.log('i am in error');
+                if(response.data.status == 'success'){
+                    $state.go('login')
+                }
+            }, function (response) {
+                console.log('i am in error');
             });
         }
         $rootScope.state = $state.current.name;
@@ -345,55 +434,56 @@ angular.module('innstal.controllers', ['ngImgCrop'])
 
         $window.scrollTo(0, 0);
         $http({
-                method: 'GET',
-                url: 'user/profile/',
-                headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-            }).then(function (response) {
-                    $scope.user_data = response.data.user_data;
-                    $scope.userdata_id = response.data.user_data.user.id;
-                    $rootScope.email_user = response.data.user_data.user.email;
+            method: 'GET',
+            url: 'user/profile/',
+            headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+        }).then(function (response) {
+            $scope.user_data = response.data.user_data;
+            $scope.userdata_id = response.data.user_data.user.id;
+            $rootScope.email_user = response.data.user_data.user.email;
 
-                    if(response.data.subscribed == true){
-                        $scope.subscribed = true;
-                        $rootScope.newsletter_pk = response.data.newsletter_pk;
-                    }
-                    else{
-                        $scope.subscribed = false;
-                    }
+            if(response.data.subscribed == true){
+                $scope.subscribed = true;
+                $rootScope.newsletter_pk = response.data.newsletter_pk;
+            }
+            else{
+                $scope.subscribed = false;
+            }
 
-                }, function (response) {
-                    console.log('i am in error');
-            });
+        }, function (response) {
+            console.log('i am in error');
+        });
         $rootScope.state = $state.current.name;
 
         $http({
             method: 'GET',
             url: 'warranty/country-list',
         }).then(function (response) {
-                $scope.countries = response.data.user_profile_countries;
-                $scope.states = response.data.user_profile_state;
-                $scope.cities = response.data.user_profile_city;
-            }, function (response) {
-                console.log('i am in error');
+            $scope.countries = response.data.user_profile_countries;
+            $scope.states = response.data.user_profile_state;
+            $scope.cities = response.data.user_profile_city;
+        }, function (response) {
+            console.log('i am in error');
         });
 
         $scope.saveProfile = function(userdata){
+            console.log('UserDetails', userdata)
             $scope.userdata = userdata
             $scope.errorEmail = '';
             if($scope.myForm.$valid){
 
-               $http({
+                $http({
                     method: 'PUT',
                     url: 'user/update/'+$scope.userdata_id+'/',
                     data: userdata,
                     headers: {'Authorization': 'Token '+$window.sessionStorage.token}
                 }).then(function (response) {
-                        $scope.email_user = userdata.user.email;
-                    }, function (response) {
-                        if(response.data.error.user.email == 'Email needs to be unique'){
-                            $scope.errorEmail = 'Email needs to be unique';
-                        }
-                        console.log('i am in error');
+                    $scope.email_user = userdata.user.email;
+                }, function (response) {
+                    if(response.data.error.user.email == 'Email needs to be unique'){
+                        $scope.errorEmail = 'Email needs to be unique';
+                    }
+                    console.log('i am in error');
                 });
             }
         }
@@ -414,8 +504,8 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     data: {'email': $rootScope.email_user},
                 }).then(function (response) {
 
-                    }, function (response) {
-                        console.log('i am in error');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
             else{
@@ -425,8 +515,8 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     data: {'email': $rootScope.email_user},
                 }).then(function (response) {
 
-                    }, function (response) {
-                        console.log('i am in error');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
         }
@@ -461,14 +551,14 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 method: 'GET',
                 url: 'warranty/country-list',
             }).then(function (response) {
-                    $scope.countries = response.data.countries;
-                    $scope.companies = response.data.companies;
-                    $scope.product_type = response.data.product_type;
-                    $scope.user_profile_countries = response.data.user_profile_countries;
-                    $scope.user_profile_state = response.data.user_profile_state;
-                    $scope.user_profile_city = response.data.user_profile_city;
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.countries = response.data.countries;
+                $scope.companies = response.data.companies;
+                $scope.product_type = response.data.product_type;
+                $scope.user_profile_countries = response.data.user_profile_countries;
+                $scope.user_profile_state = response.data.user_profile_state;
+                $scope.user_profile_city = response.data.user_profile_city;
+            }, function (response) {
+                console.log('i am in error');
             });
 
             $http({
@@ -477,9 +567,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
 
             }).then(function (response) {
-                    $scope.form = response.data.results[0];
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.form = response.data.results[0];
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -489,7 +579,7 @@ angular.module('innstal.controllers', ['ngImgCrop'])
             var formData = new FormData();
 
             for( key in form){
-             formData.append(key, form[key])
+                formData.append(key, form[key])
             }
             formData.append("warranty_image", $('#file-1')[0].files[0])
             formData.append("product", "1")
@@ -501,14 +591,14 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 url: 'warranty/register/',
                 data: formData,
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token,
-                'Content-Type': undefined}
+                    'Content-Type': undefined}
             }).then(function (response) {
 
-                    $scope.form = {};
-                    $scope.warrantyForm = {};
+                $scope.form = {};
+                $scope.warrantyForm = {};
 
-                }, function (response) {
-                    console.log('i am in error');
+            }, function (response) {
+                console.log('i am in error');
             });
         };
 
@@ -521,22 +611,22 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 headers: {'Authorization': 'Token '+$window.sessionStorage.token}
             }).then(function (response) {
 
-                    $scope.registered_warranties = response.data.results;
-                    var pagesShown = 1;
-                    var pageSize = 4;
-                    $scope.paginationLimit = function(data) {
-                     return pageSize * pagesShown;
-                    };
+                $scope.registered_warranties = response.data.results;
+                var pagesShown = 1;
+                var pageSize = 4;
+                $scope.paginationLimit = function(data) {
+                    return pageSize * pagesShown;
+                };
 
-                    $scope.hasMoreItemsToShow = function() {
-                     return pagesShown < ($scope.registered_warranties.length / pageSize);
-                    };
+                $scope.hasMoreItemsToShow = function() {
+                    return pagesShown < ($scope.registered_warranties.length / pageSize);
+                };
 
-                    $scope.showMoreItems = function() {
-                     pagesShown = pagesShown + 1;
-                    };
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.showMoreItems = function() {
+                    pagesShown = pagesShown + 1;
+                };
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -554,9 +644,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 method: 'GET',
                 url: 'user/account/activate/'+$stateParams.id+'/',
             }).then(function (response) {
-                    alert('Your account has been activated');
-                }, function (response) {
-                    console.log('i am in error');
+                alert('Your account has been activated');
+            }, function (response) {
+                console.log('i am in error');
             });
         }
 
@@ -574,26 +664,26 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 data: logindata,
             }).then(function (response) {
 
-                    $scope.logindata = {};
-                    $scope.loginForm = {};
+                $scope.logindata = {};
+                $scope.loginForm = {};
 
-                    $window.sessionStorage.token = response.data.token;
-                    console.log(response.data)
+                $window.sessionStorage.token = response.data.token;
+                console.log(response.data)
 
-                    $http({
-                        method: 'GET',
-                        url: 'user/profile/',
-                        headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-                    }).then(function (response) {
-                            $rootScope.user_id = response.data.user.id
-                        }, function (response) {
-                            console.log('i am in error');
-                    });
-
-                    $location.url($state.params.next);
-
+                $http({
+                    method: 'GET',
+                    url: 'user/profile/',
+                    headers: {'Authorization': 'Token '+$window.sessionStorage.token}
+                }).then(function (response) {
+                    $rootScope.user_id = response.data.user.id
                 }, function (response) {
                     console.log('i am in error');
+                });
+
+                $location.url($state.params.next);
+
+            }, function (response) {
+                console.log('i am in error');
             });
         };
 
@@ -605,9 +695,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     url: 'user/forgot-password/',
                     data: data,
                 }).then(function (response) {
-                        $('.forget-password').modal('hide');
-                    }, function (response) {
-                        console.log('i am in error');
+                    $('.forget-password').modal('hide');
+                }, function (response) {
+                    console.log('i am in error');
                 });
             }
         }
@@ -620,9 +710,9 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 url: 'user/subcribe/newsletter/',
                 data: subs,
             }).then(function (response) {
-                    $scope.subs = {};
-                }, function (response) {
-                    console.log('i am in error');
+                $scope.subs = {};
+            }, function (response) {
+                console.log('i am in error');
             });
         };
     })

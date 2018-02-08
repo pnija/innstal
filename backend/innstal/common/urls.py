@@ -8,7 +8,7 @@ from common.views import UserCreate, Logout, SubcribeNewsLetter, \
     UpdateNewsLetterSubscription, UpdatePassword, Login, BlogListingViewSet, \
     ContactView, UpdateUserProfile, ActivateUserAccount, ForgotPassword, \
     ChangePassword, ResetPasswordCheck, GetUserProfile, BusinessAccountRegistration, SelectPricingPlan, \
-    UpdatePricingPlan, Unsubscribe
+    UpdatePricingPlan, Unsubscribe, GetBusinessUserProfile
 
 router = routers.DefaultRouter()
 router.register(r'blog', BlogListingViewSet)
@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^update/newsletter-subscription/$', UpdateNewsLetterSubscription.as_view(), name='subscribe'),
     url(r'contact/$', ContactView.as_view(), name='contact'),
     url(r'profile/$', GetUserProfile.as_view(), name='profile'),
+    url(r'business/profile/$', GetBusinessUserProfile.as_view(), name='business-profile'),
     url(r'^', include(router.urls)),
     url(r'^chart', LineChartJSONView.as_view()),
 ]

@@ -23,63 +23,16 @@
     <section class="section">
         <div class="container-cs content-box">
             <ul class="grid-cntent">
-                <li>
+                <li ng-repeat="category in categories | limitTo: paginationLimit()" >
                     <a href="#">
-                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Laptops</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Smart Watch</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img03.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text ">Camera</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img04.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Drones</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img05.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text ">Solar Panel</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img06.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Refrigerators</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img07.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text">Mobile Phones</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img01.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Laptops</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <img src="/static/app/images/img02.jpg" class="img-grid" alt="img-grid" />
-                    <span class="grid-text bottom">Smart Watch</span>
+                    <img src={{category.category_image}} class="img-grid" alt="img-grid"/>
+                    <span class="grid-text bottom">{{ category.name }}</span>
                     </a>
                 </li>
             </ul>
             <div class="form-group text-center">
-                <button class="btn btn-outline-secondary btn-round">Load More</button>
+                <button class="btn btn-outline-secondary btn-round"
+                 ng-show="hasMoreItemsToShow()" ng-click="showMoreItems()">Load More</button>
             </div>
         </div>
     </section>

@@ -84,74 +84,18 @@
     <div class="container">
         <h2>Browse in Instruction/Product/Care Manual Categories</h2>
         <div class="row ">
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
+            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true" ng-repeat="category in categories | limitTo:8" >
                 <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-1.png"/>
+                    <img width="100%" height="180px" src={{category.category_image}} />
                     <div class="Categories-title">
-                        <h4>Laptop</h4>
+                        <h4>{{ category.name }}</h4>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-2.png"/>
-                    <div class="Categories-title">
-                        <h4>Mobiles</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-3.png"/>
-                    <div class="Categories-title">
-                        <h4>Smart Watches</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-4.png"/>
-                    <div class="Categories-title">
-                        <h4>Digital Cameras</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-5.png"/>
-                    <div class="Categories-title">
-                        <h4>Video Camera</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-6.png"/>
-                    <div class="Categories-title">
-                        <h4>Energy Saving</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-7.png"/>
-                    <div class="Categories-title">
-                        <h4>Energy Saving</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3" data-aos="fade-up" data-aos-once="true">
-                <div class="Categories-item">
-                    <img width="100%" src="/static/app/images/cat-8.png"/>
-                    <div class="Categories-title">
-                        <h4>Drone</h4>
-                    </div>
-                </div>
-            </div>
-            <div align="center" class="more" data-aos="fade-up" data-aos-once="true" data-aos-delay="800">
-                <a ui-sref="dashboard_home" ui-sref-opts="{reload: true}" class="btn btn-more" > Browse All Categories </a>
             </div>
         </div>
+        <div align="center" class="more" data-aos="fade-up" data-aos-once="true" data-aos-delay="800">
+                <a ui-sref="dashboard_home" ui-sref-opts="{reload: true}" class="btn btn-more" > Browse All Categories </a>
+            </div>
     </div>
 </div>
 <div class="clearfix"></div>

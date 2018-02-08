@@ -127,7 +127,7 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control" name="country" ng-model="user_data.country" ng-options="country as country.name for country in countries track by country.code">
+                                                        <select class="form-control" name="country" ng-model="user_data.country" ng-options="country as country.name for country in countries track by country.id">
                                                             <option value="" selected>Select Country</option>
                                                         </select>
                                                     </div>
@@ -135,7 +135,7 @@
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control" name="state" ng-model="user_data.state" ng-options="state as state.name for state in states track by state.code">
+                                                        <select class="form-control" name="state" ng-model="user_data.state" ng-options="state as state.name for state in states track by state.id">
                                                             <option value="" selected>Select State</option>
                                                         </select>
                                                     </div>
@@ -152,7 +152,7 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <select class="form-control" name="city" ng-model="user_data.city" ng-options="city as city.name for city in cities track by city.code">
+                                                        <select class="form-control" name="city" ng-model="user_data.city" ng-options="city as city.name for city in cities track by city.id">
                                                             <option value="" selected>Select City</option>
                                                         </select>
                                                     </div>

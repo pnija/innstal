@@ -83,14 +83,14 @@ class UpdateProductViewCount(APIView):
             return Response(response)
 
 class ProductCategoryViewSet(ViewSet):
-    permission_classes = (permissions.IsAuthenticated, )
+    # permission_classes = (permissions.IsAuthenticated, )
     def list(self, request):
         response = {}
         queryset = ProductCategory.objects.all()
         serializer = ProductCategorySerializer(queryset, many=True)
         response['status'] = 'success'
         response['message'] = 'Products listed successfully'
-        response['products'] = serializer.data
+        response['categories'] = serializer.data
         return Response(response)
 
     def retrieve(self, request, pk=None):
@@ -100,5 +100,5 @@ class ProductCategoryViewSet(ViewSet):
         serializer = ProductCategorySerializer(product_category)
         response['status'] = 'success'
         response['message'] = 'Product detail fetched successfully'
-        response['product_detail'] = serializer.data
+        response['category_detail'] = serializer.data
         return Response(serializer.data)

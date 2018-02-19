@@ -28,9 +28,9 @@
                                                     <div class="marginBottom-s password">
                                                         <div class="width-100 uiIcon uiIcon--l">
                                                           <div class="input-group">
-                                                            <input type="password" class="form-control pwd" value="iamapassword" ng-model="logindata.password">
+                                                            <input type="{{inputType}}" class="form-control pwd" value="iamapassword" ng-model="logindata.password">
                                                             <span class="input-group-btn">
-                                                                <button class="btn btn-default reveal" type="button"><i class="glyphicon glyphicon-eye-open"></i></button>
+                                                                <button class="btn btn-default reveal" type="button" ng-click="hideShowPassword()"><i class="glyphicon glyphicon-eye-open"></i></button>
                                                             </span>
                                                           </div>
                                                         </div>

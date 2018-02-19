@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="/static/app/styles/css/main1.css">
+
+<div ng-if="user_id">
+    <header ng-include="'/static/app/views/directives/header-after-login.html'"></header>
+</div>
+<div ng-if="!user_id">
+    <header ng-include="'/static/app/views/directives/header-before-login.html'"></header>
+</div>
+
+<div class="page-name">
+    <div class="container">
+    </div>
+</div>
+<div class="input-group col-sm-offset-2">
+    <h3 class="text">Number of Manuals Downloaded</h3>
+</div>
+<div class="clearfix"></div>
+

@@ -14,8 +14,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework import status, permissions, parsers, renderers
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
+from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.status import HTTP_401_UNAUTHORIZED
+from rest_framework.utils import json
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.views import APIView
 from rest_framework import viewsets
@@ -354,19 +356,21 @@ class ChangePassword(APIView):
 
 class UpdateUserProfile(APIView):
     permission_classes = (permissions.IsAuthenticated, )
+    parser_classes = (MultiPartParser,)
 
     def put(self, request, pk):
         response = {}
         if User.objects.filter(pk=pk):
-            print(request.data)
-            profile = UserProfile.objects.get(user_id=pk)
-            # day = request.data['day']
-            # month = request.data['month']
-            # year = request.data['year']
-            # request.data['dob'] = datetime.strptime(day + '/' + month + '/' + year, "%d/%m/%Y").date()
-            serializer = UserProfileSerializer(instance=profile, data=request.data, context={'request': request})
+            serializer = UserProfileSerializer(instance=request.user.get_user_profile, data=request.data, context={'request': request})
             if serializer.is_valid():
                 serializer.save()
+                user = request.user
+                user.email = request.data.get('email')
+                user.username = request.data.get('username')
+                password = request.data.get('password')
+                if password is not None and password != '':
+                    user.set_password(request.data.get("password"))
+                user.save()
                 response['status'] = 'success'
                 response['message'] = 'User profile updated'
                 return Response(response)
@@ -388,10 +392,11 @@ class GetUserProfile(APIView):
     def get(self, queryset=None):
         user_profile = UserProfile.objects.get(user=self.request.user)
         serializer = UserProfileSerializer(user_profile)
-        serializer.data['user'].pop('password')
-
+        password = serializer.data.pop('password')
+        myDict = {key: val for key, val in serializer.data.items() if val != password}
+        print(myDict)
         response = {}
-        response['user_data'] = serializer.data
+        response['user_data'] = myDict
         try:
             newsletter_obj = Newsletter.objects.get(email=user_profile.user.email, is_subscribed=True)
             newsletter = True

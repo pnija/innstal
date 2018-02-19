@@ -13,7 +13,17 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         loadCategories()
         $rootScope.state = $state.current.name;
     })
-    .controller('logincontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal) {
+    .controller('logincontroller', function($scope, $rootScope, $http, $state, $window,
+                                            $stateParams, $modal, ngDialog) {
+
+        $scope.inputType = 'password';
+        $scope.hideShowPassword = function(){
+            if ($scope.inputType == 'password')
+                $scope.inputType = 'text';
+            else
+                $scope.inputType = 'password';
+        };
+
 
         if($stateParams.id){
             $http({
@@ -44,12 +54,25 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 $scope.loginForm = {};
 
                 $window.sessionStorage.token = response.data.token;
-
                 $state.go('dashboard')
             }, function (response) {
-                console.log('i am in error');
+                if(response.data.status == 'failed')
+                {
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
+
+
+                }
+                console.log('i am in error', response);
             });
         };
+
 
         $scope.change_password = function(data){
             if(data != null)
@@ -60,14 +83,30 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     data: data,
                 }).then(function (response) {
                     $('.forget-password').modal('hide');
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
                 }, function (response) {
                     console.log('i am in error');
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
                 });
             }
         }
         $rootScope.state = $state.current.name;
     })
-    .controller('joinincontroller', function($scope, $state, $rootScope, $http, $window, $modal) {
+    .controller('joinincontroller', function($scope, $state, $rootScope, $http, $window, $modal, ngDialog) {
         $window.scrollTo(0, 0);
         $scope.submitted = false;
         loadData();
@@ -89,6 +128,17 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                     open();
                 }, function (response) {
                     $scope.error = response.data;
+                    if(response.data.status == 'failed')
+                    {
+                        ngDialog.open({ template: '/static/app/views/alert.html',
+                                className: 'ngdialog-theme-default',
+                                data: {
+                                    status:response.data.status,
+                                    message: response.data.message
+                                }
+                            }
+                        );
+                    }
                     console.log($scope.error)
                 });
             }
@@ -213,7 +263,7 @@ angular.module('innstal.controllers', ['ngImgCrop'])
             }
         };
     })
-    .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window) {
+    .controller('dashboardcontroller', function($scope, $state, $rootScope, $http, $window, ngDialog) {
 
         $window.scrollTo(0, 0);
         if($window.sessionStorage.token){
@@ -226,6 +276,17 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 $rootScope.user_id = response.data.user_data.user.id
             }, function (response) {
                 console.log('i am in error');
+                if(response.data.status == 'failed')
+                {
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
+                }
             });
         }
         $rootScope.state = $state.current.name;
@@ -258,7 +319,7 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         $window.scrollTo(0, 0);
         // $rootScope.state = $state.current.name;
     })
-    .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout){
+    .controller('ContactController', function($scope,  $state, $rootScope, $http, $modal, $window, $timeout, ngDialog){
 
         $window.scrollTo(0, 0);
 
@@ -282,6 +343,17 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 console.log( response.data)
                 if(response.status == 400){
                     $scope.errors = response.data
+                    if(response.data.status == 'failed')
+                    {
+                        ngDialog.open({ template: '/static/app/views/alert.html',
+                                className: 'ngdialog-theme-default',
+                                data: {
+                                    status:response.data.status,
+                                    message: response.data.message
+                                }
+                            }
+                        );
+                    }
                     console.log($scope.errors)
                 }
 
@@ -392,7 +464,7 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         }
         $rootScope.state = $state.current.name;
     })
-    .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams) {
+    .controller('changepasswordcontroller', function($scope,  $rootScope, $http, $window, $state, $stateParams, ngDialog) {
         $window.scrollTo(0, 0);
         if($stateParams){
             var user_id = $stateParams.id;
@@ -401,6 +473,17 @@ angular.module('innstal.controllers', ['ngImgCrop'])
                 method: 'GET',
                 url: 'user/token-check/'+user_id+'/'+token+'/',
             }).then(function (response) {
+                {
+                    alert
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
+                }
 
             }, function (response) {
                 console.log('i am in error');
@@ -423,7 +506,7 @@ angular.module('innstal.controllers', ['ngImgCrop'])
         }
         $rootScope.state = $state.current.name;
     })
-    .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams) {
+    .controller('profileController', function($scope, $state, $rootScope, $http, $window, $stateParams, ngDialog) {
         $scope.submitted = false;
         $scope.changed_pwd = false;
 
@@ -438,14 +521,15 @@ angular.module('innstal.controllers', ['ngImgCrop'])
             url: 'user/profile/',
             headers: {'Authorization': 'Token '+$window.sessionStorage.token}
         }).then(function (response) {
-            console.log(response.data.user_data.country)
+            console.log('User profile',response.data.user_data.password)
             $scope.user_data = response.data.user_data;
-            $scope.userdata_id = response.data.user_data.user.id;
+            $scope.userdata_id = response.data.user_data.id;
             $scope.userdata_countries = response.data.user_data.country;
             $scope.userdata_state = response.data.user_data.state;
             $scope.userdata_city = response.data.user_data.city;
             $scope.userdata_address = response.data.user_data.address;
-            $rootScope.email_user = response.data.user_data.user.email;
+            $scope.userdata_avatar = response.data.user_data.avatar;
+            $rootScope.email_user = response.data.user_data.email;
             if(response.data.subscribed == true){
                 $scope.subscribed = true;
                 $rootScope.newsletter_pk = response.data.newsletter_pk;
@@ -456,6 +540,19 @@ angular.module('innstal.controllers', ['ngImgCrop'])
 
         }, function (response) {
             console.log('i am in error');
+            if(response.data.status == 'failed')
+            {
+                ngDialog.open({ template: '/static/app/views/alert.html',
+                        className: 'ngdialog-theme-default',
+                        data: {
+                            status:response.data.status,
+                            message: response.data.message
+                        }
+                    }
+                );
+
+
+            }
         });
         $rootScope.state = $state.current.name;
 
@@ -470,27 +567,61 @@ angular.module('innstal.controllers', ['ngImgCrop'])
             console.log('i am in error');
         });
 
-        $scope.saveProfile = function(userdata){
-            console.log('UserDetails', userdata)
-            $scope.userdata = userdata
-            $scope.errorEmail = '';
-            if($scope.myForm.$valid){
+        $scope.inputType = 'password';
+        $scope.inputTypeConfirm = 'password';
+        $scope.hideShowPassword = function(){
+            if ($scope.inputType == 'password')
+                $scope.inputType = 'text';
+            else
+                $scope.inputType = 'password';
+        };
 
-                $http({
-                    method: 'PUT',
-                    url: 'user/update/'+$scope.userdata_id+'/',
-                    data: userdata,
-                    headers: {'Authorization': 'Token '+$window.sessionStorage.token}
-                }).then(function (response) {
-                    $scope.email_user = userdata.user.email;
-                }, function (response) {
-                    if(response.data.error.user.email == 'Email needs to be unique'){
-                        $scope.errorEmail = 'Email needs to be unique';
-                    }
-                    console.log('i am in error');
-                });
+        $scope.hideShowConfirmPassword = function(){
+            if ($scope.inputTypeConfirm == 'password')
+                $scope.inputTypeConfirm = 'text';
+            else
+                $scope.inputTypeConfirm = 'password';
+        };
+
+        $scope.saveProfile = function (user_data) {
+            $scope.myForm = user_data;
+            var formData = new FormData();
+
+            for (key in $scope.myForm) {
+                console.log($scope.myForm[key], key)
+                if (key == 'user'){
+                    // formData.append(key, JSON.stringify($scope.myForm[key]))
+                    formData.append(key, $scope.userdata_id)
+                }
+                else {
+                    formData.append(key, $scope.myForm[key])
+                }
             }
+            formData.append("avatar", $('#fileInput')[0].files[0])
+            $http({
+                method: 'PUT',
+                url: 'user/update/' + $scope.userdata_id + '/',
+                // data: userdata,
+                data: formData,
+                headers: {'Authorization': 'Token ' + $window.sessionStorage.token, 'Content-Type': undefined}
+            }).then(function (response) {
+                $scope.email_user = userdata.user.email;
+            }, function (response) {
+                console.log('i am in error');
+                if(response.data.status == 'failed')
+                {
+                    ngDialog.open({ template: '/static/app/views/alert.html',
+                            className: 'ngdialog-theme-default',
+                            data: {
+                                status:response.data.status,
+                                message: response.data.message
+                            }
+                        }
+                    );
+                }
+            });
         }
+
 
         $scope.clearEmail = function(){
             $scope.errorEmail = '';
@@ -640,6 +771,10 @@ angular.module('innstal.controllers', ['ngImgCrop'])
             loadRegistered();
         }
 
+    })
+
+    .controller('manualcontroller', function ($scope, $rootScope, $http, $state, $window, $stateParams, $modal, $location) {
+        console.log('accessed');
     })
     .controller('loginnextcontroller', function($scope, $rootScope, $http, $state, $window, $stateParams, $modal, $location) {
         console.log('accessed');

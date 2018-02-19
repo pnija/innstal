@@ -40,8 +40,8 @@
                     </div>
 
                     <div class="dash-userimage">
-                        <img src="/static/app/images/user01.png" class="dash-userimg" alt="userImage" />
-                        <p class="dash-user-name" style="margin-bottom: 5px; padding-right: 0px;">{{user_data.user.username}}</p>
+                        <img src='{{ user_data.avatar }}' ng-model="user_data.avatar" class="dash-userimg" alt="userImage" />
+                        <p class="dash-user-name" style="margin-bottom: 5px; padding-right: 0px;">{{user_data.username}}</p>
                         <p class="dash-user-email">{{email_user}}</p>
                     </div>
 
@@ -75,7 +75,7 @@
             <main class="content-section dash-content">
                 <div class="top-navbx">
                     <span class="user-info-bx">
-                        <span>Hello, {{user_data.user.username}}</span>
+                        <span>Hello, {{user_data.username}}</span>
                         </br>
                     </span>
                 </div>
@@ -91,7 +91,7 @@
                             <div class="col-md-4 col-sm-5 split-col-md">
                                 <!--<img width="100%" style="padding-bottom: 15px;" src="/static/app/images/slider-image.jpg" id="upload-demo" />-->
                                 <div class="cropArea">
-                                    <img-crop image="myImage" result-image="myCroppedImage"></img-crop>
+                                    <img-crop image="myImage" ng-model = 'user_data.avatar' result-image="myCroppedImage"></img-crop>
                                 </div>
                                 <div>Upload a different picture<input type="file" id="fileInput"/></div>
                             </div>
@@ -103,7 +103,7 @@
                                     <div class="row">
                                         <div class="col-sm-7">
                                             <div class="form-group">
-                                                <input type="text" ng-model="user_data.user.username" class="form-control" placeholder="Enter Your Name" />
+                                                <input type="text" ng-model="user_data.username" class="form-control" placeholder="Enter Your Name" />
                                             </div>
                                         </div>
 
@@ -176,7 +176,7 @@
                                         </div>
                                         <div class="col-sm-7">
                                             <div class="form-group">
-                                                <input type="email" name="email" ng-model="user_data.user.email" class="form-control" placeholder="Enter Your Email" ng-change="clearEmail()" required/>
+                                                <input type="email" name="email" ng-model="user_data.email" class="form-control" placeholder="Enter Your Email" ng-change="clearEmail()" required/>
                                                 <span style="color:red" ng-show="myForm.email.$error">
                                                 <span ng-show="submitted && myForm.email.$error.required">This field is required.</span>
                                                 <span ng-show="submitted && myForm.email.$error.email">Invalid email address.</span>
@@ -195,9 +195,9 @@
                                         <div class="col-sm-7">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input type="password" name="password" class="form-control" ng-change="changepass()" ng-model="user_data.user.password" placeholder="Password" data-label="password1" password-error/>
+                                                    <input type="{{inputType}}" name="password" class="form-control" ng-change="changepass()" ng-model="user_data.password" placeholder="Password" data-label="password1" password-error/>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-attach" data-toggle="password" data-for="password1">
+                                                        <button class="btn btn-attach" data-toggle="password" data-for="password1" ng-click="hideShowPassword()">
                                                             <i class="icon-eye"></i>
                                                         </button>
                                                     </div>
@@ -210,9 +210,9 @@
                                         <div class="col-sm-5">
                                             <div class="form-group">
                                                 <div class="input-group">
-                                                    <input type="password" name="confirm_password" class="form-control" ng-model="user_data.user.confirm_password" placeholder="Enter Your Password Again" data-label="password2" repeat-password-error/>
+                                                    <input type="{{inputTypeConfirm}}" name="confirm_password" class="form-control" ng-model="user_data.confirm_password" placeholder="Enter Your Password Again" data-label="password2" repeat-password-error/>
                                                     <div class="input-group-btn">
-                                                        <button class="btn btn-attach" data-toggle="password" data-for="password2">
+                                                        <button class="btn btn-attach" data-toggle="password" data-for="password2" ng-click="hideShowConfirmPassword()">
                                                             <i class="icon-eye"></i>
                                                         </button>
                                                     </div>

@@ -1,5 +1,5 @@
 
-angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap'])
+angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap', 'ngDialog'])
 .config(function ($stateProvider, $locationProvider, $urlRouterProvider) {
     $locationProvider.hashPrefix('');
     $urlRouterProvider.otherwise('/');
@@ -57,6 +57,11 @@ angular.module("innstalApp", ['innstal.controllers','ui.router', 'ui.bootstrap']
             url: '/warranty',
             templateUrl: '/static/app/views/register-for-warranty1.html',
             controller: 'warrantyregistercontroller',
+        })
+        .state('manual', {
+            url: '/warranty',
+            templateUrl: '/static/app/views/instructionmanual.html',
+            controller: 'manualcontroller',
         })
         .state('activate', {
             url: '/activate/:id',

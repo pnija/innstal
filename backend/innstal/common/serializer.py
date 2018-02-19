@@ -1,4 +1,5 @@
 import re
+import copy
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
@@ -52,27 +53,35 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
+    # user = UserSerializer(many=False)
+    email = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
+    password = serializers.SerializerMethodField()
     city = serializers.PrimaryKeyRelatedField(queryset=City.objects.all(), required=False, allow_null=True)
     state = serializers.PrimaryKeyRelatedField(queryset=State.objects.all(), required=False, allow_null=True)
     country = serializers.PrimaryKeyRelatedField(queryset=Country.objects.all(), required=False, allow_null=True)
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'phone', 'user_type', 'avatar',
-                  'address', 'user', 'dob', 'city', 'country', 'state', 'zipcode')
+        exclude = ('user', )
+        # fields = ('id', 'phone', 'user_type', 'avatar',
+        #           'address', 'dob', 'city', 'country', 'state', 'zipcode')
 
     def update(self, instance, validated_data):
-        user_id = instance.user_id
-        user_data = validated_data.pop('user')
-        user = User.objects.get(pk=user_id)
-        user.email = user_data['email']
-        user.username = user_data['username']
-        try:
-            user.set_password(user_data['password'])
-        except:
-            pass
-        user.save()
+        # user_id = instance.user_id
+        # user_data = validated_data.pop('user')
+        # user = User.objects.get(pk=user_id)
+        # instance.username = validated_data.get('username', instance.username)
+        # instance.email = validated_data.get('email', instance.email)
+        #
+        # instance.save()
+        # user.email = user_data['email']
+        # user.username = user_data['username']
+        # try:
+        #     user.set_password(user_data['password'])
+        # except:
+        #     pass
+        # user.save()
         instance.address = validated_data.get('address', instance.address)
         instance.phone = validated_data.get('phone', instance.phone)
         instance.city = validated_data.get('city', instance.city)
@@ -83,6 +92,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
         instance.zipcode = validated_data.get('zipcode', instance.zipcode)
         instance.save()
         return instance
+
+    def get_email(self, instance):
+        print(instance)
+        if instance is not None:
+            return instance.user.email
+
+    def get_username(self, instance):
+        if instance is not None:
+            return instance.user.username
+
+    def get_password(self, instance):
+        if instance is not None:
+            return instance.user.password
+
 
 class BusinessAccountSerializer(serializers.ModelSerializer):
     user = UserSerializer()

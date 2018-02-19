@@ -1,132 +1,136 @@
 <!doctype html>
 <html class="no-js" lang="" ng-app="innstalApp">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>innstal</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
-        <link rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
-        <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">-->
-        <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>innstal</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="/static/app/styles/css/bootstrap.min.css">
+    <link href="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">-->
 
 
-        <link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
-        <link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
-        <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/slider/bjqs.css">
-        <!-- EXTERNAL STYLESHEET END -->
+    <link type="text/css" rel="stylesheet" href="/static/app/styles/css/theme-style.css">
+    <link type="text/css" rel="stylesheet" href="/static/app/styles/fonts/innistal/style.css">
+    <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/slider/bjqs.css">
 
-        <!-- Cropper -->
-        <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/Cropper/croppie.css">
-        <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.css">
+    <!-- EXTERNAL STYLESHEET END -->
+
+    <!-- Cropper -->
+    <link type="text/css" rel="stylesheet" href="/static/app/styles/Plugin/Cropper/croppie.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.css">
 
 
-        <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
-        <script src="/static/app/scripts/js/ui-bootstrap-tpls-0.12.1.js"></script>
-        <script type="text/javascript" src="https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.js"></script>
+    <script src="/static/app/scripts/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.3/angular-ui-router.min.js"></script>
+    <script src="/static/app/scripts/js/ui-bootstrap-tpls-0.12.1.js"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/alexk111/ngImgCrop/master/compile/minified/ng-img-crop.js"></script>
 
-        <script type="text/javascript" src="/static/app/scripts/app.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/controller.js"></script>
-    </head>
-    <body>
-        <div>
+    <script type="text/javascript" src="/static/app/scripts/app.js"></script>
+    <script type="text/javascript" src="/static/app/scripts/controller.js"></script>
+</head>
+<body>
+<div>
 
-            <div ui-view="">
+    <div ui-view="">
 
-            </div>
+    </div>
 
-            <subscribe ng-hide="state == 'contact' || state == 'login' || state == 'register' || state=='profile' " ng-include="'/static/app/views/directives/subscribe.html'"></subscribe>
+    <subscribe ng-hide="state == 'contact' || state == 'login' || state == 'register' || state=='profile' " ng-include="'/static/app/views/directives/subscribe.html'"></subscribe>
 
-            <footer ng-hide="state == 'register' || state == 'login' || state=='profile'" ng-include="'/static/app/views/directives/footer.html'"></footer>
+    <footer ng-hide="state == 'register' || state == 'login' || state=='profile'" ng-include="'/static/app/views/directives/footer.html'"></footer>
 
-            <div ng-hide="state == 'register' || state == 'login' || state=='profile'" class="footer-bottom">
-                <div class="container-fluid">
-                    <p>© Copyright 2017 Innstal. All Rights Reserved{{request.path}}</p>
-                    <div class="pull-right">
-                        <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
-                        <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
-                        <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
-                    </div>
-                </div>
+    <div ng-hide="state == 'register' || state == 'login' || state=='profile'" class="footer-bottom">
+        <div class="container-fluid">
+            <p>© Copyright 2017 Innstal. All Rights Reserved{{request.path}}</p>
+            <div class="pull-right">
+                <a href="#"> <i class="fa fa-google-plus" aria-hidden="true"></i> </a>
+                <a href="#"> <i class="fa fa-facebook" aria-hidden="true"></i> </a>
+                <a href="#"> <i class="fa fa-twitter" aria-hidden="true"></i> </a>
             </div>
         </div>
+    </div>
+</div>
 
-        <script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
-        <script>
-        window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
-        </script>
-        <script src="/static/app/scripts/js/vendor/bootstrap.min.js"></script>
-        <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
-        <script src="/static/app/scripts/js/main.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/js/jquery.pinto.js"></script>
-        <script type="text/javascript" src="/static/app/scripts/js/imagesloaded.pkgd.min.js"></script>
-        <script>
-            AOS.init({
-              offset: 200,
-              duration: 600,
-              easing: 'ease-in-sine',
-              delay: 150,
+<script src="/static/app/scripts/js/vendor/jquery-1.11.2.min.js"></script>
+<script>
+    window.jQuery || document.write('<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"><\/script>')
+</script>
+<script src="/static/app/scripts/js/vendor/bootstrap.min.js"></script>
+<script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+<script src="/static/app/scripts/js/main.js"></script>
+<script type="text/javascript" src="/static/app/scripts/js/jquery.pinto.js"></script>
+<script type="text/javascript" src="/static/app/scripts/js/imagesloaded.pkgd.min.js"></script>
+    <link rel="stylesheet" href="/static/app/styles/css/ngDialog.css">
+    <link rel="stylesheet" href="/static/app/styles/css/ngDialog-theme-default.css">
+<script src="/static/app/scripts/js/ngDialog.min.js"></script>
+<script>
+    AOS.init({
+        offset: 200,
+        duration: 600,
+        easing: 'ease-in-sine',
+        delay: 150,
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        //stick in the fixed 100% height behind the navbar but don't wrap it
+        $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
+        $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
+        // Enter your ids or classes
+        var toggler = '.navbar-toggle';
+        var pagewrapper = '#page-content';
+        var navigationwrapper = '.navbar-header';
+        var menuwidth = '100%'; // the menu inside the slide menu itself
+        var slidewidth = '80%';
+        var menuneg = '-100%';
+        var slideneg = '-80%';
+        function toggleSideBar(selected) {
+            $('#slidemenu').stop().animate({
+                left: selected ? menuneg : '0px'
             });
-        </script>
-
-        <script>
-            $(document).ready(function() {
-              //stick in the fixed 100% height behind the navbar but don't wrap it
-              $('#slide-nav.navbar-inverse').after($('<div class="inverse" id="navbar-height-col"></div>'));
-              $('#slide-nav.navbar-default').after($('<div id="navbar-height-col"></div>'));
-              // Enter your ids or classes
-              var toggler = '.navbar-toggle';
-              var pagewrapper = '#page-content';
-              var navigationwrapper = '.navbar-header';
-              var menuwidth = '100%'; // the menu inside the slide menu itself
-              var slidewidth = '80%';
-              var menuneg = '-100%';
-              var slideneg = '-80%';
-              function toggleSideBar(selected) {
-                $('#slidemenu').stop().animate({
-                  left: selected ? menuneg : '0px'
-                });
-                $('#navbar-height-col').stop().animate({
-                  left: selected ? slideneg : '0px'
-                });
-                $(pagewrapper).stop().animate({
-                  left: selected ? '0px' : slidewidth
-                });
-                $(navigationwrapper).stop().animate({
-                  left: selected ? '0px' : slidewidth
-                });
-                $(this).toggleClass('slide-active', !selected);
-                $('#slidemenu').toggleClass('slide-active');
-                $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
-              }
-              $("#slide-nav").on("click", toggler, function(e) {
-                var selected = false;
-                toggleSideBar(selected);
-              });
-              $("body").on("click", '.nav-close', function(e) {
-                var selected = true;
-                toggleSideBar(selected);
-              });
-              var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
-              $(window).on("resize", function() {
-                if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
-                  $(selected).removeClass('slide-active');
-                }
-              });
-
-              setTimeout(function() { $("#container-01").pinto(); }, 200);
+            $('#navbar-height-col').stop().animate({
+                left: selected ? slideneg : '0px'
             });
+            $(pagewrapper).stop().animate({
+                left: selected ? '0px' : slidewidth
+            });
+            $(navigationwrapper).stop().animate({
+                left: selected ? '0px' : slidewidth
+            });
+            $(this).toggleClass('slide-active', !selected);
+            $('#slidemenu').toggleClass('slide-active');
+            $('#page-content, .navbar, body, .navbar-header').removeClass('slide-active');
+        }
+        $("#slide-nav").on("click", toggler, function(e) {
+            var selected = false;
+            toggleSideBar(selected);
+        });
+        $("body").on("click", '.nav-close', function(e) {
+            var selected = true;
+            toggleSideBar(selected);
+        });
+        var selected = '#slidemenu, #page-content, body, .navbar, .navbar-header';
+        $(window).on("resize", function() {
+            if ($(window).width() > 767 && $('.navbar-toggle').is(':hidden')) {
+                $(selected).removeClass('slide-active');
+            }
+        });
+
+        setTimeout(function() { $("#container-01").pinto(); }, 200);
+    });
 
 
 
-        </script>
+</script>
 
-       </body>
+</body>
 
 
 
